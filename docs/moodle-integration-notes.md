@@ -27,6 +27,18 @@ The chat interface displays a short notice reminding students that the assistant
 - Should not receive sensitive personal information
 - May provide imperfect AI-generated guidance
 
+## Pilot Feedback
+
+The assistant includes lightweight pilot feedback buttons after responses:
+
+- Helpful
+- Not helpful
+- Needs lecturer follow-up
+
+Feedback is stored locally for pilot review only. Before production deployment,
+COSTAATT should approve the official logging, retention, privacy notice, and
+support workflow.
+
 ## Integration Options
 
 ### Option 1: Moodle Page with iframe

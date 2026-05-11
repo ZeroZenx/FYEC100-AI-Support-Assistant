@@ -145,6 +145,21 @@ http://localhost:4100/api/admin/status
 The admin page also provides copy-ready Moodle iframe, Moodle HTML block, and
 fallback link snippets for pilot setup.
 
+## Pilot Feedback Capture
+
+Phase 2 includes local-only feedback capture for pilot testing. Students can mark
+assistant replies as helpful, not helpful, or needing lecturer follow-up, with an
+optional note.
+
+Feedback is stored locally in:
+
+```text
+data/pilot-feedback.jsonl
+```
+
+This file is ignored by Git and should not be treated as a production analytics
+or student record system.
+
 ## Knowledge Base Updates
 
 Edit this file to update Phase 1 course content:

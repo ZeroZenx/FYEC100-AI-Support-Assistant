@@ -12,6 +12,12 @@ Lecturers remain the authoritative source for course content, assignment interpr
 
 Phase 1 does not use a database and does not intentionally store chat history. Students should avoid entering sensitive personal information into the prototype.
 
+Phase 2 pilot feedback capture stores limited local JSONL records for testing:
+rating, optional note, mode, timestamp, and short excerpts of the relevant
+question and response. It does not intentionally capture student names, IDs, or
+full chat transcripts. This pilot mechanism should be replaced by an approved
+enterprise logging and analytics approach before production use.
+
 ## Knowledge Base Management
 
 The Phase 1 knowledge base is stored in `data/fyec100-knowledge-base.md`. An admin-friendly process should be created in later phases to review, approve, and version course content updates.

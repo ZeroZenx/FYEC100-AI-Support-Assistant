@@ -1,5 +1,6 @@
 import { stat } from "fs/promises";
 import path from "path";
+import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 
 const KNOWLEDGE_BASE_PATH = path.join(
   process.cwd(),
@@ -16,6 +17,7 @@ export type DeploymentChecklistItem = {
 export async function getEnterpriseStatus() {
   const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
+  const feedback = await readPilotFeedbackSummary();
   const embedBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
 
@@ -80,6 +82,7 @@ export async function getEnterpriseStatus() {
       lastUpdated: knowledgeBaseStats.mtime.toISOString(),
       sizeBytes: knowledgeBaseStats.size
     },
+    feedback,
     checklist
   };
 }

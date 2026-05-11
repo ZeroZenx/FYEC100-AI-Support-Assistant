@@ -3,9 +3,12 @@
 import { FormEvent, useMemo, useState } from "react";
 
 type ChatMessage = {
+  feedbackStatus?: "idle" | "sending" | "sent";
   role: "student" | "assistant";
   content: string;
 };
+
+type FeedbackRating = "helpful" | "not-helpful" | "lecturer-follow-up";
 
 const starterPrompts = [
   "What is FYEC100 about?",
@@ -29,6 +32,7 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [feedbackNote, setFeedbackNote] = useState("");
   const [showUseNotice, setShowUseNotice] = useState(true);
 
   const canSend = useMemo(() => input.trim().length > 0 && !isLoading, [
@@ -67,7 +71,8 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
         ...current,
         {
           role: "assistant",
-          content: data.answer ?? "I could not find a helpful response."
+          content: data.answer ?? "I could not find a helpful response.",
+          feedbackStatus: "idle"
         }
       ]);
     } catch (err) {
@@ -80,6 +85,57 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void sendMessage();
+  }
+
+  async function sendFeedback(index: number, rating: FeedbackRating) {
+    const message = messages[index];
+    const previousQuestion = [...messages]
+      .slice(0, index)
+      .reverse()
+      .find((item) => item.role === "student");
+
+    if (!message || !previousQuestion) return;
+
+    setMessages((current) =>
+      current.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, feedbackStatus: "sending" } : item
+      )
+    );
+    setError("");
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          assistantResponse: message.content,
+          mode: embedded ? "embedded" : "standalone",
+          note: feedbackNote.trim() || undefined,
+          rating,
+          studentQuestion: previousQuestion.content
+        })
+      });
+
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Feedback could not be saved.");
+      }
+
+      setMessages((current) =>
+        current.map((item, itemIndex) =>
+          itemIndex === index ? { ...item, feedbackStatus: "sent" } : item
+        )
+      );
+      setFeedbackNote("");
+    } catch (err) {
+      setMessages((current) =>
+        current.map((item, itemIndex) =>
+          itemIndex === index ? { ...item, feedbackStatus: "idle" } : item
+        )
+      );
+      setError(err instanceof Error ? err.message : "Feedback could not be saved.");
+    }
   }
 
   return (
@@ -123,14 +179,25 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
               }`}
               key={`${message.role}-${index}`}
             >
-              <div
-                className={`max-w-[84%] rounded-lg px-4 py-3 text-sm leading-6 ${
-                  message.role === "student"
-                    ? "bg-costaatt-blue text-white"
-                    : "border border-slate-200 bg-slate-50 text-slate-800"
-                }`}
-              >
-                {message.content}
+              <div className="max-w-[84%]">
+                <div
+                  className={`rounded-lg px-4 py-3 text-sm leading-6 ${
+                    message.role === "student"
+                      ? "bg-costaatt-blue text-white"
+                      : "border border-slate-200 bg-slate-50 text-slate-800"
+                  }`}
+                >
+                  {message.content}
+                </div>
+                {message.role === "assistant" && index > 0 ? (
+                  <FeedbackPanel
+                    disabled={message.feedbackStatus === "sending"}
+                    note={feedbackNote}
+                    onNoteChange={setFeedbackNote}
+                    onSubmit={(rating) => void sendFeedback(index, rating)}
+                    status={message.feedbackStatus ?? "idle"}
+                  />
+                ) : null}
               </div>
             </div>
           ))}
@@ -195,6 +262,71 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
           </p>
         </section>
       </aside>
+    </div>
+  );
+}
+
+function FeedbackPanel({
+  disabled,
+  note,
+  onNoteChange,
+  onSubmit,
+  status
+}: {
+  disabled: boolean;
+  note: string;
+  onNoteChange: (value: string) => void;
+  onSubmit: (rating: FeedbackRating) => void;
+  status: "idle" | "sending" | "sent";
+}) {
+  if (status === "sent") {
+    return (
+      <p className="mt-2 text-xs font-medium text-emerald-700">
+        Feedback saved for the pilot review.
+      </p>
+    );
+  }
+
+  return (
+    <div className="mt-2 rounded-md border border-slate-200 bg-white p-3">
+      <p className="text-xs font-semibold text-slate-700">
+        Was this response useful?
+      </p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        <button
+          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-emerald-500 hover:text-emerald-700 disabled:opacity-60"
+          disabled={disabled}
+          onClick={() => onSubmit("helpful")}
+          type="button"
+        >
+          Helpful
+        </button>
+        <button
+          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-red-500 hover:text-red-700 disabled:opacity-60"
+          disabled={disabled}
+          onClick={() => onSubmit("not-helpful")}
+          type="button"
+        >
+          Not helpful
+        </button>
+        <button
+          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-amber-500 hover:text-amber-700 disabled:opacity-60"
+          disabled={disabled}
+          onClick={() => onSubmit("lecturer-follow-up")}
+          type="button"
+        >
+          Needs lecturer follow-up
+        </button>
+      </div>
+      <label className="mt-3 block text-xs font-semibold text-slate-700">
+        Optional note
+        <textarea
+          className="mt-1 min-h-16 w-full resize-none rounded-md border border-slate-300 px-3 py-2 text-xs leading-5 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20"
+          onChange={(event) => onNoteChange(event.target.value)}
+          placeholder="What was missing or confusing?"
+          value={note}
+        />
+      </label>
     </div>
   );
 }

@@ -118,6 +118,65 @@ export default async function AdminPage() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Pilot Feedback
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Student response signals
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600">
+            Local pilot-only summary from `data/pilot-feedback.jsonl`.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard label="Total" value={status.feedback.total} />
+          <MetricCard label="Helpful" value={status.feedback.counts.helpful} />
+          <MetricCard
+            label="Not helpful"
+            value={status.feedback.counts["not-helpful"]}
+          />
+          <MetricCard
+            label="Follow-up"
+            value={status.feedback.counts["lecturer-follow-up"]}
+          />
+        </div>
+        <div className="mt-6 divide-y divide-slate-200">
+          {status.feedback.latest.length > 0 ? (
+            status.feedback.latest.map((item) => (
+              <article className="py-4" key={`${item.timestamp}-${item.rating}`}>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
+                    {item.rating}
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {new Date(item.timestamp).toLocaleString()}
+                  </span>
+                  <span className="text-xs text-slate-500">{item.mode}</span>
+                </div>
+                <p className="mt-2 text-sm text-slate-700">
+                  <span className="font-semibold text-slate-900">Question:</span>{" "}
+                  {item.studentQuestionExcerpt}
+                </p>
+                {item.note ? (
+                  <p className="mt-1 text-sm text-slate-700">
+                    <span className="font-semibold text-slate-900">Note:</span>{" "}
+                    {item.note}
+                  </p>
+                ) : null}
+              </article>
+            ))
+          ) : (
+            <p className="py-4 text-sm text-slate-600">
+              No pilot feedback has been captured yet.
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Deployment Checklist
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
@@ -148,6 +207,15 @@ export default async function AdminPage() {
         </div>
       </section>
     </PageShell>
+  );
+}
+
+function MetricCard({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+      <p className="text-sm font-semibold text-slate-600">{label}</p>
+      <p className="mt-2 text-3xl font-bold text-costaatt-navy">{value}</p>
+    </div>
   );
 }
 
