@@ -9,9 +9,9 @@ const phases = [
   },
   {
     title: "Phase 2: Enterprise integrated deployment",
-    status: "Future",
+    status: "Started",
     description:
-      "Institutional hosting, authentication, Moodle integration, Banner-aware student services routing, analytics, privacy review, and production support processes."
+      "Moodle embedded assistant route, configurable OpenAI or Ollama provider support, institutional hosting planning, authentication planning, Banner-aware student services routing, analytics, privacy review, and production support processes."
   },
   {
     title: "Phase 3: Advanced AI learning ecosystem",

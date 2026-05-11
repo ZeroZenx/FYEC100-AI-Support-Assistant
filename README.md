@@ -14,7 +14,7 @@ Built in this repository. Includes a local Next.js app, TypeScript, Tailwind CSS
 
 ### Phase 2: Enterprise integrated deployment
 
-Future phase. May include institutional hosting, authentication, Moodle integration, Banner-aware support pathways, governance, monitoring, privacy review, and production operations.
+Started. Includes initial Moodle embed route planning, configurable AI provider support, and enterprise deployment documentation. Later work may include institutional hosting, authentication, Moodle plugin or LTI integration, Banner-aware support pathways, governance, monitoring, privacy review, and production operations.
 
 ### Phase 3: Advanced AI learning ecosystem
 
@@ -98,7 +98,33 @@ http://localhost:4100
 
 ## OpenAI Integration
 
-The chat assistant uses `OPENAI_API_KEY` through a Next.js API route. The route reads `data/fyec100-knowledge-base.md` and passes it to the model as context. If the key is not configured, the chat page still loads and returns a setup reminder.
+The chat assistant can use OpenAI or Ollama through a Next.js API route. The route reads `data/fyec100-knowledge-base.md` and passes it to the model as context. If the selected provider is not configured, the chat page still loads and returns a setup reminder.
+
+OpenAI example:
+
+```bash
+AI_PROVIDER=openai
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-4o-mini
+```
+
+Ollama example:
+
+```bash
+AI_PROVIDER=ollama
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.1
+```
+
+## Moodle Embed Pilot
+
+Phase 2 starts with an embedded assistant view intended for Moodle iframe, modal, drawer, or future LTI testing:
+
+```text
+http://localhost:4100/embed
+```
+
+See `docs/moodle-integration-notes.md` and `docs/phase-2-enterprise-plan.md`.
 
 ## Knowledge Base Updates
 

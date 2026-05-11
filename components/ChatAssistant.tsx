@@ -14,7 +14,11 @@ const starterPrompts = [
   "Where should I look in the LMS for course materials?"
 ];
 
-export function ChatAssistant() {
+type ChatAssistantProps = {
+  embedded?: boolean;
+};
+
+export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
@@ -78,7 +82,7 @@ export function ChatAssistant() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+    <div className={embedded ? "grid gap-5" : "grid gap-6 lg:grid-cols-[1fr_320px]"}>
       <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
         <div className="border-b border-slate-200 bg-slate-50 px-5 py-4">
           <h2 className="font-bold text-costaatt-navy">FYEC100 Assistant</h2>
@@ -140,7 +144,7 @@ export function ChatAssistant() {
           </button>
         </form>
       </section>
-      <aside className="space-y-5">
+      <aside className={embedded ? "grid gap-5 md:grid-cols-2" : "space-y-5"}>
         <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
           <h3 className="font-bold text-costaatt-navy">Try a prompt</h3>
           <div className="mt-4 space-y-2">

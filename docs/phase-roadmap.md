@@ -6,7 +6,7 @@ Current phase. Build a local web app with a simple chat assistant, OpenAI API in
 
 ## Phase 2: Enterprise Integrated Deployment
 
-Future phase. Prepare for institutional deployment with authentication, hosting, monitoring, privacy review, Moodle integration, Banner-aware support pathways, production governance, analytics, and support procedures.
+Started. Prepare for institutional deployment with Moodle embedding, configurable AI providers, authentication planning, hosting, monitoring, privacy review, Banner-aware support pathways, production governance, analytics, and support procedures.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

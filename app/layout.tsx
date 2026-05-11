@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "FYEC100 AI Support Assistant",
@@ -15,9 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen font-sans antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
