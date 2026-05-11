@@ -26,6 +26,28 @@ function getProvider() {
   return (process.env.AI_PROVIDER ?? "openai").toLowerCase();
 }
 
+export function getProviderStatus() {
+  const provider = getProvider();
+  const model =
+    provider === "ollama"
+      ? process.env.OLLAMA_MODEL ?? "llama3.1"
+      : process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+  const configured =
+    provider === "ollama"
+      ? Boolean(process.env.OLLAMA_BASE_URL || process.env.OLLAMA_MODEL)
+      : Boolean(process.env.OPENAI_API_KEY);
+
+  return {
+    configured,
+    model,
+    provider,
+    requiredVariables:
+      provider === "ollama"
+        ? ["AI_PROVIDER", "OLLAMA_BASE_URL", "OLLAMA_MODEL"]
+        : ["AI_PROVIDER", "OPENAI_API_KEY", "OPENAI_MODEL"]
+  };
+}
+
 export function getMissingProviderConfigMessage() {
   const provider = getProvider();
 
@@ -59,6 +81,99 @@ export async function generateAssistantAnswer({
     messages,
     systemPrompt
   });
+}
+
+export async function testSelectedProvider() {
+  const status = getProviderStatus();
+  const startedAt = Date.now();
+
+  if (!status.configured) {
+    return {
+      ...status,
+      durationMs: 0,
+      ok: false,
+      responseExcerpt: "",
+      error: "Provider environment variables are not configured."
+    };
+  }
+
+  try {
+    const responseExcerpt =
+      status.provider === "ollama"
+        ? await testOllamaProvider()
+        : await testOpenAIProvider();
+
+    return {
+      ...status,
+      durationMs: Date.now() - startedAt,
+      ok: true,
+      responseExcerpt,
+      error: ""
+    };
+  } catch (error) {
+    return {
+      ...status,
+      durationMs: Date.now() - startedAt,
+      ok: false,
+      responseExcerpt: "",
+      error:
+        error instanceof Error
+          ? error.message
+          : "Provider test failed for an unknown reason."
+    };
+  }
+}
+
+async function testOpenAIProvider() {
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const completion = await openai.chat.completions.create({
+    model: process.env.OPENAI_MODEL ?? "gpt-4o-mini",
+    temperature: 0,
+    messages: [
+      {
+        role: "user",
+        content:
+          "Reply with one short sentence confirming the FYEC100 assistant provider test is working."
+      }
+    ]
+  });
+
+  return (
+    completion.choices[0]?.message.content?.trim().slice(0, 240) ||
+    "Provider responded without text."
+  );
+}
+
+async function testOllamaProvider() {
+  const baseUrl = process.env.OLLAMA_BASE_URL ?? "http://localhost:11434";
+  const response = await fetch(`${baseUrl}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: process.env.OLLAMA_MODEL ?? "llama3.1",
+      messages: [
+        {
+          role: "user",
+          content:
+            "Reply with one short sentence confirming the FYEC100 assistant provider test is working."
+        }
+      ],
+      stream: false,
+      options: {
+        temperature: 0
+      }
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Ollama responded with HTTP ${response.status}.`);
+  }
+
+  const data = (await response.json()) as {
+    message?: { content?: string };
+  };
+
+  return data.message?.content?.trim().slice(0, 240) || "Provider responded without text.";
 }
 
 async function generateWithOpenAI({

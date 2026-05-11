@@ -19,6 +19,14 @@ const moodlePilotChecklist = [
   "Confirm the post-pilot decision path: iframe, Moodle block, or LTI."
 ];
 
+const openAiEnvExample = `AI_PROVIDER=openai
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-4o-mini`;
+
+const ollamaEnvExample = `AI_PROVIDER=ollama
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.1`;
+
 export default async function AdminPage() {
   const status = await getEnterpriseStatus();
   const knowledgeBaseUpdated = new Intl.DateTimeFormat("en", {
@@ -94,6 +102,70 @@ export default async function AdminPage() {
           </dl>
         </section>
       </div>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Provider Setup
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              OpenAI or Ollama configuration
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.providerStatus.configured
+                ? statusStyles.complete
+                : statusStyles["in-progress"]
+            }`}
+          >
+            {status.providerStatus.configured ? "Configured" : "Needs env vars"}
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-3">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">
+              Current provider
+            </p>
+            <p className="mt-2 text-xl font-bold text-costaatt-navy">
+              {status.providerStatus.provider}
+            </p>
+            <p className="mt-2 text-sm text-slate-700">
+              Model: {status.providerStatus.model}
+            </p>
+            <p className="mt-2 text-sm text-slate-700">
+              Test endpoint: `POST /api/admin/provider-test`
+            </p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">
+              Required variables
+            </p>
+            <ul className="mt-3 space-y-2 text-sm text-slate-700">
+              {status.providerStatus.requiredVariables.map((variable) => (
+                <li key={variable}>{variable}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">
+              Provider test
+            </p>
+            <p className="mt-2 text-sm leading-6 text-slate-700">
+              Run the provider test before Moodle pilot sessions to confirm the
+              selected model can respond.
+            </p>
+            <pre className="mt-3 overflow-x-auto rounded-md bg-costaatt-navy p-3 text-xs leading-6 text-white">
+              <code>curl -X POST http://localhost:4100/api/admin/provider-test</code>
+            </pre>
+          </div>
+        </div>
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <SnippetBlock code={openAiEnvExample} label="OpenAI .env.local" />
+          <SnippetBlock code={ollamaEnvExample} label="Ollama .env.local" />
+        </div>
+      </section>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">

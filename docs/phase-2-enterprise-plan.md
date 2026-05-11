@@ -50,6 +50,8 @@ for early testing but is not a production student record, analytics, or case
 management system.
 
 The current prototype includes `/api/health` for deployment readiness checks.
+It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
+or Ollama model responds before Moodle pilot testing.
 
 ### Production Readiness
 

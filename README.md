@@ -117,6 +117,14 @@ OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=llama3.1
 ```
 
+Provider test endpoint:
+
+```text
+POST http://localhost:4100/api/admin/provider-test
+```
+
+See `docs/ollama-local-setup.md` for local Ollama setup.
+
 ## Moodle Embed Pilot
 
 Phase 2 starts with an embedded assistant view intended for Moodle iframe, modal, drawer, or future LTI testing:

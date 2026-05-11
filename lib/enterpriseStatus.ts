@@ -1,5 +1,6 @@
 import { stat } from "fs/promises";
 import path from "path";
+import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 
@@ -20,6 +21,7 @@ export async function getEnterpriseStatus() {
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const feedback = await readPilotFeedbackSummary();
   const health = await getHealthStatus();
+  const providerStatus = getProviderStatus();
   const embedBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
 
@@ -79,6 +81,7 @@ export async function getEnterpriseStatus() {
     provider,
     providerConfigured,
     providerLabel,
+    providerStatus,
     knowledgeBase: {
       path: "data/fyec100-knowledge-base.md",
       lastUpdated: knowledgeBaseStats.mtime.toISOString(),

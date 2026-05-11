@@ -65,6 +65,16 @@ The health check reports:
 - pilot feedback storage writability
 - timestamp
 
+## Provider Test
+
+Use this endpoint to confirm the selected model can respond:
+
+```text
+POST /api/admin/provider-test
+```
+
+For Ollama local setup, see `docs/ollama-local-setup.md`.
+
 ## Moodle Requirements
 
 Before pilot embedding:
