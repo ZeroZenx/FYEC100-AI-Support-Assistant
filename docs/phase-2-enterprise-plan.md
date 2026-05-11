@@ -49,6 +49,8 @@ The current prototype includes local-only pilot feedback capture. It is useful
 for early testing but is not a production student record, analytics, or case
 management system.
 
+The current prototype includes `/api/health` for deployment readiness checks.
+
 ### Production Readiness
 
 Before enterprise launch, the project should add:

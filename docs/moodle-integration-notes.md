@@ -96,3 +96,6 @@ Considerations:
 ## Suggested Phase 2 Pilot
 
 Start with the `/embed` route inside a Moodle pilot course. If the user experience is approved, move toward either a Moodle block plugin or LTI 1.3 integration.
+
+Before using a hosted pilot URL, check `/api/health` and confirm the Moodle
+domain/iframe settings with the LMS administrator.

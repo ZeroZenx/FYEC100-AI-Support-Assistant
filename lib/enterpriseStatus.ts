@@ -1,5 +1,6 @@
 import { stat } from "fs/promises";
 import path from "path";
+import { getHealthStatus } from "@/lib/health";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 
 const KNOWLEDGE_BASE_PATH = path.join(
@@ -18,6 +19,7 @@ export async function getEnterpriseStatus() {
   const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const feedback = await readPilotFeedbackSummary();
+  const health = await getHealthStatus();
   const embedBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
 
@@ -83,6 +85,7 @@ export async function getEnterpriseStatus() {
       sizeBytes: knowledgeBaseStats.size
     },
     feedback,
+    health,
     checklist
   };
 }

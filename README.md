@@ -145,6 +145,16 @@ http://localhost:4100/api/admin/status
 The admin page also provides copy-ready Moodle iframe, Moodle HTML block, and
 fallback link snippets for pilot setup.
 
+## Health Check
+
+Use this endpoint to confirm deployment readiness signals:
+
+```text
+http://localhost:4100/api/health
+```
+
+See `docs/deployment-readiness.md` for hosted pilot guidance.
+
 ## Pilot Feedback Capture
 
 Phase 2 includes local-only feedback capture for pilot testing. Students can mark

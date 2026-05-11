@@ -4,8 +4,20 @@ import { getEnterpriseStatus } from "@/lib/enterpriseStatus";
 const statusStyles = {
   complete: "bg-emerald-100 text-emerald-800",
   "in-progress": "bg-amber-100 text-amber-800",
-  pending: "bg-slate-100 text-slate-700"
+  pending: "bg-slate-100 text-slate-700",
+  ok: "bg-emerald-100 text-emerald-800",
+  warning: "bg-amber-100 text-amber-800",
+  error: "bg-red-100 text-red-800"
 };
+
+const moodlePilotChecklist = [
+  "Confirm Moodle allows iframe embedding from the assistant domain.",
+  "Place the assistant in a controlled FYEC100 pilot course shell.",
+  "Confirm the visible student wording and responsible-use notice.",
+  "Confirm lecturer and LMS administrator escalation contacts.",
+  "Confirm the pilot student group and feedback review schedule.",
+  "Confirm the post-pilot decision path: iframe, Moodle block, or LTI."
+];
 
 export default async function AdminPage() {
   const status = await getEnterpriseStatus();
@@ -87,6 +99,50 @@ export default async function AdminPage() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Health Check
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Deployment readiness signals
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.health.ok ? statusStyles.ok : statusStyles.error
+            }`}
+          >
+            {status.health.ok ? "Ready with warnings" : "Needs attention"}
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {status.health.checks.map((check) => (
+            <div
+              className="rounded-lg border border-slate-200 bg-slate-50 p-4"
+              key={check.label}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="font-semibold text-costaatt-navy">
+                  {check.label}
+                </h3>
+                <span
+                  className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                    statusStyles[check.status]
+                  }`}
+                >
+                  {check.status}
+                </span>
+              </div>
+              <p className="mt-2 text-sm leading-6 text-slate-700">
+                {check.message}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Moodle Pilot Snippets
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
@@ -112,6 +168,32 @@ export default async function AdminPage() {
             label="Fallback link"
           />
         </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              LMS Pilot Checklist
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Moodle setup tasks
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600">
+            Suggested checklist for the LMS administrator and project lead.
+          </p>
+        </div>
+        <ul className="mt-6 grid gap-3 md:grid-cols-2">
+          {moodlePilotChecklist.map((item) => (
+            <li
+              className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700"
+              key={item}
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
