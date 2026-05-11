@@ -87,6 +87,37 @@ export default async function AdminPage() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Moodle Pilot Snippets
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Copy-ready embed options
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600">
+            Use these in a Moodle page, label, or HTML block after iframe
+            permissions are confirmed.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-4">
+          <SnippetBlock
+            code={status.embedSnippets.iframe}
+            label="Iframe embed"
+          />
+          <SnippetBlock
+            code={status.embedSnippets.moodleHtmlBlock}
+            label="Moodle HTML block"
+          />
+          <SnippetBlock
+            code={status.embedSnippets.link}
+            label="Fallback link"
+          />
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Deployment Checklist
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
@@ -117,5 +148,16 @@ export default async function AdminPage() {
         </div>
       </section>
     </PageShell>
+  );
+}
+
+function SnippetBlock({ code, label }: { code: string; label: string }) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+      <p className="text-sm font-semibold text-costaatt-navy">{label}</p>
+      <pre className="mt-3 overflow-x-auto rounded-md bg-costaatt-navy p-4 text-xs leading-6 text-white">
+        <code>{code}</code>
+      </pre>
+    </div>
   );
 }

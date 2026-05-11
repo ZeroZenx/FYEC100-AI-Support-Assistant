@@ -18,6 +18,9 @@ The current prototype includes `/embed`, a Moodle-friendly assistant view withou
 
 The current prototype also includes `/admin`, a project-team readiness view for checking provider configuration, Moodle embed URL, knowledge base status, and deployment checklist items.
 
+The `/admin` page includes copy-ready Moodle pilot snippets and the chat
+interface includes a responsible-use notice for students.
+
 ### Authentication and Context
 
 Phase 2 should not ask students to create separate assistant accounts. Moodle should remain the front door. Later implementation can pass trusted context such as course ID, role, and launch source through Moodle plugin configuration or LTI.

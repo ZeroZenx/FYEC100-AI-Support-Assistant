@@ -29,6 +29,7 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showUseNotice, setShowUseNotice] = useState(true);
 
   const canSend = useMemo(() => input.trim().length > 0 && !isLoading, [
     input,
@@ -90,6 +91,30 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
             Responses are grounded in the local Phase 1 knowledge base.
           </p>
         </div>
+        {showUseNotice ? (
+          <div className="border-b border-costaatt-gold/40 bg-yellow-50 px-5 py-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <h3 className="text-sm font-bold text-costaatt-navy">
+                  Responsible use notice
+                </h3>
+                <p className="mt-1 text-sm leading-6 text-slate-700">
+                  This assistant supports learning but does not grade work,
+                  replace your lecturer, or write full assignments. Do not enter
+                  sensitive personal information, and do not submit AI output as
+                  your own work.
+                </p>
+              </div>
+              <button
+                className="w-fit rounded-md border border-costaatt-gold/60 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:bg-white"
+                onClick={() => setShowUseNotice(false)}
+                type="button"
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        ) : null}
         <div className="h-[520px] space-y-4 overflow-y-auto px-5 py-5">
           {messages.map((message, index) => (
             <div

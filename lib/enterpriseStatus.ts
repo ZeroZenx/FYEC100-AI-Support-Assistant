@@ -67,6 +67,11 @@ export async function getEnterpriseStatus() {
   return {
     appBaseUrl: embedBaseUrl,
     embedUrl: `${embedBaseUrl}/embed`,
+    embedSnippets: {
+      iframe: `<iframe src="${embedBaseUrl}/embed" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe>`,
+      link: `<p><a href="${embedBaseUrl}/embed" target="_blank" rel="noopener">Open the FYEC100 AI Academic Support Assistant</a></p>`,
+      moodleHtmlBlock: `<div style="width:100%; min-height:760px;"><iframe src="${embedBaseUrl}/embed" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe></div>`
+    },
     provider,
     providerConfigured,
     providerLabel,

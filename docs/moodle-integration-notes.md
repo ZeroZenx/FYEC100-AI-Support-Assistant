@@ -14,11 +14,30 @@ http://localhost:4100/embed
 
 For a hosted environment, replace the hostname with the approved deployment URL.
 
+The `/admin` page provides copy-ready iframe, Moodle HTML block, and fallback
+link snippets for pilot setup.
+
+## Student Responsible Use Notice
+
+The chat interface displays a short notice reminding students that the assistant:
+
+- Supports learning but does not grade work
+- Does not replace lecturer guidance
+- Must not be used to write or submit full assignments
+- Should not receive sensitive personal information
+- May provide imperfect AI-generated guidance
+
 ## Integration Options
 
 ### Option 1: Moodle Page with iframe
 
 Fastest pilot approach. Create a Moodle Page resource or HTML block that embeds the assistant URL.
+
+Example iframe:
+
+```html
+<iframe src="http://localhost:4100/embed" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe>
+```
 
 Pros:
 

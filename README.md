@@ -142,6 +142,9 @@ The same status is available as JSON:
 http://localhost:4100/api/admin/status
 ```
 
+The admin page also provides copy-ready Moodle iframe, Moodle HTML block, and
+fallback link snippets for pilot setup.
+
 ## Knowledge Base Updates
 
 Edit this file to update Phase 1 course content:
