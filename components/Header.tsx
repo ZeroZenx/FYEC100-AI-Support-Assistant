@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const navItems = [
@@ -12,14 +13,18 @@ export function Header() {
     <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-costaatt-navy text-sm font-bold text-white">
-            FY
-          </div>
+          <Image
+            alt="COSTAATT logo"
+            className="h-12 w-auto"
+            height={53}
+            src="/costaatt-logo.png"
+            width={120}
+          />
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-blue">
-              COSTAATT
-            </p>
             <p className="font-bold text-costaatt-navy">FYEC100 AI Support</p>
+            <p className="text-sm font-medium text-slate-600">
+              AI Academic Support Assistant
+            </p>
           </div>
         </Link>
         <nav className="flex flex-wrap gap-2 text-sm font-medium text-slate-700">
