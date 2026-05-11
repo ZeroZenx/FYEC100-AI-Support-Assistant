@@ -4,7 +4,7 @@ const team = [
   "Kevin Ramsoobhag, VP Information Technology and Digital Transformation, Project Sponsor",
   "Darren Headley, Director | Technology Services, Project Lead and Technical Lead",
   "Deborah Romero, Developer",
-  "Jessica David, LMS Administrator",
+  "Kester David, LMS Administrator",
   "Kevin Reece, System Administrator and Infrastructure Support"
 ];
 
