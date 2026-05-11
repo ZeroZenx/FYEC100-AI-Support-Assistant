@@ -16,6 +16,8 @@ Students should remain inside Moodle. The assistant can be exposed through one o
 
 The current prototype includes `/embed`, a Moodle-friendly assistant view without standalone site navigation.
 
+The current prototype also includes `/admin`, a project-team readiness view for checking provider configuration, Moodle embed URL, knowledge base status, and deployment checklist items.
+
 ### Authentication and Context
 
 Phase 2 should not ask students to create separate assistant accounts. Moodle should remain the front door. Later implementation can pass trusted context such as course ID, role, and launch source through Moodle plugin configuration or LTI.
@@ -58,5 +60,6 @@ Before enterprise launch, the project should add:
 1. Host the assistant internally or on an approved cloud environment.
 2. Configure the app with either OpenAI or Ollama.
 3. Embed `/embed` inside a Moodle FYEC100 pilot course.
-4. Collect feedback from students, lecturers, LMS administration, and IT.
-5. Decide whether to proceed with a Moodle block plugin or LTI integration.
+4. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
+5. Collect feedback from students, lecturers, LMS administration, and IT.
+6. Decide whether to proceed with a Moodle block plugin or LTI integration.

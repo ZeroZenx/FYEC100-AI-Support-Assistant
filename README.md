@@ -32,6 +32,7 @@ Future phase. May include personalized learning support, proactive nudges, multi
 
 - Home page
 - Chat assistant page
+- Phase 2 admin readiness page
 - About page
 - Roadmap page
 - Local Markdown knowledge base at `data/fyec100-knowledge-base.md`
@@ -125,6 +126,21 @@ http://localhost:4100/embed
 ```
 
 See `docs/moodle-integration-notes.md` and `docs/phase-2-enterprise-plan.md`.
+
+## Phase 2 Admin Readiness Page
+
+Use this local page to review the current embed URL, AI provider status,
+knowledge base file status, and Phase 2 deployment checklist:
+
+```text
+http://localhost:4100/admin
+```
+
+The same status is available as JSON:
+
+```text
+http://localhost:4100/api/admin/status
+```
 
 ## Knowledge Base Updates
 
