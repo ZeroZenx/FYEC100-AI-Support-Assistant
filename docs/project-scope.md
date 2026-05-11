@@ -35,4 +35,4 @@ Build a local MVP prototype that demonstrates an AI-powered academic support ass
 
 ## Success Criteria
 
-The prototype should run locally on a Mac at `http://localhost:3002`, allow users to ask FYEC100-related questions, and demonstrate a responsible path toward enterprise deployment.
+The prototype should run locally on a Mac at `http://localhost:4100`, allow users to ask FYEC100-related questions, and demonstrate a responsible path toward enterprise deployment.
