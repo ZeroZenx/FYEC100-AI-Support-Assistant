@@ -93,7 +93,7 @@ npm run dev
 6. Open the app:
 
 ```text
-http://localhost:3000
+http://localhost:3002
 ```
 
 ## OpenAI Integration
