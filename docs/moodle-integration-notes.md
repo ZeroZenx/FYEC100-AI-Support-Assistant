@@ -12,10 +12,21 @@ Use this route for early Moodle embed testing:
 http://localhost:4100/embed
 ```
 
+For controlled pilot testing, the route can also receive course, role, and
+launch-source context:
+
+```text
+http://localhost:4100/embed?courseId=FYEC100&courseShortName=FYEC100&role=student&launchSource=iframe
+```
+
 For a hosted environment, replace the hostname with the approved deployment URL.
 
 The `/admin` page provides copy-ready iframe, Moodle HTML block, and fallback
-link snippets for pilot setup.
+link snippets for pilot setup, including a sample context-aware iframe.
+
+This query-string context is not trusted authentication. It is a Phase 2 pilot
+scaffold only. Production should use a Moodle block plugin or LTI 1.3 launch to
+pass trusted course and role context.
 
 ## Student Responsible Use Notice
 
@@ -77,6 +88,7 @@ Considerations:
 
 - Requires Moodle plugin development and testing
 - Requires approval before production deployment
+- Should pass trusted course and role context from Moodle
 
 ### Option 3: LTI 1.3 Tool
 
@@ -92,6 +104,7 @@ Considerations:
 
 - More setup and governance
 - Requires LTI configuration and security review
+- Requires launch validation before trusting user or course context
 
 ## Suggested Phase 2 Pilot
 
@@ -99,3 +112,6 @@ Start with the `/embed` route inside a Moodle pilot course. If the user experien
 
 Before using a hosted pilot URL, check `/api/health` and confirm the Moodle
 domain/iframe settings with the LMS administrator.
+
+See `docs/lti-integration-scaffold.md` for the current LTI placeholder fields
+and trust-boundary notes.

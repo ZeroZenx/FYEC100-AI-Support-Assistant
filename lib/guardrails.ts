@@ -25,7 +25,12 @@ export function getLocalGuardrailResponse(question: string) {
   return null;
 }
 
-export const assistantSystemPrompt = `You are the FYEC100 AI Support Assistant for COSTAATT first-year students.
+import {
+  getMoodleContextSystemPrompt,
+  type MoodleLaunchContext
+} from "@/lib/moodleContext";
+
+const baseAssistantSystemPrompt = `You are the FYEC100 AI Support Assistant for COSTAATT first-year students.
 
 Use the provided FYEC100 knowledge base as your primary source. Keep answers clear, supportive, and suitable for higher education students.
 
@@ -37,3 +42,13 @@ Guardrails:
 - If the answer is not in the knowledge base, say so and refer the student to the lecturer, course outline, LMS, or LMS administrator as appropriate.
 - For LMS technical access issues, refer the student to the LMS administrator or institutional support process.
 - Do not invent COSTAATT policy details that are not in the knowledge base.`;
+
+export function buildAssistantSystemPrompt(context?: MoodleLaunchContext) {
+  if (!context) {
+    return baseAssistantSystemPrompt;
+  }
+
+  return `${baseAssistantSystemPrompt}
+
+${getMoodleContextSystemPrompt(context)}`;
+}

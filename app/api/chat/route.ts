@@ -3,8 +3,12 @@ import {
   generateAssistantAnswer,
   getMissingProviderConfigMessage
 } from "@/lib/aiProvider";
-import { getLocalGuardrailResponse, assistantSystemPrompt } from "@/lib/guardrails";
+import { buildAssistantSystemPrompt, getLocalGuardrailResponse } from "@/lib/guardrails";
 import { readKnowledgeBase } from "@/lib/knowledgeBase";
+import {
+  normalizeMoodleLaunchContext,
+  type MoodleLaunchContext
+} from "@/lib/moodleContext";
 import {
   checkRateLimit,
   getRateLimitConfig,
@@ -27,8 +31,12 @@ export async function POST(request: Request) {
       return rateLimitResponse(rateLimit);
     }
 
-    const body = (await request.json()) as { messages?: ClientMessage[] };
+    const body = (await request.json()) as {
+      launchContext?: Partial<MoodleLaunchContext>;
+      messages?: ClientMessage[];
+    };
     const messages = body.messages ?? [];
+    const launchContext = normalizeMoodleLaunchContext(body.launchContext);
     const latestStudentMessage = [...messages]
       .reverse()
       .find((message) => message.role === "student");
@@ -53,7 +61,7 @@ export async function POST(request: Request) {
       fallbackAnswer,
       knowledgeBase,
       messages,
-      systemPrompt: assistantSystemPrompt
+      systemPrompt: buildAssistantSystemPrompt(launchContext)
     });
 
     return NextResponse.json({ answer: answer || getMissingProviderConfigMessage() });

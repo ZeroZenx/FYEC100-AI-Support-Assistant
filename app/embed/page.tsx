@@ -1,10 +1,17 @@
 import { ChatAssistant } from "@/components/ChatAssistant";
+import { parseMoodleLaunchContext } from "@/lib/moodleContext";
 
 export const metadata = {
   title: "FYEC100 Assistant Embed"
 };
 
-export default function MoodleEmbedPage() {
+export default async function MoodleEmbedPage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const launchContext = parseMoodleLaunchContext((await searchParams) ?? {});
+
   return (
     <main className="min-h-screen bg-slate-50 p-4">
       <section className="mx-auto max-w-5xl">
@@ -21,7 +28,7 @@ export default function MoodleEmbedPage() {
             standalone site navigation.
           </p>
         </div>
-        <ChatAssistant embedded />
+        <ChatAssistant embedded launchContext={launchContext} />
       </section>
     </main>
   );

@@ -21,9 +21,17 @@ The current prototype also includes `/admin`, a project-team readiness view for 
 The `/admin` page includes copy-ready Moodle pilot snippets and the chat
 interface includes a responsible-use notice for students.
 
+The `/embed` route now accepts pilot launch context fields for course ID, course
+short name, user role, and launch source. This supports Moodle iframe or block
+testing while keeping the trust boundary clear.
+
 ### Authentication and Context
 
 Phase 2 should not ask students to create separate assistant accounts. Moodle should remain the front door. Later implementation can pass trusted context such as course ID, role, and launch source through Moodle plugin configuration or LTI.
+
+Current query-string context is only a pilot scaffold. Production must replace
+it with Moodle block or LTI 1.3 validation before trusting user, role, or course
+identity.
 
 ### AI Provider Strategy
 
@@ -69,12 +77,13 @@ Before enterprise launch, the project should add:
 - Accessibility review
 - Moodle pilot group
 - Support handoff documentation
+- Moodle block or LTI 1.3 implementation decision
 
 ## Recommended Pilot Path
 
 1. Host the assistant internally or on an approved cloud environment.
 2. Configure the app with either OpenAI or Ollama.
-3. Embed `/embed` inside a Moodle FYEC100 pilot course.
+3. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
 4. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
 5. Collect feedback from students, lecturers, LMS administration, and IT.
 6. Decide whether to proceed with a Moodle block plugin or LTI integration.

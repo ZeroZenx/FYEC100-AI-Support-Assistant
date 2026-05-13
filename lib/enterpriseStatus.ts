@@ -2,6 +2,10 @@ import { stat } from "fs/promises";
 import path from "path";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
+import {
+  getDefaultMoodleContext,
+  getMoodleContextQueryString
+} from "@/lib/moodleContext";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 
 const KNOWLEDGE_BASE_PATH = path.join(
@@ -24,6 +28,12 @@ export async function getEnterpriseStatus() {
   const providerStatus = getProviderStatus();
   const embedBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
+  const sampleMoodleContext = getDefaultMoodleContext();
+  const sampleMoodleQuery = getMoodleContextQueryString({
+    ...sampleMoodleContext,
+    launchSource: "iframe"
+  });
+  const sampleMoodleEmbedUrl = `${embedBaseUrl}/embed?${sampleMoodleQuery}`;
 
   const providerConfigured =
     provider === "ollama"
@@ -40,6 +50,11 @@ export async function getEnterpriseStatus() {
       label: "Moodle embedded route",
       status: "complete",
       note: "The /embed route is available for iframe, modal, drawer, or LTI launch testing."
+    },
+    {
+      label: "Moodle launch context",
+      status: "in-progress",
+      note: "The embed route accepts course, role, and launch-source context as pilot query parameters. Production should replace this with Moodle block or LTI trust."
     },
     {
       label: "AI provider configuration",
@@ -80,8 +95,22 @@ export async function getEnterpriseStatus() {
     embedUrl: `${embedBaseUrl}/embed`,
     embedSnippets: {
       iframe: `<iframe src="${embedBaseUrl}/embed" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe>`,
+      iframeWithContext: `<iframe src="${sampleMoodleEmbedUrl}" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe>`,
       link: `<p><a href="${embedBaseUrl}/embed" target="_blank" rel="noopener">Open the FYEC100 AI Academic Support Assistant</a></p>`,
       moodleHtmlBlock: `<div style="width:100%; min-height:760px;"><iframe src="${embedBaseUrl}/embed" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe></div>`
+    },
+    launchContext: {
+      acceptedFields: [
+        "courseId",
+        "courseShortName",
+        "role",
+        "launchSource"
+      ],
+      sample: {
+        ...sampleMoodleContext,
+        launchSource: "iframe"
+      },
+      sampleEmbedUrl: sampleMoodleEmbedUrl
     },
     provider,
     providerConfigured,

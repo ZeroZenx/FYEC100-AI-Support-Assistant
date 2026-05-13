@@ -27,6 +27,17 @@ const ollamaEnvExample = `AI_PROVIDER=ollama
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=llama3.1`;
 
+const ltiPlaceholderFields = [
+  "issuer",
+  "client_id",
+  "deployment_id",
+  "jwks_uri",
+  "login_url",
+  "redirect_uri",
+  "course_id",
+  "roles"
+];
+
 export default async function AdminPage() {
   const status = await getEnterpriseStatus();
   const knowledgeBaseUpdated = new Intl.DateTimeFormat("en", {
@@ -165,6 +176,72 @@ export default async function AdminPage() {
           <SnippetBlock code={openAiEnvExample} label="OpenAI .env.local" />
           <SnippetBlock code={ollamaEnvExample} label="Ollama .env.local" />
         </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Moodle Launch Context
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Course and role-aware pilot scaffold
+            </h2>
+          </div>
+          <span className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${statusStyles["in-progress"]}`}>
+            Pilot scaffold
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-3">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">
+              Accepted embed fields
+            </p>
+            <ul className="mt-3 space-y-2 text-sm text-slate-700">
+              {status.launchContext.acceptedFields.map((field) => (
+                <li key={field}>{field}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">
+              Sample context
+            </p>
+            <dl className="mt-3 space-y-2 text-sm text-slate-700">
+              {Object.entries(status.launchContext.sample).map(([key, value]) => (
+                <div key={key}>
+                  <dt className="font-semibold text-slate-900">{key}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">
+              Future LTI 1.3 fields
+            </p>
+            <ul className="mt-3 space-y-2 text-sm text-slate-700">
+              {ltiPlaceholderFields.map((field) => (
+                <li key={field}>{field}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mt-4 grid gap-4">
+          <SnippetBlock
+            code={status.launchContext.sampleEmbedUrl}
+            label="Sample context-aware embed URL"
+          />
+          <SnippetBlock
+            code={status.embedSnippets.iframeWithContext}
+            label="Iframe with pilot launch context"
+          />
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-600">
+          Query-string context is for controlled pilot testing only. Production
+          Moodle integration should use a Moodle block plugin or LTI 1.3 launch
+          so course, role, and user context are trusted by Moodle.
+        </p>
       </section>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">

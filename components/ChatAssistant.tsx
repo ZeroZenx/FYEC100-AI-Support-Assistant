@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import type { MoodleLaunchContext } from "@/lib/moodleContext";
 
 type ChatMessage = {
   feedbackStatus?: "idle" | "sending" | "sent";
@@ -19,9 +20,13 @@ const starterPrompts = [
 
 type ChatAssistantProps = {
   embedded?: boolean;
+  launchContext?: MoodleLaunchContext;
 };
 
-export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
+export function ChatAssistant({
+  embedded = false,
+  launchContext
+}: ChatAssistantProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
@@ -58,7 +63,7 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages })
+        body: JSON.stringify({ launchContext, messages: nextMessages })
       });
 
       const data = (await response.json()) as { answer?: string; error?: string };
@@ -146,6 +151,14 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
           <p className="text-sm text-slate-600">
             Responses are grounded in the local Phase 1 knowledge base.
           </p>
+          {embedded && launchContext ? (
+            <dl className="mt-3 grid gap-2 text-xs text-slate-600 sm:grid-cols-4">
+              <ContextItem label="Course" value={launchContext.courseShortName} />
+              <ContextItem label="Course ID" value={launchContext.courseId} />
+              <ContextItem label="Role" value={launchContext.role} />
+              <ContextItem label="Launch" value={launchContext.launchSource} />
+            </dl>
+          ) : null}
         </div>
         {showUseNotice ? (
           <div className="border-b border-costaatt-gold/40 bg-yellow-50 px-5 py-4">
@@ -262,6 +275,17 @@ export function ChatAssistant({ embedded = false }: ChatAssistantProps) {
           </p>
         </section>
       </aside>
+    </div>
+  );
+}
+
+function ContextItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-white px-3 py-2">
+      <dt className="font-semibold uppercase tracking-wide text-slate-500">
+        {label}
+      </dt>
+      <dd className="mt-1 font-semibold text-costaatt-navy">{value}</dd>
     </div>
   );
 }

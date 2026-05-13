@@ -133,7 +133,18 @@ Phase 2 starts with an embedded assistant view intended for Moodle iframe, modal
 http://localhost:4100/embed
 ```
 
+For a controlled Moodle pilot, the embedded route can receive simple launch
+context:
+
+```text
+http://localhost:4100/embed?courseId=FYEC100&courseShortName=FYEC100&role=student&launchSource=iframe
+```
+
+This is not authentication. It is a Phase 2 scaffold for testing course and role
+aware behavior before a Moodle block plugin or LTI 1.3 implementation.
+
 See `docs/moodle-integration-notes.md` and `docs/phase-2-enterprise-plan.md`.
+See `docs/lti-integration-scaffold.md` for future LTI field planning.
 
 ## Phase 2 Admin Readiness Page
 
