@@ -9,6 +9,7 @@ use the assistant.
 
 - `/api/health` returns successfully.
 - `/api/admin/deployment-readiness` has no `fail` checks.
+- `npm run smoke:pilot` passes against the hosted pilot URL.
 - `NEXT_PUBLIC_APP_BASE_URL` is the hosted HTTPS URL.
 - `MOODLE_ORIGIN` is the approved Moodle HTTPS origin.
 - AI provider variables are configured.

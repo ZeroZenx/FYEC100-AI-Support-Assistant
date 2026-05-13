@@ -218,6 +218,21 @@ Related checklists:
 - `docs/stop-pilot-procedure.md`
 - `docs/admin-protection.md`
 - `docs/moodle-iframe-security.md`
+- `docs/pilot-smoke-test.md`
+
+## Pilot Smoke Test
+
+After building or deploying the app, run:
+
+```bash
+npm run smoke:pilot
+```
+
+For hosted environments:
+
+```bash
+PILOT_BASE_URL=https://fyec100-assistant.example.edu npm run smoke:pilot
+```
 
 ## Pilot Feedback Capture
 

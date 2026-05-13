@@ -65,17 +65,18 @@ MOODLE_ORIGIN=https://moodle.costaatt.edu.tt
 
 After deployment:
 
-1. Open `/api/health`.
-2. Open `/api/admin/deployment-readiness`.
-3. Confirm there are no `fail` checks.
-4. Review warnings with the project lead and technical lead.
-5. Run `POST /api/admin/provider-test`.
-6. Open `/embed`.
-7. Confirm Moodle can iframe the hosted `/embed` URL.
-8. Confirm `/admin` requires `?adminToken=...` or platform controls.
-9. Confirm `/api/admin/*` requires `x-admin-token` or platform controls.
-10. Confirm the `Content-Security-Policy` frame-ancestors header includes the Moodle origin.
-11. Rebuild the app after changing `MOODLE_ORIGIN`; header configuration is applied at build time.
+1. Run `PILOT_BASE_URL=<hosted-url> npm run smoke:pilot`.
+2. Open `/api/health`.
+3. Open `/api/admin/deployment-readiness`.
+4. Confirm there are no `fail` checks.
+5. Review warnings with the project lead and technical lead.
+6. Run `POST /api/admin/provider-test`.
+7. Open `/embed`.
+8. Confirm Moodle can iframe the hosted `/embed` URL.
+9. Confirm `/admin` requires `?adminToken=...` or platform controls.
+10. Confirm `/api/admin/*` requires `x-admin-token` or platform controls.
+11. Confirm the `Content-Security-Policy` frame-ancestors header includes the Moodle origin.
+12. Rebuild the app after changing `MOODLE_ORIGIN`; header configuration is applied at build time.
 
 ## Notes
 
