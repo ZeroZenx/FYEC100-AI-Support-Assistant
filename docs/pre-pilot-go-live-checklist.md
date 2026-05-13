@@ -26,6 +26,8 @@ use the assistant.
 - Assistant response headers allow framing by the approved Moodle origin.
 - `/embed` loads inside a controlled FYEC100 course shell.
 - Student responsible-use notice is visible.
+- Keyboard navigation works inside the Moodle embed.
+- Screen-reader status messages have been checked for loading, errors, and feedback saved state.
 - Pilot launch context fields have been tested if used.
 - Fallback link is available if iframe embedding fails.
 
@@ -36,6 +38,7 @@ use the assistant.
 - Technical support path is confirmed.
 - Pilot feedback review schedule is confirmed.
 - Privacy notice and student guidance are approved.
+- Accessibility and usability checklist has been reviewed.
 - Pilot group and dates are approved.
 
 ## Decision Point

@@ -219,6 +219,7 @@ Related checklists:
 - `docs/admin-protection.md`
 - `docs/moodle-iframe-security.md`
 - `docs/pilot-smoke-test.md`
+- `docs/accessibility-usability-checklist.md`
 
 ## Pilot Smoke Test
 

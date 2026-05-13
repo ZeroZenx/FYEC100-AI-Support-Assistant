@@ -1,6 +1,13 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import {
+  FormEvent,
+  KeyboardEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import type { MoodleLaunchContext } from "@/lib/moodleContext";
 
 type ChatMessage = {
@@ -38,12 +45,20 @@ export function ChatAssistant({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [feedbackNote, setFeedbackNote] = useState("");
+  const [statusMessage, setStatusMessage] = useState(
+    "FYEC100 assistant ready."
+  );
   const [showUseNotice, setShowUseNotice] = useState(true);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const canSend = useMemo(() => input.trim().length > 0 && !isLoading, [
     input,
     isLoading
   ]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ block: "end" });
+  }, [messages, isLoading]);
 
   async function sendMessage(nextInput?: string) {
     const question = (nextInput ?? input).trim();
@@ -58,6 +73,7 @@ export function ChatAssistant({
     setInput("");
     setIsLoading(true);
     setError("");
+    setStatusMessage("Question sent. The assistant is preparing a response.");
 
     try {
       const response = await fetch("/api/chat", {
@@ -80,8 +96,11 @@ export function ChatAssistant({
           feedbackStatus: "idle"
         }
       ]);
+      setStatusMessage("Assistant response received.");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      const message = err instanceof Error ? err.message : "Something went wrong.";
+      setError(message);
+      setStatusMessage(`Error: ${message}`);
     } finally {
       setIsLoading(false);
     }
@@ -107,6 +126,7 @@ export function ChatAssistant({
       )
     );
     setError("");
+    setStatusMessage("Saving pilot feedback.");
 
     try {
       const response = await fetch("/api/feedback", {
@@ -133,25 +153,43 @@ export function ChatAssistant({
         )
       );
       setFeedbackNote("");
+      setStatusMessage("Feedback saved for pilot review.");
     } catch (err) {
       setMessages((current) =>
         current.map((item, itemIndex) =>
           itemIndex === index ? { ...item, feedbackStatus: "idle" } : item
         )
       );
-      setError(err instanceof Error ? err.message : "Feedback could not be saved.");
+      const message =
+        err instanceof Error ? err.message : "Feedback could not be saved.";
+      setError(message);
+      setStatusMessage(`Feedback error: ${message}`);
+    }
+  }
+
+  function handleInputKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      if (canSend) {
+        void sendMessage();
+      }
     }
   }
 
   return (
     <div className={embedded ? "grid gap-3" : "grid gap-6 lg:grid-cols-[1fr_320px]"}>
-      <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
+      <section
+        aria-labelledby="fyec-chat-title"
+        className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft"
+      >
         <div
           className={`border-b border-slate-200 bg-slate-50 ${
             embedded ? "px-4 py-3" : "px-5 py-4"
           }`}
         >
-          <h2 className="font-bold text-costaatt-navy">FYEC100 Assistant</h2>
+          <h2 className="font-bold text-costaatt-navy" id="fyec-chat-title">
+            FYEC100 Assistant
+          </h2>
           {!embedded ? (
             <p className="text-sm text-slate-600">
               Responses are grounded in the local Phase 1 knowledge base.
@@ -185,6 +223,7 @@ export function ChatAssistant({
                 </p>
               </div>
               <button
+                aria-label="Dismiss responsible use notice"
                 className="w-fit rounded-md border border-costaatt-gold/60 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:bg-white"
                 onClick={() => setShowUseNotice(false)}
                 type="button"
@@ -195,9 +234,12 @@ export function ChatAssistant({
           </div>
         ) : null}
         <div
+          aria-label="FYEC100 chat messages"
+          aria-live="polite"
           className={`space-y-4 overflow-y-auto ${
             embedded ? "h-[430px] px-4 py-4" : "h-[520px] px-5 py-5"
           }`}
+          role="log"
         >
           {messages.map((message, index) => (
             <div
@@ -208,6 +250,11 @@ export function ChatAssistant({
             >
               <div className="max-w-[84%]">
                 <div
+                  aria-label={
+                    message.role === "student"
+                      ? "Student message"
+                      : "Assistant message"
+                  }
                   className={`rounded-lg px-4 py-3 text-sm leading-6 ${
                     message.role === "student"
                       ? "bg-costaatt-blue text-white"
@@ -219,6 +266,8 @@ export function ChatAssistant({
                 {message.role === "assistant" && index > 0 ? (
                   <FeedbackPanel
                     disabled={message.feedbackStatus === "sending"}
+                    id={`feedback-note-${index}`}
+                    labelId={`feedback-label-${index}`}
                     note={feedbackNote}
                     onNoteChange={setFeedbackNote}
                     onSubmit={(rating) => void sendFeedback(index, rating)}
@@ -229,13 +278,24 @@ export function ChatAssistant({
             </div>
           ))}
           {isLoading ? (
-            <div className="max-w-[84%] rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+            <div
+              aria-label="Assistant is thinking"
+              className="max-w-[84%] rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600"
+              role="status"
+            >
               Thinking through the FYEC100 knowledge base...
             </div>
           ) : null}
+          <div ref={messagesEndRef} />
         </div>
+        <p className="sr-only" role="status">
+          {statusMessage}
+        </p>
         {error ? (
-          <p className="border-t border-red-200 bg-red-50 px-5 py-3 text-sm text-red-700">
+          <p
+            className="border-t border-red-200 bg-red-50 px-5 py-3 text-sm text-red-700"
+            role="alert"
+          >
             {error}
           </p>
         ) : null}
@@ -251,12 +311,15 @@ export function ChatAssistant({
           <textarea
             className="min-h-12 flex-1 resize-none rounded-md border border-slate-300 px-4 py-3 text-sm leading-6 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20"
             id="chat-input"
+            onKeyDown={handleInputKeyDown}
             onChange={(event) => setInput(event.target.value)}
             placeholder="Ask about course expectations, assignments, study tips, or LMS navigation..."
             rows={2}
             value={input}
+            aria-describedby="chat-input-help"
           />
           <button
+            aria-label="Send FYEC100 question"
             className="rounded-md bg-costaatt-navy px-5 py-3 text-sm font-semibold text-white hover:bg-costaatt-blue disabled:cursor-not-allowed disabled:bg-slate-300"
             disabled={!canSend}
             type="submit"
@@ -264,6 +327,12 @@ export function ChatAssistant({
             Send
           </button>
         </form>
+        <p
+          className="border-t border-slate-100 px-4 pb-4 text-xs text-slate-500"
+          id="chat-input-help"
+        >
+          Press Enter to send. Press Shift+Enter for a new line.
+        </p>
       </section>
       <aside className={embedded ? "grid gap-3 md:grid-cols-2" : "space-y-5"}>
         <section
@@ -275,6 +344,7 @@ export function ChatAssistant({
           <div className="mt-4 space-y-2">
             {starterPrompts.map((prompt) => (
               <button
+                aria-label={`Use starter prompt: ${prompt}`}
                 className="w-full rounded-md border border-slate-200 px-3 py-2 text-left text-sm leading-5 text-slate-700 hover:border-costaatt-blue hover:text-costaatt-blue"
                 disabled={isLoading}
                 key={prompt}
@@ -316,12 +386,16 @@ function ContextItem({ label, value }: { label: string; value: string }) {
 
 function FeedbackPanel({
   disabled,
+  id,
+  labelId,
   note,
   onNoteChange,
   onSubmit,
   status
 }: {
   disabled: boolean;
+  id: string;
+  labelId: string;
   note: string;
   onNoteChange: (value: string) => void;
   onSubmit: (rating: FeedbackRating) => void;
@@ -329,19 +403,23 @@ function FeedbackPanel({
 }) {
   if (status === "sent") {
     return (
-      <p className="mt-2 text-xs font-medium text-emerald-700">
+      <p className="mt-2 text-xs font-medium text-emerald-700" role="status">
         Feedback saved for the pilot review.
       </p>
     );
   }
 
   return (
-    <div className="mt-2 rounded-md border border-slate-200 bg-white p-3">
-      <p className="text-xs font-semibold text-slate-700">
+    <div
+      aria-label="Pilot feedback controls"
+      className="mt-2 rounded-md border border-slate-200 bg-white p-3"
+    >
+      <p className="text-xs font-semibold text-slate-700" id={labelId}>
         Was this response useful?
       </p>
-      <div className="mt-2 flex flex-wrap gap-2">
+      <div aria-labelledby={labelId} className="mt-2 flex flex-wrap gap-2">
         <button
+          aria-label="Mark this assistant response as helpful"
           className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-emerald-500 hover:text-emerald-700 disabled:opacity-60"
           disabled={disabled}
           onClick={() => onSubmit("helpful")}
@@ -350,6 +428,7 @@ function FeedbackPanel({
           Helpful
         </button>
         <button
+          aria-label="Mark this assistant response as not helpful"
           className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-red-500 hover:text-red-700 disabled:opacity-60"
           disabled={disabled}
           onClick={() => onSubmit("not-helpful")}
@@ -358,6 +437,7 @@ function FeedbackPanel({
           Not helpful
         </button>
         <button
+          aria-label="Mark this assistant response as needing lecturer follow-up"
           className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-amber-500 hover:text-amber-700 disabled:opacity-60"
           disabled={disabled}
           onClick={() => onSubmit("lecturer-follow-up")}
@@ -366,9 +446,13 @@ function FeedbackPanel({
           Needs lecturer follow-up
         </button>
       </div>
-      <label className="mt-3 block text-xs font-semibold text-slate-700">
+      <label
+        className="mt-3 block text-xs font-semibold text-slate-700"
+        htmlFor={id}
+      >
         Optional note
         <textarea
+          id={id}
           className="mt-1 min-h-16 w-full resize-none rounded-md border border-slate-300 px-3 py-2 text-xs leading-5 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20"
           onChange={(event) => onNoteChange(event.target.value)}
           placeholder="What was missing or confusing?"

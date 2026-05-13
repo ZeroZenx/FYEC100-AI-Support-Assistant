@@ -75,6 +75,10 @@ approved authentication and authorization for production.
 The current prototype includes Moodle iframe polish and configurable
 `frame-ancestors` security headers through `MOODLE_ORIGIN`.
 
+The current prototype includes student-facing accessibility and usability
+improvements for keyboard navigation, status messaging, focus visibility, and
+Moodle iframe review.
+
 The current prototype includes `/api/health` for deployment readiness checks.
 It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
 or Ollama model responds before Moodle pilot testing.
@@ -99,6 +103,7 @@ Before enterprise launch, the project should add:
 - Hosted pilot go-live and stop-pilot procedures
 - Admin access protection before hosted pilot use
 - Moodle iframe security header review
+- Accessibility and usability review inside Moodle
 
 ## Recommended Pilot Path
 
