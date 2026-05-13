@@ -1,5 +1,6 @@
 import { stat } from "fs/promises";
 import path from "path";
+import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import {
@@ -26,6 +27,7 @@ export async function getEnterpriseStatus() {
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const feedback = await readPilotFeedbackSummary();
   const pilotReport = await buildPilotReport();
+  const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
   const providerStatus = getProviderStatus();
   const embedBaseUrl =
@@ -81,6 +83,11 @@ export async function getEnterpriseStatus() {
       note: "Admin report endpoints provide JSON and Markdown summaries for project-team review meetings."
     },
     {
+      label: "Deployment readiness",
+      status: deploymentReadiness.okForControlledPilot ? "complete" : "in-progress",
+      note: "Deployment readiness checks validate hosted URL, HTTPS, provider config, storage, rate limits, and admin exposure warnings."
+    },
+    {
       label: "Knowledge base file",
       status: "complete",
       note: "FYEC100 content is loaded from data/fyec100-knowledge-base.md."
@@ -134,6 +141,7 @@ export async function getEnterpriseStatus() {
       sizeBytes: knowledgeBaseStats.size
     },
     feedback,
+    deploymentReadiness,
     pilotReport,
     health,
     checklist

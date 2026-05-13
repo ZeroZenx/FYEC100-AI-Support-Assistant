@@ -74,6 +74,29 @@ The health check reports:
 - pilot feedback storage writability
 - timestamp
 
+## Deployment Readiness Check
+
+Use this endpoint before hosted pilot use:
+
+```text
+/api/admin/deployment-readiness
+```
+
+The deployment readiness check reports pass, warning, and failure states for:
+
+- hosted app base URL
+- HTTPS
+- selected AI provider configuration
+- pilot rate limits
+- knowledge base readability
+- pilot feedback storage
+- admin exposure warning
+- controlled pilot scope
+
+Warnings do not automatically block a controlled pilot, but they should be
+reviewed by the project lead and technical lead. Failures should be resolved
+before Moodle pilot use.
+
 ## Provider Test
 
 Use this endpoint to confirm the selected model can respond:
@@ -94,6 +117,12 @@ Before pilot embedding:
 - Confirm student responsible-use wording.
 - Confirm lecturer and LMS administrator escalation contacts.
 - Confirm the pilot group and feedback review schedule.
+
+## Related Operational Checklists
+
+- `docs/internal-hosting-checklist.md`
+- `docs/pre-pilot-go-live-checklist.md`
+- `docs/stop-pilot-procedure.md`
 
 ## Feedback Storage
 
@@ -129,4 +158,5 @@ Before production, define who can edit, review, approve, and publish knowledge b
 - Do not treat the current `/admin` page as a secured production admin console.
 - Add authentication and role controls before production use.
 - Keep pilot rate limits enabled and add platform-level rate limiting before a full production rollout.
+- Use `/api/admin/deployment-readiness` before each hosted pilot session.
 - Review privacy, accessibility, and cybersecurity requirements before a live pilot.

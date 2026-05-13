@@ -188,6 +188,18 @@ http://localhost:4100/api/health
 
 See `docs/deployment-readiness.md` for hosted pilot guidance.
 
+Before a hosted Moodle pilot, use the deployment readiness endpoint:
+
+```text
+http://localhost:4100/api/admin/deployment-readiness
+```
+
+Related checklists:
+
+- `docs/internal-hosting-checklist.md`
+- `docs/pre-pilot-go-live-checklist.md`
+- `docs/stop-pilot-procedure.md`
+
 ## Pilot Feedback Capture
 
 Phase 2 includes local-only feedback capture for pilot testing. Students can mark

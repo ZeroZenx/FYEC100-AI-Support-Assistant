@@ -3,10 +3,13 @@ import { getEnterpriseStatus } from "@/lib/enterpriseStatus";
 
 const statusStyles = {
   complete: "bg-emerald-100 text-emerald-800",
+  fail: "bg-red-100 text-red-800",
   "in-progress": "bg-amber-100 text-amber-800",
+  pass: "bg-emerald-100 text-emerald-800",
   pending: "bg-slate-100 text-slate-700",
   ok: "bg-emerald-100 text-emerald-800",
   warning: "bg-amber-100 text-amber-800",
+  warn: "bg-amber-100 text-amber-800",
   error: "bg-red-100 text-red-800"
 };
 
@@ -272,6 +275,74 @@ export default async function AdminPage() {
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {status.health.checks.map((check) => (
+            <div
+              className="rounded-lg border border-slate-200 bg-slate-50 p-4"
+              key={check.label}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="font-semibold text-costaatt-navy">
+                  {check.label}
+                </h3>
+                <span
+                  className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                    statusStyles[check.status]
+                  }`}
+                >
+                  {check.status}
+                </span>
+              </div>
+              <p className="mt-2 text-sm leading-6 text-slate-700">
+                {check.message}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Deployment Readiness
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Hosted pilot checks
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.deploymentReadiness.okForControlledPilot
+                ? statusStyles.pass
+                : statusStyles.fail
+            }`}
+          >
+            {status.deploymentReadiness.okForControlledPilot
+              ? "No blocking failures"
+              : "Blocking failures"}
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard
+            label="Pass"
+            value={status.deploymentReadiness.summary.pass}
+          />
+          <MetricCard
+            label="Warnings"
+            value={status.deploymentReadiness.summary.warn}
+          />
+          <MetricCard
+            label="Failures"
+            value={status.deploymentReadiness.summary.fail}
+          />
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">Endpoint</p>
+            <p className="mt-2 break-words text-sm font-semibold text-costaatt-navy">
+              /api/admin/deployment-readiness
+            </p>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {status.deploymentReadiness.checks.map((check) => (
             <div
               className="rounded-lg border border-slate-200 bg-slate-50 p-4"
               key={check.label}

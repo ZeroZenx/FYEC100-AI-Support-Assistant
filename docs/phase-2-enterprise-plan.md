@@ -64,6 +64,10 @@ administrator issues, knowledge base updates, and technical/provider issues.
 The current prototype includes pilot reporting endpoints that return JSON and
 Markdown summaries for project-team review meetings.
 
+The current prototype includes deployment readiness checks for hosted URL,
+HTTPS, provider configuration, pilot rate limits, knowledge base readability,
+feedback storage, admin exposure, and controlled pilot scope.
+
 The current prototype includes `/api/health` for deployment readiness checks.
 It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
 or Ollama model responds before Moodle pilot testing.
@@ -85,14 +89,16 @@ Before enterprise launch, the project should add:
 - Moodle pilot group
 - Support handoff documentation
 - Moodle block or LTI 1.3 implementation decision
+- Hosted pilot go-live and stop-pilot procedures
 
 ## Recommended Pilot Path
 
 1. Host the assistant internally or on an approved cloud environment.
 2. Configure the app with either OpenAI or Ollama.
-3. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
-4. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
-5. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
-6. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-7. Collect feedback from students, lecturers, LMS administration, and IT.
-8. Decide whether to proceed with a Moodle block plugin or LTI integration.
+3. Run `/api/admin/deployment-readiness` and resolve blocking failures.
+4. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
+5. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
+6. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
+7. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+8. Collect feedback from students, lecturers, LMS administration, and IT.
+9. Decide whether to proceed with a Moodle block plugin or LTI integration.
