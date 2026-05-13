@@ -16,6 +16,7 @@ prototype to a controlled hosted pilot URL.
 - Network access to the Ollama host if using `AI_PROVIDER=ollama`
 - Platform access controls around `/admin` and `/api/admin/*`
 - `ADMIN_ACCESS_TOKEN` configured before hosted testing
+- `MOODLE_ORIGIN` configured to the approved Moodle origin
 
 ## Required Environment Settings
 
@@ -54,6 +55,12 @@ Set pilot admin protection:
 ADMIN_ACCESS_TOKEN=replace_with_secure_random_value
 ```
 
+Set Moodle iframe origin:
+
+```bash
+MOODLE_ORIGIN=https://moodle.costaatt.edu.tt
+```
+
 ## Verification
 
 After deployment:
@@ -67,6 +74,8 @@ After deployment:
 7. Confirm Moodle can iframe the hosted `/embed` URL.
 8. Confirm `/admin` requires `?adminToken=...` or platform controls.
 9. Confirm `/api/admin/*` requires `x-admin-token` or platform controls.
+10. Confirm the `Content-Security-Policy` frame-ancestors header includes the Moodle origin.
+11. Rebuild the app after changing `MOODLE_ORIGIN`; header configuration is applied at build time.
 
 ## Notes
 

@@ -21,9 +21,11 @@ export async function getDeploymentReadiness() {
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
   const providerStatus = getProviderStatus();
   const rateLimits = getRateLimitSummary();
+  const moodleOrigin = process.env.MOODLE_ORIGIN ?? "";
   const checks: ReadinessCheck[] = [
     checkAppBaseUrl(appBaseUrl),
     checkHttps(appBaseUrl),
+    checkMoodleOrigin(moodleOrigin),
     checkProvider(providerStatus.configured),
     checkRateLimits(rateLimits),
     await checkKnowledgeBase(),
@@ -42,10 +44,36 @@ export async function getDeploymentReadiness() {
     appBaseUrl,
     checks,
     okForControlledPilot: summary.fail === 0,
+    moodleOrigin: moodleOrigin || null,
     provider: providerStatus,
     rateLimits,
     summary,
     timestamp: new Date().toISOString()
+  };
+}
+
+function checkMoodleOrigin(moodleOrigin: string): ReadinessCheck {
+  if (!moodleOrigin) {
+    return {
+      label: "Moodle origin",
+      message:
+        "MOODLE_ORIGIN is not configured. Set it to the approved Moodle URL before hosted iframe testing.",
+      status: "warn"
+    };
+  }
+
+  if (!moodleOrigin.startsWith("https://")) {
+    return {
+      label: "Moodle origin",
+      message: "MOODLE_ORIGIN should use the approved HTTPS Moodle URL.",
+      status: "warn"
+    };
+  }
+
+  return {
+    label: "Moodle origin",
+    message: `Moodle origin is set to ${moodleOrigin}.`,
+    status: "pass"
   };
 }
 

@@ -34,6 +34,7 @@ export async function getEnterpriseStatus() {
   const providerStatus = getProviderStatus();
   const embedBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
+  const moodleOrigin = process.env.MOODLE_ORIGIN ?? "";
   const sampleMoodleContext = getDefaultMoodleContext();
   const sampleMoodleQuery = getMoodleContextQueryString({
     ...sampleMoodleContext,
@@ -128,6 +129,7 @@ export async function getEnterpriseStatus() {
       link: `<p><a href="${embedBaseUrl}/embed" target="_blank" rel="noopener">Open the FYEC100 AI Academic Support Assistant</a></p>`,
       moodleHtmlBlock: `<div style="width:100%; min-height:760px;"><iframe src="${embedBaseUrl}/embed" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe></div>`
     },
+    moodleOrigin: moodleOrigin || null,
     launchContext: {
       acceptedFields: [
         "courseId",

@@ -10,6 +10,7 @@ use the assistant.
 - `/api/health` returns successfully.
 - `/api/admin/deployment-readiness` has no `fail` checks.
 - `NEXT_PUBLIC_APP_BASE_URL` is the hosted HTTPS URL.
+- `MOODLE_ORIGIN` is the approved Moodle HTTPS origin.
 - AI provider variables are configured.
 - Provider test endpoint responds successfully.
 - Rate limits are configured.
@@ -21,6 +22,7 @@ use the assistant.
 ## Moodle Checks
 
 - Moodle allows iframe embedding from the assistant domain.
+- Assistant response headers allow framing by the approved Moodle origin.
 - `/embed` loads inside a controlled FYEC100 course shell.
 - Student responsible-use notice is visible.
 - Pilot launch context fields have been tested if used.

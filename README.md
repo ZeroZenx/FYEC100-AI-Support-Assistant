@@ -217,6 +217,7 @@ Related checklists:
 - `docs/pre-pilot-go-live-checklist.md`
 - `docs/stop-pilot-procedure.md`
 - `docs/admin-protection.md`
+- `docs/moodle-iframe-security.md`
 
 ## Pilot Feedback Capture
 

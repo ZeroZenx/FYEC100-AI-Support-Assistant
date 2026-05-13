@@ -144,15 +144,21 @@ export function ChatAssistant({
   }
 
   return (
-    <div className={embedded ? "grid gap-5" : "grid gap-6 lg:grid-cols-[1fr_320px]"}>
+    <div className={embedded ? "grid gap-3" : "grid gap-6 lg:grid-cols-[1fr_320px]"}>
       <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
-        <div className="border-b border-slate-200 bg-slate-50 px-5 py-4">
+        <div
+          className={`border-b border-slate-200 bg-slate-50 ${
+            embedded ? "px-4 py-3" : "px-5 py-4"
+          }`}
+        >
           <h2 className="font-bold text-costaatt-navy">FYEC100 Assistant</h2>
-          <p className="text-sm text-slate-600">
-            Responses are grounded in the local Phase 1 knowledge base.
-          </p>
+          {!embedded ? (
+            <p className="text-sm text-slate-600">
+              Responses are grounded in the local Phase 1 knowledge base.
+            </p>
+          ) : null}
           {embedded && launchContext ? (
-            <dl className="mt-3 grid gap-2 text-xs text-slate-600 sm:grid-cols-4">
+            <dl className="mt-2 grid gap-2 text-xs text-slate-600 sm:grid-cols-4">
               <ContextItem label="Course" value={launchContext.courseShortName} />
               <ContextItem label="Course ID" value={launchContext.courseId} />
               <ContextItem label="Role" value={launchContext.role} />
@@ -161,7 +167,11 @@ export function ChatAssistant({
           ) : null}
         </div>
         {showUseNotice ? (
-          <div className="border-b border-costaatt-gold/40 bg-yellow-50 px-5 py-4">
+          <div
+            className={`border-b border-costaatt-gold/40 bg-yellow-50 ${
+              embedded ? "px-4 py-3" : "px-5 py-4"
+            }`}
+          >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h3 className="text-sm font-bold text-costaatt-navy">
@@ -184,7 +194,11 @@ export function ChatAssistant({
             </div>
           </div>
         ) : null}
-        <div className="h-[520px] space-y-4 overflow-y-auto px-5 py-5">
+        <div
+          className={`space-y-4 overflow-y-auto ${
+            embedded ? "h-[430px] px-4 py-4" : "h-[520px] px-5 py-5"
+          }`}
+        >
           {messages.map((message, index) => (
             <div
               className={`flex ${
@@ -226,7 +240,9 @@ export function ChatAssistant({
           </p>
         ) : null}
         <form
-          className="flex flex-col gap-3 border-t border-slate-200 p-4 sm:flex-row"
+          className={`flex flex-col gap-3 border-t border-slate-200 ${
+            embedded ? "p-3 sm:flex-row" : "p-4 sm:flex-row"
+          }`}
           onSubmit={handleSubmit}
         >
           <label className="sr-only" htmlFor="chat-input">
@@ -249,8 +265,12 @@ export function ChatAssistant({
           </button>
         </form>
       </section>
-      <aside className={embedded ? "grid gap-5 md:grid-cols-2" : "space-y-5"}>
-        <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
+      <aside className={embedded ? "grid gap-3 md:grid-cols-2" : "space-y-5"}>
+        <section
+          className={`rounded-lg border border-slate-200 bg-white shadow-soft ${
+            embedded ? "p-4" : "p-5"
+          }`}
+        >
           <h3 className="font-bold text-costaatt-navy">Try a prompt</h3>
           <div className="mt-4 space-y-2">
             {starterPrompts.map((prompt) => (
@@ -266,7 +286,11 @@ export function ChatAssistant({
             ))}
           </div>
         </section>
-        <section className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-5 text-sm leading-6 text-slate-700">
+        <section
+          className={`rounded-lg border border-costaatt-gold/50 bg-yellow-50 text-sm leading-6 text-slate-700 ${
+            embedded ? "p-4" : "p-5"
+          }`}
+        >
           <h3 className="font-bold text-costaatt-navy">Academic integrity</h3>
           <p className="mt-2">
             Use the assistant to learn, plan, and clarify. Do not submit AI

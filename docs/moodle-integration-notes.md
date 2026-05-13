@@ -28,6 +28,17 @@ This query-string context is not trusted authentication. It is a Phase 2 pilot
 scaffold only. Production should use a Moodle block plugin or LTI 1.3 launch to
 pass trusted course and role context.
 
+The embedded assistant view is compact and Moodle-friendly. It keeps COSTAATT
+branding visible while reducing standalone site chrome inside the iframe.
+
+For hosted iframe security, configure:
+
+```bash
+MOODLE_ORIGIN=https://moodle.costaatt.edu.tt
+```
+
+See `docs/moodle-iframe-security.md`.
+
 ## Student Responsible Use Notice
 
 The chat interface displays a short notice reminding students that the assistant:
