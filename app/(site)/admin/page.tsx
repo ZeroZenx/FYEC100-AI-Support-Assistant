@@ -38,6 +38,14 @@ const ltiPlaceholderFields = [
   "roles"
 ];
 
+const reviewProcedure = [
+  "Review feedback after each controlled pilot session.",
+  "Route lecturer follow-up to the FYEC100 lecturer or project lead.",
+  "Route Moodle access or navigation issues to the LMS administrator.",
+  "Route provider or uptime issues to the technical lead and system administrator.",
+  "Convert repeated missing-answer reports into knowledge base update requests."
+];
+
 export default async function AdminPage() {
   const status = await getEnterpriseStatus();
   const knowledgeBaseUpdated = new Intl.DateTimeFormat("en", {
@@ -349,14 +357,14 @@ export default async function AdminPage() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
-              Pilot Feedback
+              Pilot Review Workflow
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
-              Student response signals
+              Feedback triage and escalation
             </h2>
           </div>
           <p className="text-sm text-slate-600">
-            Local pilot-only summary from `data/pilot-feedback.jsonl`.
+            Pilot-only review view from `data/pilot-feedback.jsonl`.
           </p>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-4">
@@ -371,36 +379,76 @@ export default async function AdminPage() {
             value={status.feedback.counts["lecturer-follow-up"]}
           />
         </div>
-        <div className="mt-6 divide-y divide-slate-200">
-          {status.feedback.latest.length > 0 ? (
-            status.feedback.latest.map((item) => (
-              <article className="py-4" key={`${item.timestamp}-${item.rating}`}>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
-                    {item.rating}
-                  </span>
-                  <span className="text-xs text-slate-500">
-                    {new Date(item.timestamp).toLocaleString()}
-                  </span>
-                  <span className="text-xs text-slate-500">{item.mode}</span>
-                </div>
-                <p className="mt-2 text-sm text-slate-700">
-                  <span className="font-semibold text-slate-900">Question:</span>{" "}
-                  {item.studentQuestionExcerpt}
-                </p>
-                {item.note ? (
-                  <p className="mt-1 text-sm text-slate-700">
-                    <span className="font-semibold text-slate-900">Note:</span>{" "}
-                    {item.note}
-                  </p>
-                ) : null}
-              </article>
-            ))
-          ) : (
-            <p className="py-4 text-sm text-slate-600">
-              No pilot feedback has been captured yet.
-            </p>
-          )}
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">
+              Escalation categories
+            </h3>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {Object.entries(status.feedback.escalationCounts).map(
+                ([category, value]) => (
+                  <div
+                    className="rounded-md border border-slate-200 bg-white p-3"
+                    key={category}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                      {category}
+                    </p>
+                    <p className="mt-2 text-2xl font-bold text-costaatt-navy">
+                      {value}
+                    </p>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+          <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Review procedure</h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+              {reviewProcedure.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mt-6">
+          <h3 className="font-bold text-costaatt-navy">Review queue</h3>
+          <p className="mt-1 text-sm text-slate-600">
+            Items below are automatically categorized for pilot review. This is
+            not a production ticketing system.
+          </p>
+          <div className="mt-4 divide-y divide-slate-200 rounded-lg border border-slate-200">
+            {status.feedback.reviewQueue.length > 0 ? (
+              status.feedback.reviewQueue.map((item) => (
+                <FeedbackReviewItem
+                  item={item}
+                  key={`${item.timestamp}-${item.rating}-${item.studentQuestionExcerpt}`}
+                />
+              ))
+            ) : (
+              <p className="p-4 text-sm text-slate-600">
+                No feedback currently requires escalation review.
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="mt-6">
+          <h3 className="font-bold text-costaatt-navy">Latest feedback</h3>
+          <div className="mt-4 divide-y divide-slate-200">
+            {status.feedback.latest.length > 0 ? (
+              status.feedback.latest.map((item) => (
+                <FeedbackReviewItem
+                  compact
+                  item={item}
+                  key={`${item.timestamp}-${item.rating}`}
+                />
+              ))
+            ) : (
+              <p className="py-4 text-sm text-slate-600">
+                No pilot feedback has been captured yet.
+              </p>
+            )}
+          </div>
         </div>
       </section>
 
@@ -438,6 +486,67 @@ export default async function AdminPage() {
         </div>
       </section>
     </PageShell>
+  );
+}
+
+function FeedbackReviewItem({
+  compact = false,
+  item
+}: {
+  compact?: boolean;
+  item: {
+    assistantResponseExcerpt: string;
+    escalationCategory?: string;
+    escalationOwner?: string;
+    escalationReason?: string;
+    mode: string;
+    note?: string;
+    rating: string;
+    studentQuestionExcerpt: string;
+    timestamp: string;
+  };
+}) {
+  return (
+    <article className={compact ? "py-4" : "bg-white p-4"}>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
+          {item.rating}
+        </span>
+        <span className="rounded-md bg-costaatt-blue/10 px-2 py-1 text-xs font-semibold text-costaatt-navy">
+          {item.escalationCategory ?? "none"}
+        </span>
+        <span className="text-xs text-slate-500">
+          {new Date(item.timestamp).toLocaleString()}
+        </span>
+        <span className="text-xs text-slate-500">{item.mode}</span>
+      </div>
+      <p className="mt-2 text-sm text-slate-700">
+        <span className="font-semibold text-slate-900">Owner:</span>{" "}
+        {item.escalationOwner ?? "Pilot review team"}
+      </p>
+      {item.escalationReason ? (
+        <p className="mt-1 text-sm text-slate-700">
+          <span className="font-semibold text-slate-900">Reason:</span>{" "}
+          {item.escalationReason}
+        </p>
+      ) : null}
+      <p className="mt-2 text-sm text-slate-700">
+        <span className="font-semibold text-slate-900">Question:</span>{" "}
+        {item.studentQuestionExcerpt}
+      </p>
+      {!compact ? (
+        <p className="mt-1 text-sm text-slate-700">
+          <span className="font-semibold text-slate-900">Assistant:</span>{" "}
+          {item.assistantResponseExcerpt}
+        </p>
+      ) : null}
+      {item.note ? (
+        <p className="mt-1 text-sm text-slate-700">
+          <span className="font-semibold text-slate-900">Note:</span>{" "}
+          {item.note}
+        </p>
+      ) : null}
+    </article>
   );
 }
 

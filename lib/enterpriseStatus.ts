@@ -69,6 +69,11 @@ export async function getEnterpriseStatus() {
       note: "Chat, feedback, and provider test APIs use configurable in-memory pilot limits."
     },
     {
+      label: "Pilot review workflow",
+      status: "complete",
+      note: "Admin feedback review surfaces escalation categories, owners, and next-action guidance for controlled pilot oversight."
+    },
+    {
       label: "Knowledge base file",
       status: "complete",
       note: "FYEC100 content is loaded from data/fyec100-knowledge-base.md."

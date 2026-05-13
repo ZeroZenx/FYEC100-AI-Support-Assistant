@@ -18,6 +18,15 @@ question and response. It does not intentionally capture student names, IDs, or
 full chat transcripts. This pilot mechanism should be replaced by an approved
 enterprise logging and analytics approach before production use.
 
+The Phase 2 admin page includes a pilot review workflow that automatically
+categorizes feedback into lecturer follow-up, LMS administrator, knowledge base
+update, technical/provider issue, or no immediate escalation. This categorization
+is a review aid only. Human reviewers remain responsible for deciding whether an
+item should be escalated.
+
+See `docs/pilot-review-workflow.md` for the recommended pilot review rhythm,
+ownership categories, and privacy boundary.
+
 ## Knowledge Base Management
 
 The Phase 1 knowledge base is stored in `data/fyec100-knowledge-base.md`. An admin-friendly process should be created in later phases to review, approve, and version course content updates.
@@ -25,6 +34,8 @@ The Phase 1 knowledge base is stored in `data/fyec100-knowledge-base.md`. An adm
 ## Future Governance Questions
 
 - Who approves knowledge base changes?
+- Who reviews pilot feedback after each Moodle pilot session?
+- Where should escalated pilot issues live after the prototype stage?
 - What AI usage statement should appear in FYEC100 assignment instructions?
 - What student data may be processed in enterprise deployment?
 - What monitoring and incident response process is required?

@@ -203,6 +203,9 @@ data/pilot-feedback.jsonl
 This file is ignored by Git and should not be treated as a production analytics
 or student record system.
 
+The `/admin` page includes a pilot review workflow that categorizes feedback and
+suggests escalation owners. See `docs/pilot-review-workflow.md`.
+
 ## Knowledge Base Updates
 
 Edit this file to update Phase 1 course content:

@@ -57,6 +57,10 @@ The current prototype includes local-only pilot feedback capture. It is useful
 for early testing but is not a production student record, analytics, or case
 management system.
 
+The current prototype also includes an admin pilot review workflow that
+categorizes feedback and suggests escalation owners for lecturer follow-up, LMS
+administrator issues, knowledge base updates, and technical/provider issues.
+
 The current prototype includes `/api/health` for deployment readiness checks.
 It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
 or Ollama model responds before Moodle pilot testing.
@@ -85,5 +89,6 @@ Before enterprise launch, the project should add:
 2. Configure the app with either OpenAI or Ollama.
 3. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
 4. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
-5. Collect feedback from students, lecturers, LMS administration, and IT.
-6. Decide whether to proceed with a Moodle block plugin or LTI integration.
+5. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
+6. Collect feedback from students, lecturers, LMS administration, and IT.
+7. Decide whether to proceed with a Moodle block plugin or LTI integration.
