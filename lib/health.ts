@@ -5,6 +5,7 @@ import { getRateLimitSummary } from "@/lib/rateLimit";
 const DATA_DIR = path.join(process.cwd(), "data");
 const KNOWLEDGE_BASE_PATH = path.join(DATA_DIR, "fyec100-knowledge-base.md");
 const FEEDBACK_PATH = path.join(DATA_DIR, "pilot-feedback.jsonl");
+const LAUNCH_AUDIT_PATH = path.join(DATA_DIR, "moodle-launch-audit.jsonl");
 
 type HealthCheck = {
   label: string;
@@ -34,7 +35,8 @@ export async function getHealthStatus() {
     },
     await checkKnowledgeBase(),
     checkRateLimiting(),
-    await checkFeedbackStorage()
+    await checkFeedbackStorage(),
+    await checkLaunchAuditStorage()
   ];
 
   return {
@@ -50,7 +52,7 @@ function checkRateLimiting(): HealthCheck {
 
   return {
     label: "Rate limiting",
-    message: `Pilot API limits are active: chat ${summary.chatPerMinute}/min, feedback ${summary.feedbackPerMinute}/min, provider test ${summary.providerTestPerMinute}/min.`,
+    message: `Pilot API limits are active: chat ${summary.chatPerMinute}/min, feedback ${summary.feedbackPerMinute}/min, launch audit ${summary.launchAuditPerMinute}/min, provider test ${summary.providerTestPerMinute}/min.`,
     status: "ok"
   };
 }
@@ -68,6 +70,25 @@ async function checkKnowledgeBase(): Promise<HealthCheck> {
     return {
       label: "Knowledge base",
       message: "FYEC100 knowledge base file is not readable.",
+      status: "error"
+    };
+  }
+}
+
+async function checkLaunchAuditStorage(): Promise<HealthCheck> {
+  try {
+    await mkdir(DATA_DIR, { recursive: true });
+    await appendFile(LAUNCH_AUDIT_PATH, "", "utf8");
+
+    return {
+      label: "Moodle launch audit storage",
+      message: "Moodle launch audit JSONL file is writable.",
+      status: "ok"
+    };
+  } catch {
+    return {
+      label: "Moodle launch audit storage",
+      message: "Moodle launch audit JSONL file is not writable.",
       status: "error"
     };
   }

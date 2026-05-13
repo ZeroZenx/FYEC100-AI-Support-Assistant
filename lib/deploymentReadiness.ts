@@ -136,12 +136,13 @@ function checkRateLimits(rateLimits: ReturnType<typeof getRateLimitSummary>): Re
   const enabled =
     rateLimits.chatPerMinute > 0 &&
     rateLimits.feedbackPerMinute > 0 &&
+    rateLimits.launchAuditPerMinute > 0 &&
     rateLimits.providerTestPerMinute > 0;
 
   return {
     label: "Pilot rate limits",
     message: enabled
-      ? `Rate limits are active: chat ${rateLimits.chatPerMinute}/min, feedback ${rateLimits.feedbackPerMinute}/min, provider test ${rateLimits.providerTestPerMinute}/min.`
+      ? `Rate limits are active: chat ${rateLimits.chatPerMinute}/min, feedback ${rateLimits.feedbackPerMinute}/min, launch audit ${rateLimits.launchAuditPerMinute}/min, provider test ${rateLimits.providerTestPerMinute}/min.`
       : "Rate limits must be positive numbers before pilot use.",
     status: enabled ? "pass" : "fail"
   };

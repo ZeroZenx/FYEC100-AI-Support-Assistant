@@ -16,6 +16,15 @@ await runJsonCheck(
   `${baseUrl}/api/admin/deployment-readiness`,
   { admin: true }
 );
+await runJsonCheck("Pilot sessions endpoint", `${baseUrl}/api/admin/pilot-sessions`, {
+  admin: true
+});
+await runJsonCheck("Support playbook endpoint", `${baseUrl}/api/admin/support-playbook`, {
+  admin: true
+});
+await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {
+  admin: true
+});
 
 if (moodleOrigin) {
   await runHeaderCheck(

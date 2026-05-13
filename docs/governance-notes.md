@@ -31,6 +31,14 @@ Pilot reporting is available as JSON and Markdown for project-team review
 meetings. These reports should be treated as pilot governance artifacts, not
 official student records. See `docs/pilot-reporting.md`.
 
+Moodle launch audit records are pilot diagnostics only. They should avoid
+student identifiers, grades, names, emails, and student record data. See
+`docs/moodle-launch-audit.md`.
+
+Pilot sessions should have named pre-checks, success criteria, post-checks, and
+escalation owners before involving students. See
+`docs/pilot-session-planning.md` and `docs/support-escalation-playbook.md`.
+
 ## Knowledge Base Management
 
 The Phase 1 knowledge base is stored in `data/fyec100-knowledge-base.md`. An admin-friendly process should be created in later phases to review, approve, and version course content updates.

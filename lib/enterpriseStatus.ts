@@ -5,12 +5,15 @@ import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
+import { readLaunchAuditSummary } from "@/lib/launchAudit";
 import {
   getDefaultMoodleContext,
   getMoodleContextQueryString
 } from "@/lib/moodleContext";
 import { buildPilotReport } from "@/lib/pilotReport";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
+import { readPilotSessionSummary } from "@/lib/pilotSessions";
+import { getSupportPlaybook } from "@/lib/supportPlaybook";
 
 const KNOWLEDGE_BASE_PATH = path.join(process.cwd(), "data", "fyec100-knowledge-base.md");
 
@@ -25,7 +28,10 @@ export async function getEnterpriseStatus() {
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const knowledgeBaseMetadata = await getKnowledgeBaseMetadata();
   const feedback = await readPilotFeedbackSummary();
+  const launchAudit = await readLaunchAuditSummary();
+  const pilotSessions = await readPilotSessionSummary();
   const pilotReport = await buildPilotReport();
+  const supportPlaybook = getSupportPlaybook();
   const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
   const adminAuth = getAdminAuthStatus();
@@ -82,6 +88,21 @@ export async function getEnterpriseStatus() {
       label: "Pilot reporting",
       status: "complete",
       note: "Admin report endpoints provide JSON and Markdown summaries for project-team review meetings."
+    },
+    {
+      label: "Pilot session planner",
+      status: pilotSessions.total > 0 ? "complete" : "in-progress",
+      note: "Admin view reads planned pilot sessions from data/pilot-sessions.json for pre-checks, success criteria, and post-session review."
+    },
+    {
+      label: "Moodle launch audit",
+      status: "complete",
+      note: "Embedded Moodle launches are captured as privacy-light JSONL diagnostics for pilot readiness review."
+    },
+    {
+      label: "Support escalation playbook",
+      status: "complete",
+      note: "Admin view maps common pilot issues to lecturer, LMS, knowledge base, technical, and academic integrity owners."
     },
     {
       label: "Deployment readiness",
@@ -154,8 +175,11 @@ export async function getEnterpriseStatus() {
       sizeBytes: knowledgeBaseStats.size
     },
     feedback,
+    launchAudit,
+    pilotSessions,
     deploymentReadiness,
     pilotReport,
+    supportPlaybook,
     health,
     checklist
   };

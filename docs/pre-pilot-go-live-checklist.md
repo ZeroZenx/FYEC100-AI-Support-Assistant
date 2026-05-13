@@ -16,6 +16,7 @@ use the assistant.
 - Provider test endpoint responds successfully.
 - Rate limits are configured.
 - Feedback storage is writable.
+- Moodle launch audit storage is writable and acceptable for controlled pilot diagnostics.
 - Knowledge base file is readable.
 - Knowledge base metadata has been reviewed in `/admin`.
 - `KNOWLEDGE_BASE_REVIEWED=true` is set only after lecturer/content-owner approval.
@@ -38,7 +39,9 @@ use the assistant.
 - Lecturer escalation path is confirmed.
 - LMS administrator escalation path is confirmed.
 - Technical support path is confirmed.
+- Support escalation playbook owners are confirmed.
 - Pilot feedback review schedule is confirmed.
+- Planned pilot session exists in `data/pilot-sessions.json`.
 - Privacy notice and student guidance are approved.
 - Accessibility and usability checklist has been reviewed.
 - FYEC100 knowledge base content owner has approved the current Markdown file.

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-type RateLimitScope = "chat" | "feedback" | "provider-test";
+type RateLimitScope = "chat" | "feedback" | "launch-audit" | "provider-test";
 
 type RateLimitConfig = {
   limit: number;
@@ -37,6 +37,11 @@ export function getRateLimitConfig() {
       limit: readPositiveInteger("PROVIDER_TEST_RATE_LIMIT_PER_MINUTE", 6),
       scope: "provider-test",
       windowMs: oneMinute
+    },
+    launchAudit: {
+      limit: readPositiveInteger("LAUNCH_AUDIT_RATE_LIMIT_PER_MINUTE", 60),
+      scope: "launch-audit",
+      windowMs: oneMinute
     }
   } satisfies Record<string, RateLimitConfig>;
 }
@@ -47,6 +52,7 @@ export function getRateLimitSummary() {
   return {
     chatPerMinute: config.chat.limit,
     feedbackPerMinute: config.feedback.limit,
+    launchAuditPerMinute: config.launchAudit.limit,
     providerTestPerMinute: config.providerTest.limit
   };
 }

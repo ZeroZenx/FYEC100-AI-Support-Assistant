@@ -189,6 +189,7 @@ The public pilot APIs use lightweight in-memory rate limits. Configure them in
 ```bash
 CHAT_RATE_LIMIT_PER_MINUTE=12
 FEEDBACK_RATE_LIMIT_PER_MINUTE=30
+LAUNCH_AUDIT_RATE_LIMIT_PER_MINUTE=60
 PROVIDER_TEST_RATE_LIMIT_PER_MINUTE=6
 ```
 
@@ -221,6 +222,9 @@ Related checklists:
 - `docs/pilot-smoke-test.md`
 - `docs/accessibility-usability-checklist.md`
 - `docs/knowledge-base-management.md`
+- `docs/pilot-session-planning.md`
+- `docs/moodle-launch-audit.md`
+- `docs/support-escalation-playbook.md`
 
 ## Pilot Smoke Test
 
@@ -262,6 +266,23 @@ http://localhost:4100/api/admin/report.md
 ```
 
 See `docs/pilot-reporting.md`.
+
+## Pilot Operations
+
+Phase 2 now includes file-based operational scaffolds for controlled Moodle
+testing:
+
+- pilot session planning from `data/pilot-sessions.json`
+- privacy-light Moodle launch audit records in `data/moodle-launch-audit.jsonl`
+- support escalation guidance for lecturer, LMS, knowledge base, technical, and academic integrity issues
+
+Protected admin endpoints:
+
+```text
+http://localhost:4100/api/admin/pilot-sessions
+http://localhost:4100/api/admin/launch-audit
+http://localhost:4100/api/admin/support-playbook
+```
 
 ## Knowledge Base Updates
 

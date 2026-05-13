@@ -6,8 +6,10 @@ const statusStyles = {
   complete: "bg-emerald-100 text-emerald-800",
   fail: "bg-red-100 text-red-800",
   "in-progress": "bg-amber-100 text-amber-800",
+  "not-started": "bg-slate-100 text-slate-700",
   pass: "bg-emerald-100 text-emerald-800",
   pending: "bg-slate-100 text-slate-700",
+  planned: "bg-blue-100 text-blue-800",
   ok: "bg-emerald-100 text-emerald-800",
   warning: "bg-amber-100 text-amber-800",
   warn: "bg-amber-100 text-amber-800",
@@ -356,6 +358,142 @@ export default async function AdminPage({
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Moodle Launch Audit
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Embedded usage diagnostics
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600">
+            Privacy-light pilot telemetry from `/embed` launches.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <MetricCard label="Launches" value={status.launchAudit.total} />
+          <MetricCard
+            label="Roles"
+            value={Object.keys(status.launchAudit.countsByRole).length}
+          />
+          <MetricCard
+            label="Sources"
+            value={Object.keys(status.launchAudit.countsBySource).length}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Audit source</h3>
+            <dl className="mt-3 space-y-3 text-sm text-slate-700">
+              <div>
+                <dt className="font-semibold text-slate-900">Storage</dt>
+                <dd>{status.launchAudit.path}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Admin API</dt>
+                <dd>/api/admin/launch-audit</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Notice</dt>
+                <dd>{status.launchAudit.privacyNotice}</dd>
+              </div>
+            </dl>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Latest launches</h3>
+            <div className="mt-3 divide-y divide-slate-200 rounded-md border border-slate-200 bg-white">
+              {status.launchAudit.latest.length > 0 ? (
+                status.launchAudit.latest.map((item) => (
+                  <div
+                    className="grid gap-2 p-3 text-sm text-slate-700 sm:grid-cols-[170px_1fr]"
+                    key={`${item.timestamp}-${item.context.launchSource}-${item.context.role}`}
+                  >
+                    <p className="text-xs text-slate-500">
+                      {new Date(item.timestamp).toLocaleString()}
+                    </p>
+                    <p>
+                      {item.context.courseShortName} · {item.context.role} ·{" "}
+                      {item.context.launchSource}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="p-3 text-sm text-slate-600">
+                  No embedded launches have been recorded yet.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Pilot Sessions
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Controlled Moodle pilot planner
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600">
+            Editable source: `data/pilot-sessions.json`
+          </p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard label="Sessions" value={status.pilotSessions.total} />
+          <MetricCard
+            label="Planned"
+            value={status.pilotSessions.statusCounts.planned}
+          />
+          <MetricCard
+            label="Not started"
+            value={status.pilotSessions.statusCounts["not-started"]}
+          />
+          <MetricCard
+            label="Complete"
+            value={status.pilotSessions.statusCounts.complete}
+          />
+        </div>
+        <div className="mt-6 grid gap-4">
+          {status.pilotSessions.sessions.map((session) => (
+            <article
+              className="rounded-lg border border-slate-200 bg-slate-50 p-4"
+              key={session.id}
+            >
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-costaatt-navy">
+                    {session.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-600">
+                    {session.mode} · {session.audience} · {session.facilitator}
+                  </p>
+                </div>
+                <span
+                  className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+                    statusStyles[session.status]
+                  }`}
+                >
+                  {session.status}
+                </span>
+              </div>
+              <div className="mt-4 grid gap-4 lg:grid-cols-3">
+                <ChecklistColumn title="Pre-checks" items={session.preChecks} />
+                <ChecklistColumn
+                  title="Success criteria"
+                  items={session.successCriteria}
+                />
+                <ChecklistColumn title="Post-checks" items={session.postChecks} />
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Health Check
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
@@ -392,6 +530,59 @@ export default async function AdminPage({
                 {check.message}
               </p>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Support Playbook
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Escalation owners and first response guidance
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600">
+            Admin API: `/api/admin/support-playbook`
+          </p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {status.supportPlaybook.items.map((item) => (
+            <article
+              className="rounded-lg border border-slate-200 bg-slate-50 p-4"
+              key={item.category}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="font-bold text-costaatt-navy">{item.category}</h3>
+                <span
+                  className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                    item.priority === "high"
+                      ? statusStyles.warn
+                      : statusStyles.pending
+                  }`}
+                >
+                  {item.priority}
+                </span>
+              </div>
+              <p className="mt-2 text-sm text-slate-700">
+                <span className="font-semibold text-slate-900">Owner:</span>{" "}
+                {item.owner}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-700">
+                {item.firstResponse}
+              </p>
+              <p className="mt-2 text-sm text-slate-700">
+                <span className="font-semibold text-slate-900">Target:</span>{" "}
+                {item.resolutionTarget}
+              </p>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                {item.examples.map((example) => (
+                  <li key={example}>{example}</li>
+                ))}
+              </ul>
+            </article>
           ))}
         </div>
       </section>
@@ -848,6 +1039,19 @@ function MetricCard({
         {value}
         {suffix}
       </p>
+    </div>
+  );
+}
+
+function ChecklistColumn({ items, title }: { items: string[]; title: string }) {
+  return (
+    <div>
+      <h4 className="text-sm font-bold text-costaatt-navy">{title}</h4>
+      <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-700">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -64,6 +64,17 @@ administrator issues, knowledge base updates, and technical/provider issues.
 The current prototype includes pilot reporting endpoints that return JSON and
 Markdown summaries for project-team review meetings.
 
+The current prototype includes a file-based pilot session planner for dry runs,
+small student pilots, pre-checks, success criteria, and post-session review.
+
+The current prototype includes privacy-light Moodle launch audit diagnostics for
+the embedded `/embed` route. This is only pilot telemetry and avoids intentional
+capture of names, email addresses, grades, student IDs, or student record data.
+
+The current prototype includes a support escalation playbook that maps common
+pilot issues to lecturer, LMS administrator, knowledge base, technical, and
+academic integrity owners.
+
 The current prototype includes deployment readiness checks for hosted URL,
 HTTPS, provider configuration, pilot rate limits, knowledge base readability,
 feedback storage, admin exposure, and controlled pilot scope.
@@ -117,6 +128,7 @@ Before enterprise launch, the project should add:
 4. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
 5. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
 6. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
-7. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-8. Collect feedback from students, lecturers, LMS administration, and IT.
-9. Decide whether to proceed with a Moodle block plugin or LTI integration.
+7. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
+8. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+9. Collect feedback from students, lecturers, LMS administration, and IT.
+10. Decide whether to proceed with a Moodle block plugin or LTI integration.

@@ -1,0 +1,60 @@
+[
+  {
+    "id": "fyec100-moodle-iframe-dry-run",
+    "title": "FYEC100 Moodle iframe dry run",
+    "date": "TBD",
+    "audience": "Project team and LMS administrator",
+    "mode": "Moodle iframe pilot",
+    "facilitator": "Darren Headley",
+    "status": "planned",
+    "goals": [
+      "Confirm the assistant opens inside Moodle without sending students outside the course shell.",
+      "Confirm the responsible-use notice and feedback controls are visible.",
+      "Confirm provider, knowledge base, and readiness checks before student testing."
+    ],
+    "successCriteria": [
+      "Embedded assistant loads in the FYEC100 Moodle test course.",
+      "At least three FYEC100 course questions receive appropriate grounded answers.",
+      "At least one feedback item appears in the pilot review queue."
+    ],
+    "preChecks": [
+      "Run npm run smoke:pilot against the hosted or local pilot URL.",
+      "Confirm ADMIN_ACCESS_TOKEN is configured for hosted pilot use.",
+      "Confirm MOODLE_ORIGIN matches the approved Moodle URL."
+    ],
+    "postChecks": [
+      "Review /admin feedback queue and pilot report.",
+      "Record missing knowledge base content for lecturer review.",
+      "Decide whether the next test should use iframe, Moodle block, or LTI scaffold."
+    ]
+  },
+  {
+    "id": "fyec100-small-student-pilot",
+    "title": "FYEC100 small student pilot",
+    "date": "TBD",
+    "audience": "Controlled first-year student group",
+    "mode": "Moodle course shell pilot",
+    "facilitator": "Lecturer / Project Lead",
+    "status": "not-started",
+    "goals": [
+      "Observe whether students can get study, LMS, and assignment-understanding support inside Moodle.",
+      "Collect usefulness feedback without treating it as a student record.",
+      "Identify policy, content, or support issues before wider release."
+    ],
+    "successCriteria": [
+      "Students can ask FYEC100 questions without leaving Moodle.",
+      "The assistant refuses full-assignment writing requests.",
+      "Escalation categories identify lecturer, LMS, knowledge base, and technical follow-up items."
+    ],
+    "preChecks": [
+      "Confirm lecturer/content-owner review of the knowledge base.",
+      "Confirm support contacts and stop-pilot procedure.",
+      "Confirm the student notice explains appropriate AI use."
+    ],
+    "postChecks": [
+      "Generate /api/admin/report.md for the project review meeting.",
+      "Prioritize knowledge base updates and Moodle integration decisions.",
+      "Confirm whether Phase 2 should proceed toward Moodle block or LTI 1.3."
+    ]
+  }
+]
