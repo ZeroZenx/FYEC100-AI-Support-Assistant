@@ -1,5 +1,6 @@
 import { stat } from "fs/promises";
 import path from "path";
+import { getAdminAuthStatus } from "@/lib/adminAuth";
 import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
@@ -29,6 +30,7 @@ export async function getEnterpriseStatus() {
   const pilotReport = await buildPilotReport();
   const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
+  const adminAuth = getAdminAuthStatus();
   const providerStatus = getProviderStatus();
   const embedBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
@@ -88,6 +90,13 @@ export async function getEnterpriseStatus() {
       note: "Deployment readiness checks validate hosted URL, HTTPS, provider config, storage, rate limits, and admin exposure warnings."
     },
     {
+      label: "Admin protection scaffold",
+      status: adminAuth.configured ? "complete" : "in-progress",
+      note: adminAuth.configured
+        ? "Pilot admin token gate is configured for /admin and admin API routes."
+        : "Set ADMIN_ACCESS_TOKEN before hosted pilot use."
+    },
+    {
       label: "Knowledge base file",
       status: "complete",
       note: "FYEC100 content is loaded from data/fyec100-knowledge-base.md."
@@ -111,6 +120,7 @@ export async function getEnterpriseStatus() {
 
   return {
     appBaseUrl: embedBaseUrl,
+    adminAuth,
     embedUrl: `${embedBaseUrl}/embed`,
     embedSnippets: {
       iframe: `<iframe src="${embedBaseUrl}/embed" width="100%" height="760" style="border:0; width:100%; min-height:760px;" title="FYEC100 AI Academic Support Assistant"></iframe>`,

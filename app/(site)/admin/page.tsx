@@ -1,4 +1,5 @@
 import { PageShell } from "@/components/PageShell";
+import { isAdminAccessAllowed } from "@/lib/adminAuth";
 import { getEnterpriseStatus } from "@/lib/enterpriseStatus";
 
 const statusStyles = {
@@ -49,7 +50,18 @@ const reviewProcedure = [
   "Convert repeated missing-answer reports into knowledge base update requests."
 ];
 
-export default async function AdminPage() {
+export default async function AdminPage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = (await searchParams) ?? {};
+  const adminToken = readParam(params.adminToken);
+
+  if (!isAdminAccessAllowed(adminToken)) {
+    return <AdminAccessRequired />;
+  }
+
   const status = await getEnterpriseStatus();
   const knowledgeBaseUpdated = new Intl.DateTimeFormat("en", {
     dateStyle: "medium",
@@ -62,6 +74,19 @@ export default async function AdminPage() {
       title="Enterprise readiness dashboard"
       description="A simple project-team view for checking Moodle embed details, AI provider configuration, knowledge base status, and deployment readiness."
     >
+      {!status.adminAuth.configured ? (
+        <section className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-5">
+          <h2 className="font-bold text-costaatt-navy">
+            Pilot admin token not configured
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            Local development access is currently allowed because
+            `ADMIN_ACCESS_TOKEN` is not set. Configure it before hosted pilot
+            use so `/admin` and `/api/admin/*` require a token.
+          </p>
+        </section>
+      ) : null}
+
       <div className="grid gap-6 lg:grid-cols-3">
         <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
           <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
@@ -642,6 +667,36 @@ export default async function AdminPage() {
       </section>
     </PageShell>
   );
+}
+
+function AdminAccessRequired() {
+  return (
+    <PageShell
+      eyebrow="Phase 2 Admin"
+      title="Admin access required"
+      description="This pilot admin page requires the configured admin token."
+    >
+      <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <h2 className="text-xl font-bold text-costaatt-navy">
+          Enter through the protected pilot admin URL
+        </h2>
+        <p className="mt-3 text-sm leading-6 text-slate-700">
+          Add the configured token as `?adminToken=...` for Phase 2 pilot
+          testing, or use platform-level access controls for hosted
+          environments.
+        </p>
+        <p className="mt-4 rounded-md bg-yellow-50 p-4 text-sm leading-6 text-slate-700">
+          This is a lightweight pilot safeguard, not a replacement for
+          production authentication, SSO, Moodle role validation, or LTI launch
+          security.
+        </p>
+      </section>
+    </PageShell>
+  );
+}
+
+function readParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
 }
 
 function FeedbackReviewItem({

@@ -1,5 +1,6 @@
 import { access, appendFile, mkdir } from "fs/promises";
 import path from "path";
+import { getAdminAuthStatus } from "@/lib/adminAuth";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getRateLimitSummary } from "@/lib/rateLimit";
 
@@ -27,6 +28,7 @@ export async function getDeploymentReadiness() {
     checkRateLimits(rateLimits),
     await checkKnowledgeBase(),
     await checkFeedbackStorage(),
+    checkAdminToken(),
     checkAdminExposure(),
     checkPilotMode()
   ];
@@ -147,8 +149,20 @@ function checkAdminExposure(): ReadinessCheck {
   return {
     label: "Admin exposure",
     message:
-      "The current /admin page is not authenticated. Keep it internal or behind platform access controls for hosted pilots.",
+      "Keep /admin and /api/admin/* internal or behind platform access controls for hosted pilots.",
     status: "warn"
+  };
+}
+
+function checkAdminToken(): ReadinessCheck {
+  const auth = getAdminAuthStatus();
+
+  return {
+    label: "Pilot admin token",
+    message: auth.configured
+      ? "ADMIN_ACCESS_TOKEN is configured for pilot admin access."
+      : "ADMIN_ACCESS_TOKEN is not configured. Set it before a hosted pilot.",
+    status: auth.configured ? "pass" : "warn"
   };
 }
 

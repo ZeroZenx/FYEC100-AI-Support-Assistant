@@ -46,6 +46,12 @@ FEEDBACK_RATE_LIMIT_PER_MINUTE=30
 PROVIDER_TEST_RATE_LIMIT_PER_MINUTE=6
 ```
 
+Pilot admin protection:
+
+```bash
+ADMIN_ACCESS_TOKEN=replace_with_secure_random_value
+```
+
 ## Build and Run
 
 ```bash
@@ -90,6 +96,7 @@ The deployment readiness check reports pass, warning, and failure states for:
 - pilot rate limits
 - knowledge base readability
 - pilot feedback storage
+- pilot admin token
 - admin exposure warning
 - controlled pilot scope
 
@@ -105,6 +112,9 @@ Use this endpoint to confirm the selected model can respond:
 POST /api/admin/provider-test
 ```
 
+When `ADMIN_ACCESS_TOKEN` is configured, include `x-admin-token` or
+`?adminToken=...` for admin endpoints.
+
 For Ollama local setup, see `docs/ollama-local-setup.md`.
 
 ## Moodle Requirements
@@ -117,6 +127,7 @@ Before pilot embedding:
 - Confirm student responsible-use wording.
 - Confirm lecturer and LMS administrator escalation contacts.
 - Confirm the pilot group and feedback review schedule.
+- Confirm the `/admin` page and `/api/admin/*` routes require the pilot admin token or platform access controls.
 
 ## Related Operational Checklists
 
@@ -157,6 +168,7 @@ Before production, define who can edit, review, approve, and publish knowledge b
 - Do not expose local development URLs to students.
 - Do not treat the current `/admin` page as a secured production admin console.
 - Add authentication and role controls before production use.
+- Configure `ADMIN_ACCESS_TOKEN` before hosted pilot use.
 - Keep pilot rate limits enabled and add platform-level rate limiting before a full production rollout.
 - Use `/api/admin/deployment-readiness` before each hosted pilot session.
 - Review privacy, accessibility, and cybersecurity requirements before a live pilot.

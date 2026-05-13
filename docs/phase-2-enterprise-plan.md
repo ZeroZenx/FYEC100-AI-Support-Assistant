@@ -68,6 +68,10 @@ The current prototype includes deployment readiness checks for hosted URL,
 HTTPS, provider configuration, pilot rate limits, knowledge base readability,
 feedback storage, admin exposure, and controlled pilot scope.
 
+The current prototype includes a pilot admin token scaffold for `/admin` and
+`/api/admin/*`. This is a temporary Phase 2 safeguard and should be replaced by
+approved authentication and authorization for production.
+
 The current prototype includes `/api/health` for deployment readiness checks.
 It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
 or Ollama model responds before Moodle pilot testing.
@@ -90,6 +94,7 @@ Before enterprise launch, the project should add:
 - Support handoff documentation
 - Moodle block or LTI 1.3 implementation decision
 - Hosted pilot go-live and stop-pilot procedures
+- Admin access protection before hosted pilot use
 
 ## Recommended Pilot Path
 

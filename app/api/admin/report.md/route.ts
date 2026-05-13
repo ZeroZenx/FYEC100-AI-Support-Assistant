@@ -1,6 +1,13 @@
+import { requireAdminAccess } from "@/lib/adminAuth";
 import { buildPilotReport, renderPilotReportMarkdown } from "@/lib/pilotReport";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const unauthorized = requireAdminAccess(request);
+
+  if (unauthorized) {
+    return unauthorized;
+  }
+
   const report = await buildPilotReport();
 
   return new Response(renderPilotReportMarkdown(report), {

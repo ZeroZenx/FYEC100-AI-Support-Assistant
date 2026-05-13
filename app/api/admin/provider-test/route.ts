@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdminAccess } from "@/lib/adminAuth";
 import { testSelectedProvider } from "@/lib/aiProvider";
 import {
   checkRateLimit,
@@ -7,6 +8,12 @@ import {
 } from "@/lib/rateLimit";
 
 export async function POST(request: Request) {
+  const unauthorized = requireAdminAccess(request);
+
+  if (unauthorized) {
+    return unauthorized;
+  }
+
   const rateLimit = checkRateLimit(
     request,
     getRateLimitConfig().providerTest

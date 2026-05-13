@@ -125,6 +125,23 @@ POST http://localhost:4100/api/admin/provider-test
 
 See `docs/ollama-local-setup.md` for local Ollama setup.
 
+## Pilot Admin Protection
+
+Phase 2 admin pages and admin API routes can be protected with:
+
+```bash
+ADMIN_ACCESS_TOKEN=change_me_for_hosted_pilot
+```
+
+Admin page example:
+
+```text
+http://localhost:4100/admin?adminToken=change_me_for_hosted_pilot
+```
+
+Admin API routes also accept `x-admin-token`. See
+`docs/admin-protection.md`.
+
 ## Moodle Embed Pilot
 
 Phase 2 starts with an embedded assistant view intended for Moodle iframe, modal, drawer, or future LTI testing:
@@ -199,6 +216,7 @@ Related checklists:
 - `docs/internal-hosting-checklist.md`
 - `docs/pre-pilot-go-live-checklist.md`
 - `docs/stop-pilot-procedure.md`
+- `docs/admin-protection.md`
 
 ## Pilot Feedback Capture
 

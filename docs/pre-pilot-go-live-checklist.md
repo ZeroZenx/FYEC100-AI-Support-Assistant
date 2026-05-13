@@ -15,7 +15,8 @@ use the assistant.
 - Rate limits are configured.
 - Feedback storage is writable.
 - Knowledge base file is readable.
-- `/admin` and `/api/admin/*` are not publicly exposed.
+- `ADMIN_ACCESS_TOKEN` is configured.
+- `/admin` and `/api/admin/*` are not publicly exposed without the pilot token or platform access controls.
 
 ## Moodle Checks
 

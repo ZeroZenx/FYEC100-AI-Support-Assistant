@@ -15,6 +15,7 @@ prototype to a controlled hosted pilot URL.
 - Outbound access to OpenAI if using `AI_PROVIDER=openai`
 - Network access to the Ollama host if using `AI_PROVIDER=ollama`
 - Platform access controls around `/admin` and `/api/admin/*`
+- `ADMIN_ACCESS_TOKEN` configured before hosted testing
 
 ## Required Environment Settings
 
@@ -47,6 +48,12 @@ FEEDBACK_RATE_LIMIT_PER_MINUTE=30
 PROVIDER_TEST_RATE_LIMIT_PER_MINUTE=6
 ```
 
+Set pilot admin protection:
+
+```bash
+ADMIN_ACCESS_TOKEN=replace_with_secure_random_value
+```
+
 ## Verification
 
 After deployment:
@@ -58,7 +65,8 @@ After deployment:
 5. Run `POST /api/admin/provider-test`.
 6. Open `/embed`.
 7. Confirm Moodle can iframe the hosted `/embed` URL.
-8. Confirm `/admin` is internal or protected by platform controls.
+8. Confirm `/admin` requires `?adminToken=...` or platform controls.
+9. Confirm `/api/admin/*` requires `x-admin-token` or platform controls.
 
 ## Notes
 
