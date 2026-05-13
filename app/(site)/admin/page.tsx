@@ -154,6 +154,78 @@ export default async function AdminPage({
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Knowledge Base Management
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              FYEC100 content governance
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.knowledgeBase.needsReview
+                ? statusStyles["in-progress"]
+                : statusStyles.complete
+            }`}
+          >
+            {status.knowledgeBase.needsReview ? "Needs review" : "Reviewed"}
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard label="Words" value={status.knowledgeBase.wordCount} />
+          <MetricCard label="Sections" value={status.knowledgeBase.headings.length} />
+          <MetricCard label="Lines" value={status.knowledgeBase.lineCount} />
+          <MetricCard
+            label="Characters"
+            value={status.knowledgeBase.characterCount}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Content source</h3>
+            <dl className="mt-3 space-y-3 text-sm text-slate-700">
+              <div>
+                <dt className="font-semibold text-slate-900">Path</dt>
+                <dd>{status.knowledgeBase.path}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Review status</dt>
+                <dd>{status.knowledgeBase.reviewStatus}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Admin API</dt>
+                <dd>/api/admin/knowledge-base</dd>
+              </div>
+            </dl>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Section headings</h3>
+            <ol className="mt-3 space-y-2 text-sm text-slate-700">
+              {status.knowledgeBase.headings.map((heading, index) => (
+                <li
+                  className="rounded-md border border-slate-200 bg-white px-3 py-2"
+                  key={`${heading.title}-${index}`}
+                >
+                  <span className="text-xs font-semibold text-slate-500">
+                    H{heading.level}
+                  </span>{" "}
+                  {heading.title}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+        <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
+          <h3 className="font-bold text-costaatt-navy">Preview excerpt</h3>
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            {status.knowledgeBase.preview}
+          </p>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Provider Setup
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">

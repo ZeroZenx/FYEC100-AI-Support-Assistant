@@ -220,6 +220,7 @@ Related checklists:
 - `docs/moodle-iframe-security.md`
 - `docs/pilot-smoke-test.md`
 - `docs/accessibility-usability-checklist.md`
+- `docs/knowledge-base-management.md`
 
 ## Pilot Smoke Test
 
@@ -271,6 +272,10 @@ data/fyec100-knowledge-base.md
 ```
 
 After changes, restart the dev server if needed.
+
+The admin dashboard and `/api/admin/knowledge-base` expose read-only metadata
+for content governance. Set `KNOWLEDGE_BASE_REVIEWED=true` only after lecturer
+or content-owner review.
 
 ## GitHub Upload Instructions
 

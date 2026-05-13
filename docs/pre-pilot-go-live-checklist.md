@@ -17,6 +17,8 @@ use the assistant.
 - Rate limits are configured.
 - Feedback storage is writable.
 - Knowledge base file is readable.
+- Knowledge base metadata has been reviewed in `/admin`.
+- `KNOWLEDGE_BASE_REVIEWED=true` is set only after lecturer/content-owner approval.
 - `ADMIN_ACCESS_TOKEN` is configured.
 - `/admin` and `/api/admin/*` are not publicly exposed without the pilot token or platform access controls.
 
@@ -39,6 +41,7 @@ use the assistant.
 - Pilot feedback review schedule is confirmed.
 - Privacy notice and student guidance are approved.
 - Accessibility and usability checklist has been reviewed.
+- FYEC100 knowledge base content owner has approved the current Markdown file.
 - Pilot group and dates are approved.
 
 ## Decision Point

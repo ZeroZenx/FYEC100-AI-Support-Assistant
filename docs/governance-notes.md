@@ -35,6 +35,10 @@ official student records. See `docs/pilot-reporting.md`.
 
 The Phase 1 knowledge base is stored in `data/fyec100-knowledge-base.md`. An admin-friendly process should be created in later phases to review, approve, and version course content updates.
 
+Phase 2 includes read-only knowledge base metadata in `/admin` and
+`/api/admin/knowledge-base`. `KNOWLEDGE_BASE_REVIEWED=true` should only be set
+after lecturer or content-owner review.
+
 ## Future Governance Questions
 
 - Who approves knowledge base changes?

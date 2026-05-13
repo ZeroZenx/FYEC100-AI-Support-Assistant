@@ -79,6 +79,9 @@ The current prototype includes student-facing accessibility and usability
 improvements for keyboard navigation, status messaging, focus visibility, and
 Moodle iframe review.
 
+The current prototype includes a read-only knowledge base management scaffold
+for content metadata, section headings, preview, and review status.
+
 The current prototype includes `/api/health` for deployment readiness checks.
 It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
 or Ollama model responds before Moodle pilot testing.
@@ -104,6 +107,7 @@ Before enterprise launch, the project should add:
 - Admin access protection before hosted pilot use
 - Moodle iframe security header review
 - Accessibility and usability review inside Moodle
+- Knowledge base content-owner review before hosted pilot
 
 ## Recommended Pilot Path
 
