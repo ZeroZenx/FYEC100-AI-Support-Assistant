@@ -53,6 +53,10 @@ The current prototype includes `/api/health` for deployment readiness checks.
 It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
 or Ollama model responds before Moodle pilot testing.
 
+The current prototype includes lightweight in-memory rate limits for chat,
+feedback, and provider test APIs. These are appropriate for a controlled pilot,
+but a hosted production rollout should add platform-level protection.
+
 ### Production Readiness
 
 Before enterprise launch, the project should add:
@@ -61,7 +65,7 @@ Before enterprise launch, the project should add:
 - HTTPS
 - Environment secret management
 - Logging policy
-- Rate limiting
+- Production-grade rate limiting
 - Accessibility review
 - Moodle pilot group
 - Support handoff documentation

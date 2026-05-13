@@ -5,6 +5,11 @@ import {
 } from "@/lib/aiProvider";
 import { getLocalGuardrailResponse, assistantSystemPrompt } from "@/lib/guardrails";
 import { readKnowledgeBase } from "@/lib/knowledgeBase";
+import {
+  checkRateLimit,
+  getRateLimitConfig,
+  rateLimitResponse
+} from "@/lib/rateLimit";
 
 type ClientMessage = {
   role: "student" | "assistant";
@@ -16,6 +21,12 @@ const fallbackAnswer =
 
 export async function POST(request: Request) {
   try {
+    const rateLimit = checkRateLimit(request, getRateLimitConfig().chat);
+
+    if (rateLimit.limited) {
+      return rateLimitResponse(rateLimit);
+    }
+
     const body = (await request.json()) as { messages?: ClientMessage[] };
     const messages = body.messages ?? [];
     const latestStudentMessage = [...messages]

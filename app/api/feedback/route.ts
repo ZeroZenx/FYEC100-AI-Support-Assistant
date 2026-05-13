@@ -4,6 +4,11 @@ import {
   readPilotFeedbackSummary,
   savePilotFeedback
 } from "@/lib/pilotFeedback";
+import {
+  checkRateLimit,
+  getRateLimitConfig,
+  rateLimitResponse
+} from "@/lib/rateLimit";
 
 const ratings: FeedbackRating[] = [
   "helpful",
@@ -19,6 +24,12 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const rateLimit = checkRateLimit(request, getRateLimitConfig().feedback);
+
+    if (rateLimit.limited) {
+      return rateLimitResponse(rateLimit);
+    }
+
     const body = (await request.json()) as {
       assistantResponse?: string;
       mode?: "standalone" | "embedded";

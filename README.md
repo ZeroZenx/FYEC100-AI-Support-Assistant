@@ -153,6 +153,20 @@ http://localhost:4100/api/admin/status
 The admin page also provides copy-ready Moodle iframe, Moodle HTML block, and
 fallback link snippets for pilot setup.
 
+## Pilot Rate Limiting
+
+The public pilot APIs use lightweight in-memory rate limits. Configure them in
+`.env.local` or production hosting settings:
+
+```bash
+CHAT_RATE_LIMIT_PER_MINUTE=12
+FEEDBACK_RATE_LIMIT_PER_MINUTE=30
+PROVIDER_TEST_RATE_LIMIT_PER_MINUTE=6
+```
+
+These limits are suitable for a local or small hosted pilot. Enterprise
+production should replace or extend them with platform-level protection.
+
 ## Health Check
 
 Use this endpoint to confirm deployment readiness signals:

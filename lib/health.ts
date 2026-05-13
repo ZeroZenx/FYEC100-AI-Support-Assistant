@@ -1,5 +1,6 @@
 import { access, appendFile, mkdir } from "fs/promises";
 import path from "path";
+import { getRateLimitSummary } from "@/lib/rateLimit";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const KNOWLEDGE_BASE_PATH = path.join(DATA_DIR, "fyec100-knowledge-base.md");
@@ -32,6 +33,7 @@ export async function getHealthStatus() {
       status: providerConfigured ? "ok" : "warning"
     },
     await checkKnowledgeBase(),
+    checkRateLimiting(),
     await checkFeedbackStorage()
   ];
 
@@ -40,6 +42,16 @@ export async function getHealthStatus() {
     ok: checks.every((check) => check.status !== "error"),
     provider,
     timestamp: new Date().toISOString()
+  };
+}
+
+function checkRateLimiting(): HealthCheck {
+  const summary = getRateLimitSummary();
+
+  return {
+    label: "Rate limiting",
+    message: `Pilot API limits are active: chat ${summary.chatPerMinute}/min, feedback ${summary.feedbackPerMinute}/min, provider test ${summary.providerTestPerMinute}/min.`,
+    status: "ok"
   };
 }
 

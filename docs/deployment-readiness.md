@@ -38,6 +38,14 @@ OLLAMA_BASE_URL=http://ollama.internal:11434
 OLLAMA_MODEL=llama3.1
 ```
 
+Pilot rate limits:
+
+```bash
+CHAT_RATE_LIMIT_PER_MINUTE=12
+FEEDBACK_RATE_LIMIT_PER_MINUTE=30
+PROVIDER_TEST_RATE_LIMIT_PER_MINUTE=6
+```
+
 ## Build and Run
 
 ```bash
@@ -62,6 +70,7 @@ The health check reports:
 - selected AI provider
 - provider configuration warning
 - knowledge base readability
+- rate limit configuration
 - pilot feedback storage writability
 - timestamp
 
@@ -112,4 +121,5 @@ Before production, define who can edit, review, approve, and publish knowledge b
 - Do not expose local development URLs to students.
 - Do not treat the current `/admin` page as a secured production admin console.
 - Add authentication and role controls before production use.
+- Keep pilot rate limits enabled and add platform-level rate limiting before a full production rollout.
 - Review privacy, accessibility, and cybersecurity requirements before a live pilot.
