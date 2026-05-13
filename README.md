@@ -206,6 +206,15 @@ or student record system.
 The `/admin` page includes a pilot review workflow that categorizes feedback and
 suggests escalation owners. See `docs/pilot-review-workflow.md`.
 
+Pilot report endpoints are also available for project-team review meetings:
+
+```text
+http://localhost:4100/api/admin/report
+http://localhost:4100/api/admin/report.md
+```
+
+See `docs/pilot-reporting.md`.
+
 ## Knowledge Base Updates
 
 Edit this file to update Phase 1 course content:

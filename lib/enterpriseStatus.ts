@@ -6,6 +6,7 @@ import {
   getDefaultMoodleContext,
   getMoodleContextQueryString
 } from "@/lib/moodleContext";
+import { buildPilotReport } from "@/lib/pilotReport";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 
 const KNOWLEDGE_BASE_PATH = path.join(
@@ -24,6 +25,7 @@ export async function getEnterpriseStatus() {
   const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const feedback = await readPilotFeedbackSummary();
+  const pilotReport = await buildPilotReport();
   const health = await getHealthStatus();
   const providerStatus = getProviderStatus();
   const embedBaseUrl =
@@ -72,6 +74,11 @@ export async function getEnterpriseStatus() {
       label: "Pilot review workflow",
       status: "complete",
       note: "Admin feedback review surfaces escalation categories, owners, and next-action guidance for controlled pilot oversight."
+    },
+    {
+      label: "Pilot reporting",
+      status: "complete",
+      note: "Admin report endpoints provide JSON and Markdown summaries for project-team review meetings."
     },
     {
       label: "Knowledge base file",
@@ -127,6 +134,7 @@ export async function getEnterpriseStatus() {
       sizeBytes: knowledgeBaseStats.size
     },
     feedback,
+    pilotReport,
     health,
     checklist
   };

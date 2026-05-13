@@ -25,6 +25,9 @@ The pilot review section shows:
 - Suggested owner for each item
 - Suggested reason for escalation
 
+For meeting-ready summaries, use the pilot reporting endpoints documented in
+`docs/pilot-reporting.md`.
+
 ## Escalation Categories
 
 ### Lecturer Follow-Up

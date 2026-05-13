@@ -456,6 +456,90 @@ export default async function AdminPage() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Pilot Report
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Stakeholder summary export
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600">
+            JSON and Markdown summaries for project-team review meetings.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <MetricCard
+            label="Helpful rate"
+            value={status.pilotReport.overview.helpfulRate}
+            suffix="%"
+          />
+          <MetricCard
+            label="Escalations"
+            value={status.pilotReport.overview.totalEscalations}
+          />
+          <MetricCard
+            label="Report items"
+            value={status.pilotReport.topReviewItems.length}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Export endpoints</h3>
+            <div className="mt-4 grid gap-3">
+              <SnippetBlock code="/api/admin/report" label="JSON report" />
+              <SnippetBlock code="/api/admin/report.md" label="Markdown report" />
+            </div>
+          </div>
+          <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Suggested actions</h3>
+            <div className="mt-3 space-y-3">
+              {status.pilotReport.suggestedActions.map((action) => (
+                <div
+                  className="rounded-md border border-costaatt-gold/40 bg-white p-3"
+                  key={`${action.owner}-${action.text}`}
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-md bg-costaatt-blue/10 px-2 py-1 text-xs font-semibold text-costaatt-navy">
+                      {action.priority}
+                    </span>
+                    <span className="text-sm font-semibold text-slate-900">
+                      {action.owner}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    {action.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="mt-6">
+          <h3 className="font-bold text-costaatt-navy">Top report items</h3>
+          <div className="mt-4 divide-y divide-slate-200 rounded-lg border border-slate-200">
+            {status.pilotReport.topReviewItems.length > 0 ? (
+              status.pilotReport.topReviewItems.map((item) => (
+                <FeedbackReviewItem
+                  item={item}
+                  key={`${item.timestamp}-${item.rating}-${item.escalationCategory}`}
+                />
+              ))
+            ) : (
+              <p className="p-4 text-sm text-slate-600">
+                No report items yet. Run a controlled pilot session and collect
+                feedback first.
+              </p>
+            )}
+          </div>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-600">
+          {status.pilotReport.privacyNotice}
+        </p>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Deployment Checklist
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
@@ -550,11 +634,22 @@ function FeedbackReviewItem({
   );
 }
 
-function MetricCard({ label, value }: { label: string; value: number }) {
+function MetricCard({
+  label,
+  suffix = "",
+  value
+}: {
+  label: string;
+  suffix?: string;
+  value: number;
+}) {
   return (
     <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
       <p className="text-sm font-semibold text-slate-600">{label}</p>
-      <p className="mt-2 text-3xl font-bold text-costaatt-navy">{value}</p>
+      <p className="mt-2 text-3xl font-bold text-costaatt-navy">
+        {value}
+        {suffix}
+      </p>
     </div>
   );
 }

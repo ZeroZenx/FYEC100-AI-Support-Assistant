@@ -27,6 +27,10 @@ item should be escalated.
 See `docs/pilot-review-workflow.md` for the recommended pilot review rhythm,
 ownership categories, and privacy boundary.
 
+Pilot reporting is available as JSON and Markdown for project-team review
+meetings. These reports should be treated as pilot governance artifacts, not
+official student records. See `docs/pilot-reporting.md`.
+
 ## Knowledge Base Management
 
 The Phase 1 knowledge base is stored in `data/fyec100-knowledge-base.md`. An admin-friendly process should be created in later phases to review, approve, and version course content updates.

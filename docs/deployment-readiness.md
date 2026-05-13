@@ -108,6 +108,10 @@ This is useful for pilot testing only. Before production, COSTAATT should approv
 The `/admin` page includes a pilot feedback review workflow with escalation
 categories and suggested owners. See `docs/pilot-review-workflow.md`.
 
+Pilot reporting endpoints are available at `/api/admin/report` and
+`/api/admin/report.md`. These should remain internal to the project team during
+the pilot.
+
 ## Knowledge Base Updates
 
 The Phase 2 prototype still reads:
