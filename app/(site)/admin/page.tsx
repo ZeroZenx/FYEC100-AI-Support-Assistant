@@ -237,6 +237,149 @@ export default async function AdminPage({
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Pilot Meeting Pack
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Sponsor and project-team briefing
+            </h2>
+          </div>
+          <span className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${statusStyles.complete}`}>
+            Export ready
+          </span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-700">
+          {status.pilotMeetingPack.meetingPurpose}
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard
+            label="Blockers"
+            value={status.pilotMeetingPack.blockers.length}
+          />
+          <MetricCard
+            label="Decisions"
+            value={status.pilotMeetingPack.decisions.length}
+          />
+          <MetricCard
+            label="Feedback"
+            value={status.pilotMeetingPack.summary.feedbackTotal}
+          />
+          <MetricCard
+            label="Launches"
+            value={status.pilotMeetingPack.summary.launchAuditTotal}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr]">
+          <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Decisions needed</h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+              {status.pilotMeetingPack.decisions.map((decision) => (
+                <li key={decision}>{decision}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="grid gap-4">
+            <SnippetBlock
+              code="/api/admin/pilot-meeting-pack"
+              label="Meeting pack JSON"
+            />
+            <SnippetBlock
+              code="/api/admin/pilot-meeting-pack.md"
+              label="Meeting pack Markdown"
+            />
+          </div>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-600">
+          {status.pilotMeetingPack.privacyNotice}
+        </p>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Moodle Pilot Configuration
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              LMS setup pack
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.moodlePilotConfig.preflight.okForControlledPilot
+                ? statusStyles.ready
+                : statusStyles.watch
+            }`}
+          >
+            {status.moodlePilotConfig.preflight.okForControlledPilot
+              ? "Preflight ready"
+              : "Review warnings"}
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <MetricCard
+            label="Failures"
+            value={status.moodlePilotConfig.preflight.deploymentFailures}
+          />
+          <MetricCard
+            label="Warnings"
+            value={status.moodlePilotConfig.preflight.deploymentWarnings}
+          />
+          <MetricCard
+            label="Setup steps"
+            value={status.moodlePilotConfig.steps.length}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Setup steps</h3>
+            <div className="mt-4 grid gap-3">
+              {status.moodlePilotConfig.steps.map((step) => (
+                <article
+                  className="rounded-md border border-slate-200 bg-white p-3"
+                  key={step.label}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="font-semibold text-costaatt-navy">
+                      {step.label}
+                    </h4>
+                    <span
+                      className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                        statusStyles[step.status]
+                      }`}
+                    >
+                      {step.status}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    {step.text}
+                  </p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Owner: {step.owner}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <SnippetBlock
+              code={status.moodlePilotConfig.snippets.iframe}
+              label="Moodle iframe snippet"
+            />
+            <SnippetBlock
+              code="/api/admin/moodle-pilot-config.md"
+              label="Moodle config Markdown"
+            />
+          </div>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-600">
+          {status.moodlePilotConfig.trustBoundary}
+        </p>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Pilot Sign-off
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">

@@ -71,6 +71,13 @@ block, and LTI readiness signals for sponsor go/no-go discussion.
 The current prototype includes a file-based pilot sign-off pack for tracking
 project-team approval owners and exporting a Markdown sign-off record.
 
+The current prototype includes a pilot meeting pack that consolidates evidence,
+sign-off, readiness, feedback, launch audit, knowledge base review, and Moodle
+integration status into one Markdown briefing.
+
+The current prototype includes a Moodle pilot configuration pack with LMS-ready
+embed snippets, setup steps, preflight signals, and trust-boundary guidance.
+
 The current prototype includes a file-based pilot session planner for dry runs,
 small student pilots, pre-checks, success criteria, and post-session review.
 
@@ -153,6 +160,8 @@ Before enterprise launch, the project should add:
 7. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
 8. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
 9. Review the pilot sign-off pack and record project-team approval status.
-10. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-11. Collect feedback from students, lecturers, LMS administration, and IT.
-12. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
+10. Export the pilot meeting pack for sponsor and project-team review.
+11. Export the Moodle pilot configuration pack for LMS setup.
+12. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+13. Collect feedback from students, lecturers, LMS administration, and IT.
+14. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.

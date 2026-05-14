@@ -32,6 +32,16 @@ await runJsonCheck("Pilot evidence endpoint", `${baseUrl}/api/admin/pilot-eviden
 await runJsonCheck("Pilot sign-off endpoint", `${baseUrl}/api/admin/pilot-signoff`, {
   admin: true
 });
+await runJsonCheck(
+  "Pilot meeting pack endpoint",
+  `${baseUrl}/api/admin/pilot-meeting-pack`,
+  { admin: true }
+);
+await runJsonCheck(
+  "Moodle pilot config endpoint",
+  `${baseUrl}/api/admin/moodle-pilot-config`,
+  { admin: true }
+);
 await runJsonCheck("LTI readiness endpoint", `${baseUrl}/api/admin/lti-readiness`, {
   admin: true
 });

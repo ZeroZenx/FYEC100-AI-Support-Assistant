@@ -19,7 +19,9 @@ import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 import { readPilotSessionSummary } from "@/lib/pilotSessions";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
 import { buildPilotEvidenceDashboard } from "@/lib/pilotEvidence";
+import { buildPilotMeetingPack } from "@/lib/pilotMeetingPack";
 import { getPilotSignoffStatus } from "@/lib/pilotSignoff";
+import { buildMoodlePilotConfigPack } from "@/lib/moodlePilotConfig";
 
 const KNOWLEDGE_BASE_PATH = path.join(process.cwd(), "data", "fyec100-knowledge-base.md");
 
@@ -43,6 +45,8 @@ export async function getEnterpriseStatus() {
   const pilotReport = await buildPilotReport();
   const pilotEvidence = await buildPilotEvidenceDashboard();
   const pilotSignoff = await getPilotSignoffStatus();
+  const pilotMeetingPack = await buildPilotMeetingPack();
+  const moodlePilotConfig = await buildMoodlePilotConfigPack();
   const supportPlaybook = getSupportPlaybook();
   const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
@@ -127,6 +131,16 @@ export async function getEnterpriseStatus() {
         ? "complete"
         : "in-progress",
       note: "Admin view now tracks project-team approval owners and exports a Markdown sign-off pack for controlled pilot review."
+    },
+    {
+      label: "Pilot meeting pack",
+      status: "complete",
+      note: "Admin view now exports one consolidated sponsor/project-team meeting brief for pilot review."
+    },
+    {
+      label: "Moodle pilot configuration pack",
+      status: "complete",
+      note: "Admin view now provides LMS-ready Moodle embed snippets, setup steps, and trust-boundary guidance."
     },
     {
       label: "Pilot session planner",
@@ -222,7 +236,9 @@ export async function getEnterpriseStatus() {
     pilotSessions,
     deploymentReadiness,
     pilotEvidence,
+    pilotMeetingPack,
     pilotSignoff,
+    moodlePilotConfig,
     pilotReport,
     supportPlaybook,
     health,

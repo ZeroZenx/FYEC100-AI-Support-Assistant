@@ -188,6 +188,9 @@ signals for sponsor go/no-go discussion.
 The admin page also includes a pilot sign-off pack for tracking project-team
 approval owners before expanding the controlled Moodle pilot.
 
+The admin page also includes a pilot meeting pack and Moodle pilot
+configuration pack for project-team briefings and LMS setup.
+
 ## Pilot Rate Limiting
 
 The public pilot APIs use lightweight in-memory rate limits. Configure them in
@@ -237,6 +240,8 @@ Related checklists:
 - `docs/lti-readiness-scaffold.md`
 - `docs/pilot-evidence-dashboard.md`
 - `docs/pilot-signoff-pack.md`
+- `docs/pilot-meeting-pack.md`
+- `docs/moodle-pilot-configuration-pack.md`
 
 ## Pilot Smoke Test
 
@@ -301,6 +306,10 @@ http://localhost:4100/api/admin/pilot-evidence
 http://localhost:4100/api/admin/pilot-evidence.md
 http://localhost:4100/api/admin/pilot-signoff
 http://localhost:4100/api/admin/pilot-signoff.md
+http://localhost:4100/api/admin/pilot-meeting-pack
+http://localhost:4100/api/admin/pilot-meeting-pack.md
+http://localhost:4100/api/admin/moodle-pilot-config
+http://localhost:4100/api/admin/moodle-pilot-config.md
 ```
 
 ## Moodle Block Plugin Scaffold
