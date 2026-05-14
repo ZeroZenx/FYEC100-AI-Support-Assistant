@@ -225,6 +225,7 @@ Related checklists:
 - `docs/pilot-session-planning.md`
 - `docs/moodle-launch-audit.md`
 - `docs/support-escalation-playbook.md`
+- `docs/moodle-integration-decision.md`
 
 ## Pilot Smoke Test
 
@@ -279,6 +280,7 @@ testing:
 Protected admin endpoints:
 
 ```text
+http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/pilot-sessions
 http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook

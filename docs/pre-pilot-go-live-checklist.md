@@ -42,6 +42,7 @@ use the assistant.
 - Support escalation playbook owners are confirmed.
 - Pilot feedback review schedule is confirmed.
 - Planned pilot session exists in `data/pilot-sessions.json`.
+- Integration decision criteria have been reviewed with the project team.
 - Privacy notice and student guidance are approved.
 - Accessibility and usability checklist has been reviewed.
 - FYEC100 knowledge base content owner has approved the current Markdown file.

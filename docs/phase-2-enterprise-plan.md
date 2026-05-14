@@ -75,6 +75,9 @@ The current prototype includes a support escalation playbook that maps common
 pilot issues to lecturer, LMS administrator, knowledge base, technical, and
 academic integrity owners.
 
+The current prototype includes a Moodle integration decision matrix comparing
+iframe pilot, custom Moodle block, and LTI 1.3 paths.
+
 The current prototype includes deployment readiness checks for hosted URL,
 HTTPS, provider configuration, pilot rate limits, knowledge base readability,
 feedback storage, admin exposure, and controlled pilot scope.
@@ -131,4 +134,4 @@ Before enterprise launch, the project should add:
 7. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
 8. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
 9. Collect feedback from students, lecturers, LMS administration, and IT.
-10. Decide whether to proceed with a Moodle block plugin or LTI integration.
+10. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.

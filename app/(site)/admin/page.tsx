@@ -358,6 +358,87 @@ export default async function AdminPage({
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Integration Decision
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Moodle path recommendation
+            </h2>
+          </div>
+          <span className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${statusStyles["in-progress"]}`}>
+            Decision scaffold
+          </span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-700">
+          {status.integrationDecision.summary}
+        </p>
+        <div className="mt-6 grid gap-4 lg:grid-cols-3">
+          {status.integrationDecision.options.map((option) => (
+            <article
+              className={`rounded-lg border p-4 ${
+                option.id === status.integrationDecision.recommendedOption.id
+                  ? "border-costaatt-gold/70 bg-yellow-50"
+                  : "border-slate-200 bg-slate-50"
+              }`}
+              key={option.id}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h3 className="font-bold text-costaatt-navy">
+                    {option.label}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-600">
+                    {option.phaseFit} · {option.effort} effort
+                  </p>
+                </div>
+                <span className="rounded-md bg-white px-2 py-1 text-xs font-bold text-costaatt-navy">
+                  {option.score}
+                </span>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-slate-700">
+                {option.description}
+              </p>
+              <p className="mt-3 text-sm text-slate-700">
+                <span className="font-semibold text-slate-900">Best for:</span>{" "}
+                {option.bestFor}
+              </p>
+              <p className="mt-3 text-sm leading-6 text-slate-700">
+                {option.recommendation}
+              </p>
+              <div className="mt-4 grid gap-3">
+                <OptionList items={option.strengths} title="Strengths" />
+                <OptionList items={option.considerations} title="Considerations" />
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Decision criteria</h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+              {status.integrationDecision.decisionCriteria.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Next actions</h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+              {status.integrationDecision.nextActions.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <SnippetBlock
+          code="/api/admin/integration-decision"
+          label="Integration decision endpoint"
+        />
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Moodle Launch Audit
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
@@ -1048,6 +1129,21 @@ function ChecklistColumn({ items, title }: { items: string[]; title: string }) {
     <div>
       <h4 className="text-sm font-bold text-costaatt-navy">{title}</h4>
       <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-700">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function OptionList({ items, title }: { items: string[]; title: string }) {
+  return (
+    <div>
+      <h4 className="text-xs font-bold uppercase tracking-wide text-slate-500">
+        {title}
+      </h4>
+      <ul className="mt-2 space-y-1 text-sm leading-6 text-slate-700">
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}

@@ -124,5 +124,9 @@ Start with the `/embed` route inside a Moodle pilot course. If the user experien
 Before using a hosted pilot URL, check `/api/health` and confirm the Moodle
 domain/iframe settings with the LMS administrator.
 
+The admin dashboard includes an integration decision matrix and the protected
+`/api/admin/integration-decision` endpoint to compare iframe, Moodle block, and
+LTI 1.3 paths.
+
 See `docs/lti-integration-scaffold.md` for the current LTI placeholder fields
 and trust-boundary notes.

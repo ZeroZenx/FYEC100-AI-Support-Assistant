@@ -6,6 +6,7 @@ import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
 import { readLaunchAuditSummary } from "@/lib/launchAudit";
+import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
 import {
   getDefaultMoodleContext,
   getMoodleContextQueryString
@@ -29,6 +30,7 @@ export async function getEnterpriseStatus() {
   const knowledgeBaseMetadata = await getKnowledgeBaseMetadata();
   const feedback = await readPilotFeedbackSummary();
   const launchAudit = await readLaunchAuditSummary();
+  const integrationDecision = getMoodleIntegrationDecision();
   const pilotSessions = await readPilotSessionSummary();
   const pilotReport = await buildPilotReport();
   const supportPlaybook = getSupportPlaybook();
@@ -66,6 +68,11 @@ export async function getEnterpriseStatus() {
       label: "Moodle launch context",
       status: "in-progress",
       note: "The embed route accepts course, role, and launch-source context as pilot query parameters. Production should replace this with Moodle block or LTI trust."
+    },
+    {
+      label: "Moodle integration decision",
+      status: "in-progress",
+      note: "Admin view now compares iframe, Moodle block, and LTI 1.3 paths for the Phase 2 integration decision."
     },
     {
       label: "AI provider configuration",
@@ -175,6 +182,7 @@ export async function getEnterpriseStatus() {
       sizeBytes: knowledgeBaseStats.size
     },
     feedback,
+    integrationDecision,
     launchAudit,
     pilotSessions,
     deploymentReadiness,

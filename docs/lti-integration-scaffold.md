@@ -77,8 +77,10 @@ should then:
 ## Current Code Touchpoints
 
 - `lib/moodleContext.ts` defines pilot context types and parsing.
+- `lib/moodleIntegrationDecision.ts` compares iframe, Moodle block, and LTI 1.3 paths.
 - `app/embed/page.tsx` reads pilot context from URL parameters.
 - `components/ChatAssistant.tsx` displays embedded context and sends it to the chat API.
 - `app/api/chat/route.ts` normalizes context before building the assistant prompt.
 - `lib/guardrails.ts` adds context-aware guidance to the system prompt.
 - `/admin` shows accepted context fields and sample embed snippets.
+- `/api/admin/integration-decision` exposes the current integration decision matrix.

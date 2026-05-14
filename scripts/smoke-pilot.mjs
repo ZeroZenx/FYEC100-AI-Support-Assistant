@@ -16,6 +16,11 @@ await runJsonCheck(
   `${baseUrl}/api/admin/deployment-readiness`,
   { admin: true }
 );
+await runJsonCheck(
+  "Integration decision endpoint",
+  `${baseUrl}/api/admin/integration-decision`,
+  { admin: true }
+);
 await runJsonCheck("Pilot sessions endpoint", `${baseUrl}/api/admin/pilot-sessions`, {
   admin: true
 });
