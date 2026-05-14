@@ -89,6 +89,14 @@ Considerations:
 
 Create a Moodle block plugin that displays an "Ask FYEC100 Assistant" button and opens the assistant in a panel or modal.
 
+The repository now includes a starter scaffold at:
+
+```text
+moodle/block_fyec100assistant
+```
+
+See `docs/moodle-block-plugin-scaffold.md`.
+
 Pros:
 
 - Better course-level experience

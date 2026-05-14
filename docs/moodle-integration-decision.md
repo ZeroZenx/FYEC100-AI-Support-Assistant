@@ -36,6 +36,12 @@ Considerations:
 
 Best for a cleaner Moodle course-level experience after the iframe pilot.
 
+Repository scaffold:
+
+```text
+moodle/block_fyec100assistant
+```
+
 Strengths:
 
 - Better course-shell fit

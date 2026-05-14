@@ -28,6 +28,7 @@ use the assistant.
 - Moodle allows iframe embedding from the assistant domain.
 - Assistant response headers allow framing by the approved Moodle origin.
 - `/embed` loads inside a controlled FYEC100 course shell.
+- Moodle block scaffold has been reviewed in a test Moodle environment if used.
 - Student responsible-use notice is visible.
 - Keyboard navigation works inside the Moodle embed.
 - Screen-reader status messages have been checked for loading, errors, and feedback saved state.

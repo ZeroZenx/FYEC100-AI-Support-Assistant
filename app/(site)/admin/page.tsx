@@ -439,6 +439,88 @@ export default async function AdminPage({
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Moodle Block Plugin
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Course-shell plugin scaffold
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.moodleBlockPlugin.readyForLmsReview
+                ? statusStyles.complete
+                : statusStyles["in-progress"]
+            }`}
+          >
+            {status.moodleBlockPlugin.readyForLmsReview
+              ? "Ready for LMS review"
+              : "Needs files"}
+          </span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-700">
+          {status.moodleBlockPlugin.summary}
+        </p>
+        <div className="mt-6 grid gap-4 lg:grid-cols-3">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">Component</p>
+            <p className="mt-2 text-xl font-bold text-costaatt-navy">
+              {status.moodleBlockPlugin.component}
+            </p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">Moodle path</p>
+            <p className="mt-2 text-xl font-bold text-costaatt-navy">
+              {status.moodleBlockPlugin.installPath}
+            </p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">Admin API</p>
+            <p className="mt-2 break-words text-sm font-bold text-costaatt-navy">
+              /api/admin/moodle-block
+            </p>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Required plugin files</h3>
+            <div className="mt-3 divide-y divide-slate-200 rounded-md border border-slate-200 bg-white">
+              {status.moodleBlockPlugin.requiredFiles.map((file) => (
+                <div
+                  className="grid gap-2 p-3 text-sm text-slate-700 sm:grid-cols-[90px_1fr]"
+                  key={file.path}
+                >
+                  <span
+                    className={`w-fit rounded-md px-2 py-1 text-xs font-semibold ${
+                      file.exists ? statusStyles.complete : statusStyles.error
+                    }`}
+                  >
+                    {file.exists ? "present" : "missing"}
+                  </span>
+                  <span>{file.path}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Trust boundary</h3>
+            <p className="mt-3 text-sm leading-6 text-slate-700">
+              {status.moodleBlockPlugin.trustBoundary}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-slate-700">
+              Copy the local plugin folder into Moodle as{" "}
+              <span className="font-semibold">
+                {status.moodleBlockPlugin.installPath}
+              </span>{" "}
+              only after LMS administrator review in a test Moodle environment.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Moodle Launch Audit
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">

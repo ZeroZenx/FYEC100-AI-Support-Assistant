@@ -78,6 +78,10 @@ academic integrity owners.
 The current prototype includes a Moodle integration decision matrix comparing
 iframe pilot, custom Moodle block, and LTI 1.3 paths.
 
+The current prototype includes a starter Moodle block plugin scaffold under
+`moodle/block_fyec100assistant` for LMS administrator review in a Moodle test
+environment.
+
 The current prototype includes deployment readiness checks for hosted URL,
 HTTPS, provider configuration, pilot rate limits, knowledge base readability,
 feedback storage, admin exposure, and controlled pilot scope.

@@ -21,6 +21,9 @@ await runJsonCheck(
   `${baseUrl}/api/admin/integration-decision`,
   { admin: true }
 );
+await runJsonCheck("Moodle block endpoint", `${baseUrl}/api/admin/moodle-block`, {
+  admin: true
+});
 await runJsonCheck("Pilot sessions endpoint", `${baseUrl}/api/admin/pilot-sessions`, {
   admin: true
 });

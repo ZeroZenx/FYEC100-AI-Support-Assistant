@@ -1,0 +1,43 @@
+.block_fyec100assistant .fyec100assistant-container {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.block_fyec100assistant .fyec100assistant-notice {
+    color: #334155;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.block_fyec100assistant .fyec100assistant-button {
+    background: #163a70;
+    border-radius: 0.375rem;
+    color: #fff;
+    display: inline-block;
+    font-weight: 700;
+    padding: 0.6rem 0.85rem;
+    text-decoration: none;
+}
+
+.block_fyec100assistant .fyec100assistant-button:focus,
+.block_fyec100assistant .fyec100assistant-button:hover {
+    background: #2563a8;
+    color: #fff;
+    text-decoration: none;
+}
+
+.block_fyec100assistant .fyec100assistant-frame {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    min-height: 620px;
+    width: 100%;
+}
+
+.block_fyec100assistant .fyec100assistant-warning {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 0.375rem;
+    color: #78350f;
+    padding: 0.75rem;
+}

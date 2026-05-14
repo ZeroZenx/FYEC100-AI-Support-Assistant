@@ -78,6 +78,7 @@ should then:
 
 - `lib/moodleContext.ts` defines pilot context types and parsing.
 - `lib/moodleIntegrationDecision.ts` compares iframe, Moodle block, and LTI 1.3 paths.
+- `moodle/block_fyec100assistant` contains the starter Moodle block plugin scaffold.
 - `app/embed/page.tsx` reads pilot context from URL parameters.
 - `components/ChatAssistant.tsx` displays embedded context and sends it to the chat API.
 - `app/api/chat/route.ts` normalizes context before building the assistant prompt.

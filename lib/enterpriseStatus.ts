@@ -7,6 +7,7 @@ import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
 import { readLaunchAuditSummary } from "@/lib/launchAudit";
 import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
+import { getMoodleBlockPluginStatus } from "@/lib/moodleBlockPlugin";
 import {
   getDefaultMoodleContext,
   getMoodleContextQueryString
@@ -31,6 +32,7 @@ export async function getEnterpriseStatus() {
   const feedback = await readPilotFeedbackSummary();
   const launchAudit = await readLaunchAuditSummary();
   const integrationDecision = getMoodleIntegrationDecision();
+  const moodleBlockPlugin = await getMoodleBlockPluginStatus();
   const pilotSessions = await readPilotSessionSummary();
   const pilotReport = await buildPilotReport();
   const supportPlaybook = getSupportPlaybook();
@@ -73,6 +75,11 @@ export async function getEnterpriseStatus() {
       label: "Moodle integration decision",
       status: "in-progress",
       note: "Admin view now compares iframe, Moodle block, and LTI 1.3 paths for the Phase 2 integration decision."
+    },
+    {
+      label: "Moodle block plugin scaffold",
+      status: moodleBlockPlugin.readyForLmsReview ? "complete" : "in-progress",
+      note: "Starter Moodle block plugin files are available under moodle/block_fyec100assistant for LMS administrator review."
     },
     {
       label: "AI provider configuration",
@@ -183,6 +190,7 @@ export async function getEnterpriseStatus() {
     },
     feedback,
     integrationDecision,
+    moodleBlockPlugin,
     launchAudit,
     pilotSessions,
     deploymentReadiness,

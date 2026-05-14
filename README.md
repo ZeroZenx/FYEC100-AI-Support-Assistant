@@ -226,6 +226,7 @@ Related checklists:
 - `docs/moodle-launch-audit.md`
 - `docs/support-escalation-playbook.md`
 - `docs/moodle-integration-decision.md`
+- `docs/moodle-block-plugin-scaffold.md`
 
 ## Pilot Smoke Test
 
@@ -281,10 +282,28 @@ Protected admin endpoints:
 
 ```text
 http://localhost:4100/api/admin/integration-decision
+http://localhost:4100/api/admin/moodle-block
 http://localhost:4100/api/admin/pilot-sessions
 http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook
 ```
+
+## Moodle Block Plugin Scaffold
+
+A starter Moodle block plugin is included at:
+
+```text
+moodle/block_fyec100assistant
+```
+
+For Moodle test installation, copy it to:
+
+```text
+blocks/fyec100assistant
+```
+
+See `docs/moodle-block-plugin-scaffold.md`. This is a Phase 2 scaffold for LMS
+administrator review, not production LTI authentication.
 
 ## Knowledge Base Updates
 
