@@ -1,0 +1,35 @@
+{
+  "version": "phase-2-kb-releases-v0.1",
+  "lastUpdatedAt": "",
+  "releases": [
+    {
+      "id": "KBR-001",
+      "versionLabel": "FYEC100 KB v0.1",
+      "releaseStatus": "draft",
+      "pilotStage": "Controlled FYEC100 Moodle pilot",
+      "knowledgeBasePath": "data/fyec100-knowledge-base.md",
+      "releasedAt": "",
+      "approvedBy": "",
+      "reviewer": "",
+      "changeRequestIds": [],
+      "summary": "Initial Phase 1/Phase 2 knowledge base snapshot for local and controlled Moodle pilot testing.",
+      "changes": [
+        "Baseline FYEC100 course overview and expectations",
+        "Academic integrity guardrails",
+        "LMS navigation guidance",
+        "Escalation guidance for lecturer and LMS administrator follow-up"
+      ],
+      "knownLimitations": [
+        "Knowledge base review is still pending.",
+        "Pilot content should be reviewed by the lecturer/content owner before wider student use.",
+        "Moodle-specific instructions may need adjustment after the pilot course shell is confirmed."
+      ],
+      "notes": "Do not treat this release as final production course policy."
+    }
+  ],
+  "governanceNotes": [
+    "Use release notes to identify which knowledge base version was used in each pilot stage.",
+    "Only include approved content changes in a release.",
+    "Do not store student records, grades, IDs, or private student information in release notes."
+  ]
+}

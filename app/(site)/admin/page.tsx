@@ -7,6 +7,7 @@ const statusStyles = {
   blocked: "bg-red-100 text-red-800",
   complete: "bg-emerald-100 text-emerald-800",
   done: "bg-emerald-100 text-emerald-800",
+  draft: "bg-slate-100 text-slate-700",
   fail: "bg-red-100 text-red-800",
   "in-progress": "bg-amber-100 text-amber-800",
   "not-started": "bg-slate-100 text-slate-700",
@@ -25,7 +26,9 @@ const statusStyles = {
   "changes-requested": "bg-red-100 text-red-800",
   error: "bg-red-100 text-red-800",
   implemented: "bg-emerald-100 text-emerald-800",
-  rejected: "bg-red-100 text-red-800"
+  rejected: "bg-red-100 text-red-800",
+  released: "bg-emerald-100 text-emerald-800",
+  superseded: "bg-slate-100 text-slate-700"
 };
 
 const moodlePilotChecklist = [
@@ -235,6 +238,147 @@ export default async function AdminPage({
           <p className="mt-2 text-sm leading-6 text-slate-700">
             {status.knowledgeBase.preview}
           </p>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Knowledge Base Releases
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Content version snapshots
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.knowledgeBase.releases.summary.released > 0
+                ? statusStyles.released
+                : statusStyles.draft
+            }`}
+          >
+            {status.knowledgeBase.releases.latestRelease?.releaseStatus ??
+              "draft"}
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard
+            label="Releases"
+            value={status.knowledgeBase.releases.summary.total}
+          />
+          <MetricCard
+            label="Draft"
+            value={status.knowledgeBase.releases.summary.draft}
+          />
+          <MetricCard
+            label="Approved"
+            value={status.knowledgeBase.releases.summary.approved}
+          />
+          <MetricCard
+            label="Released"
+            value={status.knowledgeBase.releases.summary.released}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Latest snapshot</h3>
+            {status.knowledgeBase.releases.latestRelease ? (
+              <article className="mt-4 rounded-lg border border-slate-200 bg-white p-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <h4 className="font-semibold text-costaatt-navy">
+                      {status.knowledgeBase.releases.latestRelease.id}:{" "}
+                      {
+                        status.knowledgeBase.releases.latestRelease
+                          .versionLabel
+                      }
+                    </h4>
+                    <p className="text-sm text-slate-600">
+                      {status.knowledgeBase.releases.latestRelease.pilotStage}
+                    </p>
+                  </div>
+                  <span
+                    className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                      statusStyles[
+                        status.knowledgeBase.releases.latestRelease
+                          .releaseStatus
+                      ]
+                    }`}
+                  >
+                    {status.knowledgeBase.releases.latestRelease.releaseStatus}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm leading-6 text-slate-700">
+                  {status.knowledgeBase.releases.latestRelease.summary}
+                </p>
+                <div className="mt-4 grid gap-4 md:grid-cols-2">
+                  <ChecklistColumn
+                    items={status.knowledgeBase.releases.latestRelease.changes}
+                    title="Changes"
+                  />
+                  <ChecklistColumn
+                    items={
+                      status.knowledgeBase.releases.latestRelease
+                        .knownLimitations
+                    }
+                    title="Known limitations"
+                  />
+                </div>
+              </article>
+            ) : (
+              <p className="mt-4 text-sm text-slate-600">
+                No knowledge base release snapshots have been recorded yet.
+              </p>
+            )}
+          </div>
+          <div className="grid gap-4">
+            <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+              <h3 className="font-bold text-costaatt-navy">
+                Related workflow
+              </h3>
+              <dl className="mt-3 space-y-3 text-sm text-slate-700">
+                <div>
+                  <dt className="font-semibold text-slate-900">
+                    Review status
+                  </dt>
+                  <dd>
+                    {status.knowledgeBase.releases.relatedWorkflow.reviewStatus}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-900">
+                    Approved change requests
+                  </dt>
+                  <dd>
+                    {
+                      status.knowledgeBase.releases.relatedWorkflow
+                        .approvedChangeRequests
+                    }
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-900">
+                    High-priority pending requests
+                  </dt>
+                  <dd>
+                    {
+                      status.knowledgeBase.releases.relatedWorkflow
+                        .highPriorityPendingChangeRequests
+                    }
+                  </dd>
+                </div>
+              </dl>
+            </div>
+            <SnippetBlock
+              code="/api/admin/knowledge-base/releases"
+              label="Releases JSON"
+            />
+            <SnippetBlock
+              code={status.knowledgeBase.releases.exportPath}
+              label="Releases Markdown"
+            />
+          </div>
         </div>
       </section>
 

@@ -19,6 +19,8 @@ use the assistant.
 - `/api/admin/actions.md` has been exported for the pilot record.
 - `/api/admin/knowledge-base/change-requests` has been reviewed for pending content changes.
 - `/api/admin/knowledge-base/change-requests.md` has been exported for the content review record.
+- `/api/admin/knowledge-base/releases` has been reviewed for the active knowledge base version.
+- `/api/admin/knowledge-base/releases.md` has been exported for the release record.
 - `npm run smoke:pilot` passes against the hosted pilot URL.
 - `NEXT_PUBLIC_APP_BASE_URL` is the hosted HTTPS URL.
 - `MOODLE_ORIGIN` is the approved Moodle HTTPS origin.
@@ -62,6 +64,7 @@ use the assistant.
 - Moodle pilot configuration pack has been reviewed with the LMS administrator.
 - Admin action register has owners and statuses for follow-up items.
 - Knowledge base change requests have been reviewed before live content edits.
+- Knowledge base release notes identify the version used for the pilot.
 - Integration decision criteria have been reviewed with the project team.
 - Privacy notice and student guidance are approved.
 - Accessibility and usability checklist has been reviewed.

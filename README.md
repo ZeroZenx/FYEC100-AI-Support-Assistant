@@ -198,6 +198,10 @@ The admin page also includes a knowledge base change request workflow for
 reviewing proposed FYEC100 content updates before they are added to the live
 Markdown knowledge base.
 
+The admin page also includes knowledge base release notes for recording content
+version snapshots, approval details, change request references, and known
+limitations.
+
 ## Pilot Rate Limiting
 
 The public pilot APIs use lightweight in-memory rate limits. Configure them in
@@ -251,6 +255,7 @@ Related checklists:
 - `docs/moodle-pilot-configuration-pack.md`
 - `docs/admin-action-register.md`
 - `docs/knowledge-base-change-requests.md`
+- `docs/knowledge-base-release-notes.md`
 
 ## Pilot Smoke Test
 
@@ -323,6 +328,8 @@ http://localhost:4100/api/admin/actions
 http://localhost:4100/api/admin/actions.md
 http://localhost:4100/api/admin/knowledge-base/change-requests
 http://localhost:4100/api/admin/knowledge-base/change-requests.md
+http://localhost:4100/api/admin/knowledge-base/releases
+http://localhost:4100/api/admin/knowledge-base/releases.md
 ```
 
 ## Moodle Block Plugin Scaffold
