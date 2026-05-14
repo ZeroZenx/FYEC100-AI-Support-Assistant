@@ -18,6 +18,7 @@ import { buildPilotReport } from "@/lib/pilotReport";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 import { readPilotSessionSummary } from "@/lib/pilotSessions";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
+import { buildPilotEvidenceDashboard } from "@/lib/pilotEvidence";
 
 const KNOWLEDGE_BASE_PATH = path.join(process.cwd(), "data", "fyec100-knowledge-base.md");
 
@@ -39,6 +40,7 @@ export async function getEnterpriseStatus() {
   const moodleBlockPlugin = await getMoodleBlockPluginStatus();
   const pilotSessions = await readPilotSessionSummary();
   const pilotReport = await buildPilotReport();
+  const pilotEvidence = await buildPilotEvidenceDashboard();
   const supportPlaybook = getSupportPlaybook();
   const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
@@ -111,6 +113,11 @@ export async function getEnterpriseStatus() {
       label: "Pilot reporting",
       status: "complete",
       note: "Admin report endpoints provide JSON and Markdown summaries for project-team review meetings."
+    },
+    {
+      label: "Pilot evidence dashboard",
+      status: pilotEvidence.goNoGo.status === "go" ? "complete" : "in-progress",
+      note: "Admin view now aggregates readiness, launch audit, feedback, knowledge base review, and integration signals for go/no-go discussion."
     },
     {
       label: "Pilot session planner",
@@ -205,6 +212,7 @@ export async function getEnterpriseStatus() {
     launchAudit,
     pilotSessions,
     deploymentReadiness,
+    pilotEvidence,
     pilotReport,
     supportPlaybook,
     health,

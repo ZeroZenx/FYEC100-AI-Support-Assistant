@@ -10,9 +10,14 @@ const statusStyles = {
   pass: "bg-emerald-100 text-emerald-800",
   pending: "bg-slate-100 text-slate-700",
   planned: "bg-blue-100 text-blue-800",
+  ready: "bg-emerald-100 text-emerald-800",
   ok: "bg-emerald-100 text-emerald-800",
   warning: "bg-amber-100 text-amber-800",
   warn: "bg-amber-100 text-amber-800",
+  watch: "bg-amber-100 text-amber-800",
+  go: "bg-emerald-100 text-emerald-800",
+  hold: "bg-amber-100 text-amber-800",
+  blocked: "bg-red-100 text-red-800",
   error: "bg-red-100 text-red-800"
 };
 
@@ -224,6 +229,107 @@ export default async function AdminPage({
             {status.knowledgeBase.preview}
           </p>
         </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Pilot Evidence
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Sponsor go/no-go snapshot
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              statusStyles[status.pilotEvidence.goNoGo.status]
+            }`}
+          >
+            {status.pilotEvidence.goNoGo.label}
+          </span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-700">
+          {status.pilotEvidence.goNoGo.message}
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard label="Ready" value={status.pilotEvidence.summary.ready} />
+          <MetricCard label="Watch" value={status.pilotEvidence.summary.watch} />
+          <MetricCard
+            label="Blocked"
+            value={status.pilotEvidence.summary.blocked}
+          />
+          <MetricCard
+            label="Helpful rate"
+            value={status.pilotEvidence.metrics.helpfulRate}
+            suffix="%"
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Evidence signals</h3>
+            <div className="mt-4 grid gap-3">
+              {status.pilotEvidence.signals.map((signal) => (
+                <article
+                  className="rounded-md border border-slate-200 bg-white p-3"
+                  key={signal.label}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="font-semibold text-costaatt-navy">
+                      {signal.label}
+                    </h4>
+                    <span
+                      className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                        statusStyles[signal.status]
+                      }`}
+                    >
+                      {signal.status}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    {signal.message}
+                  </p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Owner: {signal.owner}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+              <h3 className="font-bold text-costaatt-navy">
+                Recommended actions
+              </h3>
+              <div className="mt-3 space-y-3">
+                {status.pilotEvidence.recommendedActions.map((action) => (
+                  <div
+                    className="rounded-md border border-costaatt-gold/40 bg-white p-3"
+                    key={`${action.owner}-${action.text}`}
+                  >
+                    <p className="text-sm font-semibold text-slate-900">
+                      {action.owner}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-slate-700">
+                      {action.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <SnippetBlock
+              code="/api/admin/pilot-evidence"
+              label="Pilot evidence JSON"
+            />
+            <SnippetBlock
+              code="/api/admin/pilot-evidence.md"
+              label="Pilot evidence Markdown"
+            />
+          </div>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-600">
+          {status.pilotEvidence.privacyNotice}
+        </p>
       </section>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">

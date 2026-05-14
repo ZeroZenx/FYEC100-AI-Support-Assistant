@@ -181,6 +181,10 @@ http://localhost:4100/api/admin/status
 The admin page also provides copy-ready Moodle iframe, Moodle HTML block, and
 fallback link snippets for pilot setup.
 
+The admin page includes a pilot evidence dashboard that aggregates readiness,
+knowledge base review, feedback, Moodle launch audit, Moodle block, and LTI
+signals for sponsor go/no-go discussion.
+
 ## Pilot Rate Limiting
 
 The public pilot APIs use lightweight in-memory rate limits. Configure them in
@@ -228,6 +232,7 @@ Related checklists:
 - `docs/moodle-integration-decision.md`
 - `docs/moodle-block-plugin-scaffold.md`
 - `docs/lti-readiness-scaffold.md`
+- `docs/pilot-evidence-dashboard.md`
 
 ## Pilot Smoke Test
 
@@ -288,6 +293,8 @@ http://localhost:4100/api/admin/moodle-block
 http://localhost:4100/api/admin/pilot-sessions
 http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook
+http://localhost:4100/api/admin/pilot-evidence
+http://localhost:4100/api/admin/pilot-evidence.md
 ```
 
 ## Moodle Block Plugin Scaffold
