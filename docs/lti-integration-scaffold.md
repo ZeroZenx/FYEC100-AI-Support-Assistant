@@ -61,6 +61,37 @@ A production Moodle LTI implementation should define and validate:
 - user role
 - Moodle user ID or anonymized identifier
 
+## Current Readiness Scaffold
+
+The app now exposes a protected LTI readiness endpoint:
+
+```text
+/api/admin/lti-readiness
+```
+
+The app also exposes placeholder LTI tool endpoints:
+
+```text
+/api/lti/login
+/api/lti/launch
+/api/lti/jwks
+```
+
+These endpoints are not production LTI authentication. They exist so the project
+team can plan Moodle external tool registration values and see the expected URL
+shape.
+
+## Environment Variables
+
+```bash
+LTI_PLATFORM_ISSUER=https://moodle.example.edu
+LTI_CLIENT_ID=your_lti_client_id
+LTI_DEPLOYMENT_ID=your_lti_deployment_id
+LTI_PLATFORM_AUTH_URL=https://moodle.example.edu/mod/lti/auth.php
+LTI_PLATFORM_TOKEN_URL=https://moodle.example.edu/mod/lti/token.php
+LTI_PLATFORM_JWKS_URL=https://moodle.example.edu/mod/lti/certs.php
+```
+
 ## Future Behavior
 
 When LTI is implemented, Moodle should provide trusted launch context. The app
@@ -85,3 +116,5 @@ should then:
 - `lib/guardrails.ts` adds context-aware guidance to the system prompt.
 - `/admin` shows accepted context fields and sample embed snippets.
 - `/api/admin/integration-decision` exposes the current integration decision matrix.
+- `/api/admin/lti-readiness` exposes required platform values, tool endpoints, and remaining validation warnings.
+- `/api/lti/login`, `/api/lti/launch`, and `/api/lti/jwks` are placeholder tool endpoints.

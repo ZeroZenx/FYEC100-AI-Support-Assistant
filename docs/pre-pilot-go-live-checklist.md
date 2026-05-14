@@ -34,6 +34,7 @@ use the assistant.
 - Screen-reader status messages have been checked for loading, errors, and feedback saved state.
 - Pilot launch context fields have been tested if used.
 - Fallback link is available if iframe embedding fails.
+- LTI readiness scaffold is reviewed if LTI testing is planned.
 
 ## Governance Checks
 

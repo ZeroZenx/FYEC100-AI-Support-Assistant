@@ -6,6 +6,7 @@ import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
 import { readLaunchAuditSummary } from "@/lib/launchAudit";
+import { getLtiReadiness } from "@/lib/ltiReadiness";
 import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
 import { getMoodleBlockPluginStatus } from "@/lib/moodleBlockPlugin";
 import {
@@ -32,6 +33,7 @@ export async function getEnterpriseStatus() {
   const feedback = await readPilotFeedbackSummary();
   const launchAudit = await readLaunchAuditSummary();
   const integrationDecision = getMoodleIntegrationDecision();
+  const ltiReadiness = getLtiReadiness();
   const moodleBlockPlugin = await getMoodleBlockPluginStatus();
   const pilotSessions = await readPilotSessionSummary();
   const pilotReport = await buildPilotReport();
@@ -80,6 +82,11 @@ export async function getEnterpriseStatus() {
       label: "Moodle block plugin scaffold",
       status: moodleBlockPlugin.readyForLmsReview ? "complete" : "in-progress",
       note: "Starter Moodle block plugin files are available under moodle/block_fyec100assistant for LMS administrator review."
+    },
+    {
+      label: "LTI 1.3 readiness scaffold",
+      status: ltiReadiness.summary.warnings === 0 ? "complete" : "in-progress",
+      note: "Admin view tracks required Moodle platform values, tool endpoint URLs, and remaining LTI launch validation work."
     },
     {
       label: "AI provider configuration",
@@ -190,6 +197,7 @@ export async function getEnterpriseStatus() {
     },
     feedback,
     integrationDecision,
+    ltiReadiness,
     moodleBlockPlugin,
     launchAudit,
     pilotSessions,

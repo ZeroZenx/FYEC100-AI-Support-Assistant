@@ -521,6 +521,110 @@ export default async function AdminPage({
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              LTI 1.3 Readiness
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Enterprise launch validation scaffold
+            </h2>
+          </div>
+          <span className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${statusStyles["in-progress"]}`}>
+            Validation not implemented
+          </span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-700">
+          {status.ltiReadiness.trustBoundary}
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <MetricCard
+            label="Configured"
+            value={status.ltiReadiness.summary.configured}
+          />
+          <MetricCard
+            label="Warnings"
+            value={status.ltiReadiness.summary.warnings}
+          />
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-600">Admin API</p>
+            <p className="mt-2 break-words text-sm font-bold text-costaatt-navy">
+              /api/admin/lti-readiness
+            </p>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Tool endpoints</h3>
+            <dl className="mt-3 space-y-3 text-sm text-slate-700">
+              {Object.entries(status.ltiReadiness.toolEndpoints).map(
+                ([key, value]) => (
+                  <div key={key}>
+                    <dt className="font-semibold text-slate-900">{key}</dt>
+                    <dd className="break-words">
+                      {Array.isArray(value) ? value.join(", ") : value}
+                    </dd>
+                  </div>
+                )
+              )}
+            </dl>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">
+              Moodle platform values
+            </h3>
+            <dl className="mt-3 space-y-3 text-sm text-slate-700">
+              {Object.entries(status.ltiReadiness.platform).map(([key, value]) => (
+                <div key={key}>
+                  <dt className="font-semibold text-slate-900">{key}</dt>
+                  <dd className="break-words">
+                    {value || "Not configured"}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_0.9fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Readiness checks</h3>
+            <div className="mt-3 divide-y divide-slate-200 rounded-md border border-slate-200 bg-white">
+              {status.ltiReadiness.checks.map((check) => (
+                <div
+                  className="grid gap-2 p-3 text-sm text-slate-700 sm:grid-cols-[100px_1fr]"
+                  key={check.label}
+                >
+                  <span
+                    className={`w-fit rounded-md px-2 py-1 text-xs font-semibold ${
+                      check.status === "pass"
+                        ? statusStyles.pass
+                        : statusStyles.warn
+                    }`}
+                  >
+                    {check.status}
+                  </span>
+                  <div>
+                    <p className="font-semibold text-slate-900">
+                      {check.label}
+                    </p>
+                    <p className="mt-1 leading-6">{check.message}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Implementation path</h3>
+            <ol className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+              {status.ltiReadiness.workflow.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
               Moodle Launch Audit
             </p>
             <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">

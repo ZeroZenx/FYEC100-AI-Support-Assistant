@@ -227,6 +227,7 @@ Related checklists:
 - `docs/support-escalation-playbook.md`
 - `docs/moodle-integration-decision.md`
 - `docs/moodle-block-plugin-scaffold.md`
+- `docs/lti-readiness-scaffold.md`
 
 ## Pilot Smoke Test
 
@@ -282,6 +283,7 @@ Protected admin endpoints:
 
 ```text
 http://localhost:4100/api/admin/integration-decision
+http://localhost:4100/api/admin/lti-readiness
 http://localhost:4100/api/admin/moodle-block
 http://localhost:4100/api/admin/pilot-sessions
 http://localhost:4100/api/admin/launch-audit
@@ -304,6 +306,20 @@ blocks/fyec100assistant
 
 See `docs/moodle-block-plugin-scaffold.md`. This is a Phase 2 scaffold for LMS
 administrator review, not production LTI authentication.
+
+## LTI 1.3 Readiness
+
+Phase 2 includes LTI planning endpoints and configuration checks:
+
+```text
+http://localhost:4100/api/admin/lti-readiness
+http://localhost:4100/api/lti/login
+http://localhost:4100/api/lti/launch
+http://localhost:4100/api/lti/jwks
+```
+
+These are readiness scaffolds only. They do not validate Moodle launches yet.
+See `docs/lti-readiness-scaffold.md`.
 
 ## Knowledge Base Updates
 

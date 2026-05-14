@@ -82,6 +82,10 @@ The current prototype includes a starter Moodle block plugin scaffold under
 `moodle/block_fyec100assistant` for LMS administrator review in a Moodle test
 environment.
 
+The current prototype includes an LTI 1.3 readiness scaffold for required
+Moodle platform values, placeholder tool endpoints, and launch validation
+warnings. It does not implement production LTI authentication yet.
+
 The current prototype includes deployment readiness checks for hosted URL,
 HTTPS, provider configuration, pilot rate limits, knowledge base readability,
 feedback storage, admin exposure, and controlled pilot scope.

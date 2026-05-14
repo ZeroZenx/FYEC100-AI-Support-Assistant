@@ -21,9 +21,13 @@ await runJsonCheck(
   `${baseUrl}/api/admin/integration-decision`,
   { admin: true }
 );
+await runJsonCheck("LTI readiness endpoint", `${baseUrl}/api/admin/lti-readiness`, {
+  admin: true
+});
 await runJsonCheck("Moodle block endpoint", `${baseUrl}/api/admin/moodle-block`, {
   admin: true
 });
+await runJsonCheck("LTI JWKS scaffold endpoint", `${baseUrl}/api/lti/jwks`);
 await runJsonCheck("Pilot sessions endpoint", `${baseUrl}/api/admin/pilot-sessions`, {
   admin: true
 });

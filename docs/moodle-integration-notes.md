@@ -138,3 +138,5 @@ LTI 1.3 paths.
 
 See `docs/lti-integration-scaffold.md` for the current LTI placeholder fields
 and trust-boundary notes.
+See `docs/lti-readiness-scaffold.md` for the current LTI readiness endpoints
+and environment variables.
