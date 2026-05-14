@@ -1,0 +1,56 @@
+{
+  "version": "phase-2-kb-change-requests-v0.1",
+  "lastUpdatedAt": "",
+  "requests": [
+    {
+      "id": "KBCR-001",
+      "title": "Add clearer guidance for first assignment planning",
+      "requestedBy": "Pilot Review Team",
+      "owner": "Lecturer / Content Owner",
+      "priority": "high",
+      "status": "pending-review",
+      "source": "Pilot feedback",
+      "knowledgeBaseSection": "How should students approach assignments?",
+      "rationale": "Students may need more explicit steps for planning, outlining, and checking assignment requirements without the assistant writing the assignment.",
+      "recommendedChange": "Add a short checklist for interpreting the assignment brief, identifying required evidence, drafting an outline, and asking the lecturer for clarification.",
+      "reviewer": "",
+      "decisionDate": "",
+      "notes": "Keep academic integrity guardrails explicit."
+    },
+    {
+      "id": "KBCR-002",
+      "title": "Clarify Moodle navigation support limits",
+      "requestedBy": "LMS Administrator",
+      "owner": "LMS Administrator / Lecturer",
+      "priority": "medium",
+      "status": "pending-review",
+      "source": "Moodle pilot configuration pack",
+      "knowledgeBaseSection": "LMS Navigation Guidance",
+      "rationale": "Students may ask for LMS steps that depend on the live course shell layout.",
+      "recommendedChange": "Add language explaining that Moodle layout may vary and students should contact the LMS administrator for access or missing-course issues.",
+      "reviewer": "",
+      "decisionDate": "",
+      "notes": "Avoid documenting non-final Moodle screen paths until the pilot course shell is confirmed."
+    },
+    {
+      "id": "KBCR-003",
+      "title": "Add escalation wording for unresolved course policy questions",
+      "requestedBy": "Project Lead",
+      "owner": "Lecturer / Content Owner",
+      "priority": "medium",
+      "status": "pending-review",
+      "source": "Support escalation playbook",
+      "knowledgeBaseSection": "Escalation Guidance",
+      "rationale": "The assistant should consistently refer policy, due-date, grading, and lecturer-specific questions to the lecturer or LMS.",
+      "recommendedChange": "Add a short policy-escalation note that distinguishes study support from official course decisions.",
+      "reviewer": "",
+      "decisionDate": "",
+      "notes": "Do not imply that the assistant can grade work or approve exceptions."
+    }
+  ],
+  "governanceNotes": [
+    "Use this register to propose knowledge base changes from pilot feedback and review meetings.",
+    "Only approved changes should be copied into data/fyec100-knowledge-base.md.",
+    "Do not store student names, IDs, grades, or private student information in change requests."
+  ]
+}

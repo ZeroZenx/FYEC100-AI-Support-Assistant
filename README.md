@@ -194,6 +194,10 @@ configuration pack for project-team briefings and LMS setup.
 The admin page also includes an action register for tracking pilot follow-up
 items by owner, priority, status, source, and due date.
 
+The admin page also includes a knowledge base change request workflow for
+reviewing proposed FYEC100 content updates before they are added to the live
+Markdown knowledge base.
+
 ## Pilot Rate Limiting
 
 The public pilot APIs use lightweight in-memory rate limits. Configure them in
@@ -246,6 +250,7 @@ Related checklists:
 - `docs/pilot-meeting-pack.md`
 - `docs/moodle-pilot-configuration-pack.md`
 - `docs/admin-action-register.md`
+- `docs/knowledge-base-change-requests.md`
 
 ## Pilot Smoke Test
 
@@ -316,6 +321,8 @@ http://localhost:4100/api/admin/moodle-pilot-config
 http://localhost:4100/api/admin/moodle-pilot-config.md
 http://localhost:4100/api/admin/actions
 http://localhost:4100/api/admin/actions.md
+http://localhost:4100/api/admin/knowledge-base/change-requests
+http://localhost:4100/api/admin/knowledge-base/change-requests.md
 ```
 
 ## Moodle Block Plugin Scaffold

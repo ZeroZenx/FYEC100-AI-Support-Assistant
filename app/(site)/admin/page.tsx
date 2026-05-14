@@ -13,6 +13,7 @@ const statusStyles = {
   open: "bg-blue-100 text-blue-800",
   pass: "bg-emerald-100 text-emerald-800",
   pending: "bg-slate-100 text-slate-700",
+  "pending-review": "bg-amber-100 text-amber-800",
   planned: "bg-blue-100 text-blue-800",
   ready: "bg-emerald-100 text-emerald-800",
   ok: "bg-emerald-100 text-emerald-800",
@@ -22,7 +23,9 @@ const statusStyles = {
   go: "bg-emerald-100 text-emerald-800",
   hold: "bg-amber-100 text-amber-800",
   "changes-requested": "bg-red-100 text-red-800",
-  error: "bg-red-100 text-red-800"
+  error: "bg-red-100 text-red-800",
+  implemented: "bg-emerald-100 text-emerald-800",
+  rejected: "bg-red-100 text-red-800"
 };
 
 const moodlePilotChecklist = [
@@ -232,6 +235,114 @@ export default async function AdminPage({
           <p className="mt-2 text-sm leading-6 text-slate-700">
             {status.knowledgeBase.preview}
           </p>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Knowledge Base Change Requests
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Governed FYEC100 content updates
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.knowledgeBase.changeRequests.summary.highPriorityPending > 0
+                ? statusStyles["in-progress"]
+                : statusStyles.complete
+            }`}
+          >
+            {status.knowledgeBase.changeRequests.summary.pending} pending
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard
+            label="Total"
+            value={status.knowledgeBase.changeRequests.summary.total}
+          />
+          <MetricCard
+            label="Pending"
+            value={status.knowledgeBase.changeRequests.summary.pending}
+          />
+          <MetricCard
+            label="Approved"
+            value={status.knowledgeBase.changeRequests.summary.approved}
+          />
+          <MetricCard
+            label="High priority"
+            value={
+              status.knowledgeBase.changeRequests.summary.highPriorityPending
+            }
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Pending requests</h3>
+            <div className="mt-4 divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+              {status.knowledgeBase.changeRequests.pending.map((request) => (
+                <article className="p-4" key={request.id}>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <h4 className="font-semibold text-costaatt-navy">
+                        {request.id}: {request.title}
+                      </h4>
+                      <p className="text-sm text-slate-600">{request.owner}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="rounded-md bg-costaatt-blue/10 px-2 py-1 text-xs font-semibold text-costaatt-navy">
+                        {request.priority}
+                      </span>
+                      <span
+                        className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                          statusStyles[request.status]
+                        }`}
+                      >
+                        {request.status}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    {request.rationale}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    <span className="font-semibold text-slate-900">
+                      Recommended change:
+                    </span>{" "}
+                    {request.recommendedChange}
+                  </p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Section: {request.knowledgeBaseSection} | Source:{" "}
+                    {request.source}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+              <h3 className="font-bold text-costaatt-navy">
+                Governance notes
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                {status.knowledgeBase.changeRequests.record.governanceNotes.map(
+                  (note) => (
+                    <li key={note}>{note}</li>
+                  )
+                )}
+              </ul>
+            </div>
+            <SnippetBlock
+              code="/api/admin/knowledge-base/change-requests"
+              label="Change requests JSON"
+            />
+            <SnippetBlock
+              code={status.knowledgeBase.changeRequests.exportPath}
+              label="Change requests Markdown"
+            />
+          </div>
         </div>
       </section>
 

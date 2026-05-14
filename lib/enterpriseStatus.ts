@@ -6,6 +6,7 @@ import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
+import { getKnowledgeBaseChangeRequests } from "@/lib/knowledgeBaseChangeRequests";
 import { getKnowledgeBaseReviewStatus } from "@/lib/knowledgeBaseReview";
 import { readLaunchAuditSummary } from "@/lib/launchAudit";
 import { getLtiReadiness } from "@/lib/ltiReadiness";
@@ -36,6 +37,7 @@ export async function getEnterpriseStatus() {
   const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const knowledgeBaseMetadata = await getKnowledgeBaseMetadata();
+  const knowledgeBaseChangeRequests = await getKnowledgeBaseChangeRequests();
   const knowledgeBaseReview = await getKnowledgeBaseReviewStatus();
   const feedback = await readPilotFeedbackSummary();
   const launchAudit = await readLaunchAuditSummary();
@@ -184,6 +186,14 @@ export async function getEnterpriseStatus() {
         : "FYEC100 content is loaded from Markdown and needs lecturer/content-owner review before hosted pilot."
     },
     {
+      label: "Knowledge base change requests",
+      status:
+        knowledgeBaseChangeRequests.summary.highPriorityPending > 0
+          ? "in-progress"
+          : "complete",
+      note: "Admin view now tracks proposed FYEC100 knowledge base changes before approved content updates are made."
+    },
+    {
       label: "Moodle pilot course",
       status: "pending",
       note: "Add the embed URL to a controlled FYEC100 Moodle test course."
@@ -230,6 +240,7 @@ export async function getEnterpriseStatus() {
     providerStatus,
     knowledgeBase: {
       ...knowledgeBaseMetadata,
+      changeRequests: knowledgeBaseChangeRequests,
       review: knowledgeBaseReview,
       path: "data/fyec100-knowledge-base.md",
       lastUpdated: knowledgeBaseStats.mtime.toISOString(),
