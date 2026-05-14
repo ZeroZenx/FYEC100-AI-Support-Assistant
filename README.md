@@ -191,6 +191,9 @@ approval owners before expanding the controlled Moodle pilot.
 The admin page also includes a pilot meeting pack and Moodle pilot
 configuration pack for project-team briefings and LMS setup.
 
+The admin page also includes an action register for tracking pilot follow-up
+items by owner, priority, status, source, and due date.
+
 ## Pilot Rate Limiting
 
 The public pilot APIs use lightweight in-memory rate limits. Configure them in
@@ -242,6 +245,7 @@ Related checklists:
 - `docs/pilot-signoff-pack.md`
 - `docs/pilot-meeting-pack.md`
 - `docs/moodle-pilot-configuration-pack.md`
+- `docs/admin-action-register.md`
 
 ## Pilot Smoke Test
 
@@ -310,6 +314,8 @@ http://localhost:4100/api/admin/pilot-meeting-pack
 http://localhost:4100/api/admin/pilot-meeting-pack.md
 http://localhost:4100/api/admin/moodle-pilot-config
 http://localhost:4100/api/admin/moodle-pilot-config.md
+http://localhost:4100/api/admin/actions
+http://localhost:4100/api/admin/actions.md
 ```
 
 ## Moodle Block Plugin Scaffold

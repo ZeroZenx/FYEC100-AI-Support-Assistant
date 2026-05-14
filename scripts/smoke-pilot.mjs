@@ -16,6 +16,9 @@ await runJsonCheck(
   `${baseUrl}/api/admin/deployment-readiness`,
   { admin: true }
 );
+await runJsonCheck("Admin actions endpoint", `${baseUrl}/api/admin/actions`, {
+  admin: true
+});
 await runJsonCheck(
   "Knowledge base review endpoint",
   `${baseUrl}/api/admin/knowledge-base/review`,

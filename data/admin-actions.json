@@ -1,0 +1,71 @@
+{
+  "version": "phase-2-admin-actions-v0.1",
+  "lastUpdatedAt": "",
+  "actions": [
+    {
+      "id": "ACT-001",
+      "title": "Complete FYEC100 knowledge base review",
+      "owner": "Lecturer / Content Owner",
+      "priority": "high",
+      "status": "open",
+      "dueDate": "",
+      "source": "Pilot evidence dashboard",
+      "notes": "Record reviewer name, review date, and approval status before wider student use."
+    },
+    {
+      "id": "ACT-002",
+      "title": "Configure Moodle origin for hosted iframe testing",
+      "owner": "Technical Lead / LMS Administrator",
+      "priority": "high",
+      "status": "open",
+      "dueDate": "",
+      "source": "Moodle pilot configuration pack",
+      "notes": "Set MOODLE_ORIGIN to the approved Moodle HTTPS origin before hosted pilot use."
+    },
+    {
+      "id": "ACT-003",
+      "title": "Configure admin access token before hosted pilot",
+      "owner": "Technical Lead / System Administrator",
+      "priority": "high",
+      "status": "open",
+      "dueDate": "",
+      "source": "Deployment readiness",
+      "notes": "Set ADMIN_ACCESS_TOKEN and keep /admin and /api/admin/* behind approved access controls."
+    },
+    {
+      "id": "ACT-004",
+      "title": "Review Moodle block scaffold in a Moodle test environment",
+      "owner": "LMS Administrator / Developer",
+      "priority": "medium",
+      "status": "open",
+      "dueDate": "",
+      "source": "Moodle block scaffold",
+      "notes": "Confirm installation path, block behavior, and fallback link before deciding whether to move beyond iframe testing."
+    },
+    {
+      "id": "ACT-005",
+      "title": "Complete project-team pilot sign-off",
+      "owner": "Project Sponsor / Project Team",
+      "priority": "high",
+      "status": "open",
+      "dueDate": "",
+      "source": "Pilot sign-off pack",
+      "notes": "Update data/pilot-signoff.json after the review meeting."
+    },
+    {
+      "id": "ACT-006",
+      "title": "Decide iframe, Moodle block, or LTI path for next stage",
+      "owner": "Project Sponsor / Project Lead",
+      "priority": "medium",
+      "status": "open",
+      "dueDate": "",
+      "source": "Moodle integration decision",
+      "notes": "Use pilot evidence and LMS administrator review to decide the next integration path."
+    }
+  ],
+  "governanceNotes": [
+    "Use this register to track project-team follow-up actions after pilot review meetings.",
+    "Update action status manually during Phase 2.",
+    "Do not store student records, grades, IDs, or private student information in this file."
+  ]
+}

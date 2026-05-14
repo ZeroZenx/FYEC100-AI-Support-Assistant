@@ -1,6 +1,7 @@
 import { stat } from "fs/promises";
 import path from "path";
 import { getAdminAuthStatus } from "@/lib/adminAuth";
+import { getAdminActionRegister } from "@/lib/adminActions";
 import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
@@ -47,6 +48,7 @@ export async function getEnterpriseStatus() {
   const pilotSignoff = await getPilotSignoffStatus();
   const pilotMeetingPack = await buildPilotMeetingPack();
   const moodlePilotConfig = await buildMoodlePilotConfigPack();
+  const adminActions = await getAdminActionRegister();
   const supportPlaybook = getSupportPlaybook();
   const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
@@ -143,6 +145,11 @@ export async function getEnterpriseStatus() {
       note: "Admin view now provides LMS-ready Moodle embed snippets, setup steps, and trust-boundary guidance."
     },
     {
+      label: "Admin action register",
+      status: adminActions.summary.blocked > 0 ? "in-progress" : "complete",
+      note: "Admin view now tracks pilot follow-up actions by owner, priority, status, source, and due date."
+    },
+    {
       label: "Pilot session planner",
       status: pilotSessions.total > 0 ? "complete" : "in-progress",
       note: "Admin view reads planned pilot sessions from data/pilot-sessions.json for pre-checks, success criteria, and post-session review."
@@ -229,6 +236,7 @@ export async function getEnterpriseStatus() {
       sizeBytes: knowledgeBaseStats.size
     },
     feedback,
+    adminActions,
     integrationDecision,
     ltiReadiness,
     moodleBlockPlugin,

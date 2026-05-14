@@ -4,10 +4,13 @@ import { getEnterpriseStatus } from "@/lib/enterpriseStatus";
 
 const statusStyles = {
   approved: "bg-emerald-100 text-emerald-800",
+  blocked: "bg-red-100 text-red-800",
   complete: "bg-emerald-100 text-emerald-800",
+  done: "bg-emerald-100 text-emerald-800",
   fail: "bg-red-100 text-red-800",
   "in-progress": "bg-amber-100 text-amber-800",
   "not-started": "bg-slate-100 text-slate-700",
+  open: "bg-blue-100 text-blue-800",
   pass: "bg-emerald-100 text-emerald-800",
   pending: "bg-slate-100 text-slate-700",
   planned: "bg-blue-100 text-blue-800",
@@ -18,7 +21,6 @@ const statusStyles = {
   watch: "bg-amber-100 text-amber-800",
   go: "bg-emerald-100 text-emerald-800",
   hold: "bg-amber-100 text-amber-800",
-  blocked: "bg-red-100 text-red-800",
   "changes-requested": "bg-red-100 text-red-800",
   error: "bg-red-100 text-red-800"
 };
@@ -230,6 +232,97 @@ export default async function AdminPage({
           <p className="mt-2 text-sm leading-6 text-slate-700">
             {status.knowledgeBase.preview}
           </p>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Action Register
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Pilot follow-up tracking
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.adminActions.summary.blocked > 0
+                ? statusStyles.blocked
+                : statusStyles.complete
+            }`}
+          >
+            {status.adminActions.summary.blocked > 0
+              ? "Blocked actions"
+              : "Register active"}
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard label="Total" value={status.adminActions.summary.total} />
+          <MetricCard label="Open" value={status.adminActions.summary.open} />
+          <MetricCard
+            label="In progress"
+            value={status.adminActions.summary.inProgress}
+          />
+          <MetricCard
+            label="High priority"
+            value={status.adminActions.summary.highPriorityOpen}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Open actions</h3>
+            <div className="mt-4 divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+              {status.adminActions.openActions.map((action) => (
+                <article className="p-4" key={action.id}>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <h4 className="font-semibold text-costaatt-navy">
+                        {action.id}: {action.title}
+                      </h4>
+                      <p className="text-sm text-slate-600">{action.owner}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="rounded-md bg-costaatt-blue/10 px-2 py-1 text-xs font-semibold text-costaatt-navy">
+                        {action.priority}
+                      </span>
+                      <span
+                        className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                          statusStyles[action.status]
+                        }`}
+                      >
+                        {action.status}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    {action.notes}
+                  </p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Source: {action.source}
+                    {action.dueDate ? ` | Due: ${action.dueDate}` : ""}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+              <h3 className="font-bold text-costaatt-navy">
+                Governance notes
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                {status.adminActions.record.governanceNotes.map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+            </div>
+            <SnippetBlock code="/api/admin/actions" label="Actions JSON" />
+            <SnippetBlock
+              code={status.adminActions.exportPath}
+              label="Actions Markdown"
+            />
+          </div>
         </div>
       </section>
 
