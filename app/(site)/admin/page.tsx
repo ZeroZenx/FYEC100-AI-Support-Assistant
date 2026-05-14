@@ -3,6 +3,7 @@ import { isAdminAccessAllowed } from "@/lib/adminAuth";
 import { getEnterpriseStatus } from "@/lib/enterpriseStatus";
 
 const statusStyles = {
+  approved: "bg-emerald-100 text-emerald-800",
   complete: "bg-emerald-100 text-emerald-800",
   fail: "bg-red-100 text-red-800",
   "in-progress": "bg-amber-100 text-amber-800",
@@ -18,6 +19,7 @@ const statusStyles = {
   go: "bg-emerald-100 text-emerald-800",
   hold: "bg-amber-100 text-amber-800",
   blocked: "bg-red-100 text-red-800",
+  "changes-requested": "bg-red-100 text-red-800",
   error: "bg-red-100 text-red-800"
 };
 
@@ -228,6 +230,103 @@ export default async function AdminPage({
           <p className="mt-2 text-sm leading-6 text-slate-700">
             {status.knowledgeBase.preview}
           </p>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Pilot Sign-off
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Project-team approval pack
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.pilotSignoff.approvedForControlledPilot
+                ? statusStyles.complete
+                : statusStyles["in-progress"]
+            }`}
+          >
+            {status.pilotSignoff.record.decisionStatus}
+          </span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-700">
+          {status.pilotSignoff.statusMessage}
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <MetricCard
+            label="Approved"
+            value={status.pilotSignoff.counts.approved}
+          />
+          <MetricCard
+            label="Pending"
+            value={status.pilotSignoff.counts.pending}
+          />
+          <MetricCard
+            label="Changes"
+            value={status.pilotSignoff.counts.changesRequested}
+          />
+          <MetricCard
+            label="Owners"
+            value={status.pilotSignoff.record.approvals.length}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">
+              Approval owners
+            </h3>
+            <div className="mt-4 divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+              {status.pilotSignoff.record.approvals.map((approval) => (
+                <article className="p-4" key={approval.name}>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <h4 className="font-semibold text-costaatt-navy">
+                        {approval.name}
+                      </h4>
+                      <p className="text-sm text-slate-600">
+                        {approval.responsibility}
+                      </p>
+                    </div>
+                    <span
+                      className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                        statusStyles[approval.status]
+                      }`}
+                    >
+                      {approval.status}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    {approval.role}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-slate-700">
+                    {approval.notes}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <div className="rounded-lg border border-costaatt-gold/50 bg-yellow-50 p-4">
+              <h3 className="font-bold text-costaatt-navy">Decision notes</h3>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                {status.pilotSignoff.record.decisionNotes.map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+            </div>
+            <SnippetBlock
+              code="/api/admin/pilot-signoff"
+              label="Pilot sign-off JSON"
+            />
+            <SnippetBlock
+              code={status.pilotSignoff.exportPath}
+              label="Pilot sign-off Markdown"
+            />
+          </div>
         </div>
       </section>
 

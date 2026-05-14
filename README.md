@@ -185,6 +185,9 @@ The admin page includes a pilot evidence dashboard that aggregates readiness,
 knowledge base review, feedback, Moodle launch audit, Moodle block, and LTI
 signals for sponsor go/no-go discussion.
 
+The admin page also includes a pilot sign-off pack for tracking project-team
+approval owners before expanding the controlled Moodle pilot.
+
 ## Pilot Rate Limiting
 
 The public pilot APIs use lightweight in-memory rate limits. Configure them in
@@ -233,6 +236,7 @@ Related checklists:
 - `docs/moodle-block-plugin-scaffold.md`
 - `docs/lti-readiness-scaffold.md`
 - `docs/pilot-evidence-dashboard.md`
+- `docs/pilot-signoff-pack.md`
 
 ## Pilot Smoke Test
 
@@ -295,6 +299,8 @@ http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook
 http://localhost:4100/api/admin/pilot-evidence
 http://localhost:4100/api/admin/pilot-evidence.md
+http://localhost:4100/api/admin/pilot-signoff
+http://localhost:4100/api/admin/pilot-signoff.md
 ```
 
 ## Moodle Block Plugin Scaffold

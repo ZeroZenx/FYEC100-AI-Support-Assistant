@@ -11,6 +11,8 @@ use the assistant.
 - `/api/admin/deployment-readiness` has no `fail` checks.
 - `/api/admin/pilot-evidence` has been reviewed by the project team.
 - `/api/admin/pilot-evidence.md` has been exported for the pilot record.
+- `/api/admin/pilot-signoff` has been reviewed by approval owners.
+- `/api/admin/pilot-signoff.md` has been exported for the pilot record.
 - `npm run smoke:pilot` passes against the hosted pilot URL.
 - `NEXT_PUBLIC_APP_BASE_URL` is the hosted HTTPS URL.
 - `MOODLE_ORIGIN` is the approved Moodle HTTPS origin.
@@ -49,6 +51,7 @@ use the assistant.
 - Pilot feedback review schedule is confirmed.
 - Planned pilot session exists in `data/pilot-sessions.json`.
 - Pilot evidence dashboard status and recommended actions have been reviewed.
+- Pilot sign-off pack approval owners and decision status have been reviewed.
 - Integration decision criteria have been reviewed with the project team.
 - Privacy notice and student guidance are approved.
 - Accessibility and usability checklist has been reviewed.

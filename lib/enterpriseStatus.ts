@@ -19,6 +19,7 @@ import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 import { readPilotSessionSummary } from "@/lib/pilotSessions";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
 import { buildPilotEvidenceDashboard } from "@/lib/pilotEvidence";
+import { getPilotSignoffStatus } from "@/lib/pilotSignoff";
 
 const KNOWLEDGE_BASE_PATH = path.join(process.cwd(), "data", "fyec100-knowledge-base.md");
 
@@ -41,6 +42,7 @@ export async function getEnterpriseStatus() {
   const pilotSessions = await readPilotSessionSummary();
   const pilotReport = await buildPilotReport();
   const pilotEvidence = await buildPilotEvidenceDashboard();
+  const pilotSignoff = await getPilotSignoffStatus();
   const supportPlaybook = getSupportPlaybook();
   const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
@@ -118,6 +120,13 @@ export async function getEnterpriseStatus() {
       label: "Pilot evidence dashboard",
       status: pilotEvidence.goNoGo.status === "go" ? "complete" : "in-progress",
       note: "Admin view now aggregates readiness, launch audit, feedback, knowledge base review, and integration signals for go/no-go discussion."
+    },
+    {
+      label: "Pilot sign-off pack",
+      status: pilotSignoff.approvedForControlledPilot
+        ? "complete"
+        : "in-progress",
+      note: "Admin view now tracks project-team approval owners and exports a Markdown sign-off pack for controlled pilot review."
     },
     {
       label: "Pilot session planner",
@@ -213,6 +222,7 @@ export async function getEnterpriseStatus() {
     pilotSessions,
     deploymentReadiness,
     pilotEvidence,
+    pilotSignoff,
     pilotReport,
     supportPlaybook,
     health,

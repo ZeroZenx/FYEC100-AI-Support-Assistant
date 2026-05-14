@@ -1,0 +1,53 @@
+{
+  "version": "phase-2-pilot-signoff-v0.1",
+  "decisionStatus": "pending-review",
+  "targetPilotStage": "Controlled FYEC100 Moodle pilot",
+  "lastUpdatedAt": "",
+  "approvals": [
+    {
+      "name": "Kevin Ramsoobhag",
+      "role": "VP Information Technology and Digital Transformation",
+      "responsibility": "Project Sponsor",
+      "status": "pending",
+      "signedAt": "",
+      "notes": "Approve sponsor go/no-go decision after reviewing pilot evidence."
+    },
+    {
+      "name": "Darren Headley",
+      "role": "Director | Technology Services",
+      "responsibility": "Project Lead and Technical Lead",
+      "status": "pending",
+      "signedAt": "",
+      "notes": "Confirm technical readiness, support path, and pilot scope."
+    },
+    {
+      "name": "Deborah Romero",
+      "role": "Developer",
+      "responsibility": "Application Development",
+      "status": "pending",
+      "signedAt": "",
+      "notes": "Confirm application build, endpoints, and documented limitations."
+    },
+    {
+      "name": "Kester David",
+      "role": "LMS Administrator",
+      "responsibility": "Moodle Pilot Setup",
+      "status": "pending",
+      "signedAt": "",
+      "notes": "Confirm Moodle course placement, iframe or block behavior, and fallback link."
+    },
+    {
+      "name": "Kevin Reece",
+      "role": "System Administrator and Infrastructure Support",
+      "responsibility": "Infrastructure Support",
+      "status": "pending",
+      "signedAt": "",
+      "notes": "Confirm hosting, environment variables, monitoring, and support readiness."
+    }
+  ],
+  "decisionNotes": [
+    "Use this file as a lightweight Phase 2 pilot sign-off artifact.",
+    "Update statuses manually after the project-team review meeting.",
+    "Do not store student records, grades, or personal student information in this file."
+  ]
+}

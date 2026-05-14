@@ -68,6 +68,9 @@ The current prototype includes a pilot evidence dashboard that aggregates
 readiness, knowledge base review, pilot feedback, Moodle launch audit, Moodle
 block, and LTI readiness signals for sponsor go/no-go discussion.
 
+The current prototype includes a file-based pilot sign-off pack for tracking
+project-team approval owners and exporting a Markdown sign-off record.
+
 The current prototype includes a file-based pilot session planner for dry runs,
 small student pilots, pre-checks, success criteria, and post-session review.
 
@@ -149,6 +152,7 @@ Before enterprise launch, the project should add:
 6. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
 7. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
 8. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
-9. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-10. Collect feedback from students, lecturers, LMS administration, and IT.
-11. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
+9. Review the pilot sign-off pack and record project-team approval status.
+10. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+11. Collect feedback from students, lecturers, LMS administration, and IT.
+12. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
