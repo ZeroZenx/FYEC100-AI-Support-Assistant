@@ -17,6 +17,11 @@ await runJsonCheck(
   { admin: true }
 );
 await runJsonCheck(
+  "Knowledge base review endpoint",
+  `${baseUrl}/api/admin/knowledge-base/review`,
+  { admin: true }
+);
+await runJsonCheck(
   "Integration decision endpoint",
   `${baseUrl}/api/admin/integration-decision`,
   { admin: true }

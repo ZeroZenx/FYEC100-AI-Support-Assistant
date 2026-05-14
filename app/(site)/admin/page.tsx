@@ -164,12 +164,14 @@ export default async function AdminPage({
           </div>
           <span
             className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
-              status.knowledgeBase.needsReview
-                ? statusStyles["in-progress"]
-                : statusStyles.complete
+              status.knowledgeBase.review.readyForPilot
+                ? statusStyles.complete
+                : statusStyles["in-progress"]
             }`}
           >
-            {status.knowledgeBase.needsReview ? "Needs review" : "Reviewed"}
+            {status.knowledgeBase.review.readyForPilot
+              ? "Reviewed"
+              : "Needs review"}
           </span>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-4">
@@ -191,7 +193,7 @@ export default async function AdminPage({
               </div>
               <div>
                 <dt className="font-semibold text-slate-900">Review status</dt>
-                <dd>{status.knowledgeBase.reviewStatus}</dd>
+                <dd>{status.knowledgeBase.review.statusMessage}</dd>
               </div>
               <div>
                 <dt className="font-semibold text-slate-900">Admin API</dt>
@@ -221,6 +223,104 @@ export default async function AdminPage({
           <p className="mt-2 text-sm leading-6 text-slate-700">
             {status.knowledgeBase.preview}
           </p>
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-costaatt-teal">
+              Knowledge Base Review
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-costaatt-navy">
+              Lecturer/content-owner approval workflow
+            </h2>
+          </div>
+          <span
+            className={`w-fit rounded-md px-3 py-1 text-xs font-semibold ${
+              status.knowledgeBase.review.readyForPilot
+                ? statusStyles.complete
+                : statusStyles["in-progress"]
+            }`}
+          >
+            {status.knowledgeBase.review.record.approvalStatus}
+          </span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-slate-700">
+          {status.knowledgeBase.review.statusMessage}
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          <ReviewStateCard
+            label="Reviewer"
+            ok={status.knowledgeBase.review.hasReviewer}
+          />
+          <ReviewStateCard
+            label="Review date"
+            ok={status.knowledgeBase.review.hasReviewDate}
+          />
+          <ReviewStateCard
+            label="Approval"
+            ok={status.knowledgeBase.review.approved}
+          />
+          <ReviewStateCard
+            label="Pilot ready"
+            ok={status.knowledgeBase.review.readyForPilot}
+          />
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Review record</h3>
+            <dl className="mt-3 space-y-3 text-sm text-slate-700">
+              <div>
+                <dt className="font-semibold text-slate-900">Version</dt>
+                <dd>{status.knowledgeBase.review.record.versionLabel}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Revision</dt>
+                <dd>{status.knowledgeBase.review.record.revision}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Content owner</dt>
+                <dd>{status.knowledgeBase.review.record.contentOwner}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Reviewer</dt>
+                <dd>
+                  {status.knowledgeBase.review.record.reviewerName ||
+                    "Not recorded"}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Last reviewed</dt>
+                <dd>
+                  {status.knowledgeBase.review.record.lastReviewedAt ||
+                    "Not recorded"}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-slate-900">Review file</dt>
+                <dd>{status.knowledgeBase.review.reviewFile.path}</dd>
+              </div>
+            </dl>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="font-bold text-costaatt-navy">Reviewer notes</h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+              {status.knowledgeBase.review.record.notes.map((note) => (
+                <li key={note}>{note}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <SnippetBlock
+            code="/api/admin/knowledge-base/review"
+            label="Review JSON endpoint"
+          />
+          <SnippetBlock
+            code={status.knowledgeBase.review.exportPath}
+            label="Review Markdown export"
+          />
         </div>
       </section>
 
@@ -1305,6 +1405,21 @@ function MetricCard({
       <p className="mt-2 text-3xl font-bold text-costaatt-navy">
         {value}
         {suffix}
+      </p>
+    </div>
+  );
+}
+
+function ReviewStateCard({ label, ok }: { label: string; ok: boolean }) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+      <p className="text-sm font-semibold text-slate-600">{label}</p>
+      <p
+        className={`mt-2 text-lg font-bold ${
+          ok ? "text-emerald-700" : "text-amber-700"
+        }`}
+      >
+        {ok ? "Complete" : "Needed"}
       </p>
     </div>
   );

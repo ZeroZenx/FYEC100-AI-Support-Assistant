@@ -20,19 +20,19 @@ export async function getKnowledgeBaseMetadata() {
   ]);
   const headings = extractHeadings(content);
   const words = content.trim().split(/\s+/).filter(Boolean);
-  const needsReview = process.env.KNOWLEDGE_BASE_REVIEWED !== "true";
+  const legacyReviewed = process.env.KNOWLEDGE_BASE_REVIEWED === "true";
 
   return {
     characterCount: content.length,
     headings,
     lastUpdated: stats.mtime.toISOString(),
     lineCount: content.split("\n").length,
-    needsReview,
+    needsReview: !legacyReviewed,
     path: "data/fyec100-knowledge-base.md",
     preview: getPreview(content),
-    reviewStatus: needsReview
-      ? "Needs lecturer/content-owner review before hosted pilot."
-      : "Marked reviewed through KNOWLEDGE_BASE_REVIEWED=true.",
+    reviewStatus: legacyReviewed
+      ? "Marked reviewed through KNOWLEDGE_BASE_REVIEWED=true."
+      : "Needs lecturer/content-owner review before hosted pilot.",
     sizeBytes: stats.size,
     wordCount: words.length
   };

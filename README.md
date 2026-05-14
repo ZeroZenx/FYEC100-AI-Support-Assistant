@@ -335,6 +335,19 @@ The admin dashboard and `/api/admin/knowledge-base` expose read-only metadata
 for content governance. Set `KNOWLEDGE_BASE_REVIEWED=true` only after lecturer
 or content-owner review.
 
+Phase 2 also includes a file-based review record:
+
+```text
+data/knowledge-base-review.json
+```
+
+Protected review endpoints:
+
+```text
+http://localhost:4100/api/admin/knowledge-base/review
+http://localhost:4100/api/admin/knowledge-base/review.md
+```
+
 ## GitHub Upload Instructions
 
 ```bash

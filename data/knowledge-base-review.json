@@ -1,0 +1,13 @@
+{
+  "approvalStatus": "pending-review",
+  "contentOwner": "FYEC100 Lecturer / Content Owner",
+  "knowledgeBasePath": "data/fyec100-knowledge-base.md",
+  "lastReviewedAt": "",
+  "notes": [
+    "Initial Phase 2 review record. Confirm FYEC100 course expectations, LMS guidance, assignment-support boundaries, and academic integrity wording before hosted pilot use."
+  ],
+  "reviewerName": "",
+  "reviewerRole": "Lecturer / Content Owner",
+  "revision": "phase-2-review-001",
+  "versionLabel": "FYEC100 pilot knowledge base v0.1"
+}

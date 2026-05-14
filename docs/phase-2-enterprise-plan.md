@@ -104,6 +104,10 @@ Moodle iframe review.
 The current prototype includes a read-only knowledge base management scaffold
 for content metadata, section headings, preview, and review status.
 
+The current prototype includes a file-based knowledge base review workflow with
+reviewer, review date, approval status, content-owner notes, and Markdown export
+for governance meetings.
+
 The current prototype includes `/api/health` for deployment readiness checks.
 It also includes `POST /api/admin/provider-test` to confirm the selected OpenAI
 or Ollama model responds before Moodle pilot testing.

@@ -2,7 +2,7 @@ import { access, appendFile, mkdir } from "fs/promises";
 import path from "path";
 import { getAdminAuthStatus } from "@/lib/adminAuth";
 import { getProviderStatus } from "@/lib/aiProvider";
-import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
+import { getKnowledgeBaseReviewStatus } from "@/lib/knowledgeBaseReview";
 import { getRateLimitSummary } from "@/lib/rateLimit";
 
 type ReadinessStatus = "pass" | "warn" | "fail";
@@ -55,12 +55,12 @@ export async function getDeploymentReadiness() {
 }
 
 async function checkKnowledgeBaseReview(): Promise<ReadinessCheck> {
-  const metadata = await getKnowledgeBaseMetadata();
+  const review = await getKnowledgeBaseReviewStatus();
 
   return {
     label: "Knowledge base review",
-    message: metadata.reviewStatus,
-    status: metadata.needsReview ? "warn" : "pass"
+    message: review.statusMessage,
+    status: review.readyForPilot ? "pass" : "warn"
   };
 }
 

@@ -5,6 +5,7 @@ import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
+import { getKnowledgeBaseReviewStatus } from "@/lib/knowledgeBaseReview";
 import { readLaunchAuditSummary } from "@/lib/launchAudit";
 import { getLtiReadiness } from "@/lib/ltiReadiness";
 import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
@@ -30,6 +31,7 @@ export async function getEnterpriseStatus() {
   const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const knowledgeBaseMetadata = await getKnowledgeBaseMetadata();
+  const knowledgeBaseReview = await getKnowledgeBaseReviewStatus();
   const feedback = await readPilotFeedbackSummary();
   const launchAudit = await readLaunchAuditSummary();
   const integrationDecision = getMoodleIntegrationDecision();
@@ -139,10 +141,10 @@ export async function getEnterpriseStatus() {
     },
     {
       label: "Knowledge base file",
-      status: knowledgeBaseMetadata.needsReview ? "in-progress" : "complete",
-      note: knowledgeBaseMetadata.needsReview
-        ? "FYEC100 content is loaded from Markdown and needs lecturer/content-owner review before hosted pilot."
-        : "FYEC100 content is loaded from Markdown and marked reviewed."
+      status: knowledgeBaseReview.readyForPilot ? "complete" : "in-progress",
+      note: knowledgeBaseReview.readyForPilot
+        ? "FYEC100 content review is approved for controlled pilot use."
+        : "FYEC100 content is loaded from Markdown and needs lecturer/content-owner review before hosted pilot."
     },
     {
       label: "Moodle pilot course",
@@ -191,6 +193,7 @@ export async function getEnterpriseStatus() {
     providerStatus,
     knowledgeBase: {
       ...knowledgeBaseMetadata,
+      review: knowledgeBaseReview,
       path: "data/fyec100-knowledge-base.md",
       lastUpdated: knowledgeBaseStats.mtime.toISOString(),
       sizeBytes: knowledgeBaseStats.size

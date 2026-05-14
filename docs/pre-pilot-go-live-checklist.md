@@ -20,6 +20,8 @@ use the assistant.
 - Knowledge base file is readable.
 - Knowledge base metadata has been reviewed in `/admin`.
 - `KNOWLEDGE_BASE_REVIEWED=true` is set only after lecturer/content-owner approval.
+- `data/knowledge-base-review.json` is approved for pilot with reviewer name and review date.
+- `/api/admin/knowledge-base/review.md` has been exported for the review record.
 - `ADMIN_ACCESS_TOKEN` is configured.
 - `/admin` and `/api/admin/*` are not publicly exposed without the pilot token or platform access controls.
 

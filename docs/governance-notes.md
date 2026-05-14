@@ -47,6 +47,11 @@ Phase 2 includes read-only knowledge base metadata in `/admin` and
 `/api/admin/knowledge-base`. `KNOWLEDGE_BASE_REVIEWED=true` should only be set
 after lecturer or content-owner review.
 
+Phase 2 also includes `data/knowledge-base-review.json` for reviewer name,
+review date, approval status, revision, and content-owner notes. The protected
+Markdown export `/api/admin/knowledge-base/review.md` can be used as a project
+governance artifact.
+
 ## Future Governance Questions
 
 - Who approves knowledge base changes?

@@ -33,7 +33,35 @@ The same metadata is available through the protected endpoint:
 
 Use `x-admin-token` or `?adminToken=...` when `ADMIN_ACCESS_TOKEN` is configured.
 
-## Review Flag
+## Review Record
+
+Phase 2 uses this file as the review source of truth:
+
+```text
+data/knowledge-base-review.json
+```
+
+The review record includes:
+
+- approval status
+- content owner
+- reviewer name
+- reviewer role
+- last reviewed date
+- version label
+- revision
+- reviewer notes
+
+Protected endpoints:
+
+```text
+/api/admin/knowledge-base/review
+/api/admin/knowledge-base/review.md
+```
+
+The Markdown export can be used in project-team or governance meetings.
+
+## Legacy Review Flag
 
 Use this environment variable to mark the knowledge base as reviewed:
 
@@ -41,18 +69,19 @@ Use this environment variable to mark the knowledge base as reviewed:
 KNOWLEDGE_BASE_REVIEWED=true
 ```
 
-Leave it as `false` until the lecturer or content owner has reviewed the
-current Markdown file for pilot use.
+The richer review record is preferred for Phase 2. Leave the environment flag
+as `false` unless the hosted pilot process explicitly approves its use.
 
 ## Suggested Review Workflow
 
 1. Developer updates `data/fyec100-knowledge-base.md`.
 2. Lecturer or content owner reviews the updated Markdown.
-3. Project lead confirms the content is suitable for the controlled pilot.
-4. Set `KNOWLEDGE_BASE_REVIEWED=true` in the hosted environment.
-5. Rebuild/restart the hosted app if required by the hosting platform.
+3. Update `data/knowledge-base-review.json` with reviewer, date, status, and notes.
+4. Set `approvalStatus` to `approved-for-pilot` only after content-owner approval.
+5. Project lead confirms the content is suitable for the controlled pilot.
 6. Run `/api/admin/deployment-readiness`.
-7. Run `npm run smoke:pilot` against the hosted pilot URL.
+7. Export `/api/admin/knowledge-base/review.md` for the review record.
+8. Run `npm run smoke:pilot` against the hosted pilot URL.
 
 ## Content Rules
 
@@ -65,7 +94,7 @@ current Markdown file for pilot use.
 
 ## Production Gap
 
-This is a read-only governance scaffold. It does not provide web editing,
-version approval, role-based publishing, or audit history. In production,
-COSTAATT should decide whether content management belongs in Moodle, SharePoint,
-GitHub pull requests, or a governed admin console.
+This is a file-based governance scaffold. It does not provide web editing,
+role-based publishing, electronic signatures, or a production audit log. In
+production, COSTAATT should decide whether content management belongs in Moodle,
+SharePoint, GitHub pull requests, or a governed admin console.
