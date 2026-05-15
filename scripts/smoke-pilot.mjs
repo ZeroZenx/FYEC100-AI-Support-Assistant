@@ -55,6 +55,11 @@ await runJsonCheck(
   `${baseUrl}/api/admin/moodle-pilot-config`,
   { admin: true }
 );
+await runJsonCheck(
+  "Accessibility usability endpoint",
+  `${baseUrl}/api/admin/accessibility-usability`,
+  { admin: true }
+);
 await runJsonCheck("LTI readiness endpoint", `${baseUrl}/api/admin/lti-readiness`, {
   admin: true
 });

@@ -15,6 +15,8 @@ use the assistant.
 - `/api/admin/pilot-signoff.md` has been exported for the pilot record.
 - `/api/admin/pilot-meeting-pack.md` has been exported for project-team review.
 - `/api/admin/moodle-pilot-config.md` has been exported for LMS setup.
+- `/api/admin/accessibility-usability` has been reviewed for pending or failed checks.
+- `/api/admin/accessibility-usability.md` has been exported for the pilot record.
 - `/api/admin/actions` has been reviewed for open high-priority actions.
 - `/api/admin/actions.md` has been exported for the pilot record.
 - `/api/admin/knowledge-base/change-requests` has been reviewed for pending content changes.

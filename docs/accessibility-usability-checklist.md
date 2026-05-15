@@ -6,6 +6,15 @@ Use this checklist before and during the FYEC100 controlled Moodle pilot. It
 focuses on the student-facing assistant experience, especially inside Moodle
 iframes, drawers, or panels.
 
+The checklist now has a file-based Phase 2 review record at
+`data/accessibility-usability-review.json`, plus admin exports:
+
+- `/api/admin/accessibility-usability`
+- `/api/admin/accessibility-usability.md`
+
+Use the JSON endpoint for the admin dashboard and the Markdown endpoint for
+project-team review records.
+
 ## Keyboard Checks
 
 - Tab reaches the responsible-use dismiss button.
@@ -47,6 +56,6 @@ iframes, drawers, or panels.
 ## Known Phase 2 Limitations
 
 - This is not a full WCAG audit.
-- The admin page is a pilot tool, not a polished production console.
+- The admin page is a pilot tool, not a replacement for a formal accessibility audit.
 - The assistant does not yet use Moodle SSO, LTI role validation, or production analytics.
 - Manual testing should be repeated after the app is hosted and embedded in Moodle.

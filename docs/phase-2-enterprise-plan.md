@@ -126,6 +126,10 @@ The current prototype includes student-facing accessibility and usability
 improvements for keyboard navigation, status messaging, focus visibility, and
 Moodle iframe review.
 
+The current prototype includes an accessibility and Moodle usability review
+pack for tracking keyboard, screen-reader, Moodle iframe, and student clarity
+checks before pilot go-live.
+
 The current prototype includes a read-only knowledge base management scaffold
 for content metadata, section headings, preview, and review status.
 
@@ -176,6 +180,7 @@ Before enterprise launch, the project should add:
 12. Update the admin action register with follow-up items from the meeting.
 13. Review knowledge base change requests before editing the FYEC100 Markdown content.
 14. Record knowledge base release notes for the version used in the pilot.
-15. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-16. Collect feedback from students, lecturers, LMS administration, and IT.
-17. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
+15. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
+16. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+17. Collect feedback from students, lecturers, LMS administration, and IT.
+18. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.

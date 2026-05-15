@@ -1,3 +1,4 @@
+import { getAccessibilityUsabilityReview } from "@/lib/accessibilityUsabilityReview";
 import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getKnowledgeBaseReviewStatus } from "@/lib/knowledgeBaseReview";
 import { readLaunchAuditSummary } from "@/lib/launchAudit";
@@ -53,7 +54,8 @@ export async function buildPilotEvidenceDashboard(): Promise<PilotEvidenceDashbo
     launchAudit,
     integrationDecision,
     moodleBlockPlugin,
-    ltiReadiness
+    ltiReadiness,
+    accessibilityUsabilityReview
   ] = await Promise.all([
     getDeploymentReadiness(),
     getKnowledgeBaseReviewStatus(),
@@ -62,7 +64,8 @@ export async function buildPilotEvidenceDashboard(): Promise<PilotEvidenceDashbo
     readLaunchAuditSummary(),
     Promise.resolve(getMoodleIntegrationDecision()),
     getMoodleBlockPluginStatus(),
-    Promise.resolve(getLtiReadiness())
+    Promise.resolve(getLtiReadiness()),
+    getAccessibilityUsabilityReview()
   ]);
 
   const signals: PilotEvidenceSignal[] = [
@@ -115,6 +118,12 @@ export async function buildPilotEvidenceDashboard(): Promise<PilotEvidenceDashbo
         : `${moodleBlockPlugin.missingFiles.length} Moodle block file(s) are missing.`,
       owner: "LMS Administrator / Developer",
       status: moodleBlockPlugin.readyForLmsReview ? "ready" : "watch"
+    },
+    {
+      label: "Accessibility and Moodle usability review",
+      message: accessibilityUsabilityReview.statusMessage,
+      owner: "Developer / LMS Administrator",
+      status: accessibilityUsabilityReview.readyForPilot ? "ready" : "watch"
     },
     {
       label: "LTI 1.3 readiness",

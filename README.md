@@ -202,6 +202,9 @@ The admin page also includes knowledge base release notes for recording content
 version snapshots, approval details, change request references, and known
 limitations.
 
+The admin page also includes an accessibility and Moodle usability review pack
+for keyboard, screen-reader, embedded Moodle, and student clarity checks.
+
 ## Pilot Rate Limiting
 
 The public pilot APIs use lightweight in-memory rate limits. Configure them in

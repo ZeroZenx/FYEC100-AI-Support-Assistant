@@ -449,7 +449,34 @@ export default async function AdminPage({
               status={status.adminAuth.configured ? "configured" : "local only"}
               text="Use ADMIN_ACCESS_TOKEN before hosted pilot access."
             />
+            <CompactRecord
+              label="Accessibility review"
+              status={status.accessibilityUsabilityReview.record.reviewStatus}
+              text={status.accessibilityUsabilityReview.statusMessage}
+            />
+            <CompactRecord
+              label="Moodle usability checks"
+              status={
+                status.accessibilityUsabilityReview.readyForPilot
+                  ? "approved"
+                  : "pending-review"
+              }
+              text={`${status.accessibilityUsabilityReview.summary.watch} watch / ${status.accessibilityUsabilityReview.summary.pending} pending / ${status.accessibilityUsabilityReview.summary.fail} failed`}
+            />
           </div>
+          <DetailDrawer title="Accessibility and Moodle usability checks">
+            <div className="grid gap-3">
+              {status.accessibilityUsabilityReview.record.checks.map((check) => (
+                <CompactRecord
+                  key={check.id}
+                  label={`${check.id}: ${check.label}`}
+                  meta={`${check.category} / ${check.owner}`}
+                  status={check.status}
+                  text={check.recommendedAction}
+                />
+              ))}
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Health checks">
             <div className="grid gap-3">
               {status.health.checks.map((check) => (
@@ -510,6 +537,10 @@ export default async function AdminPage({
             <EndpointPill label="Pilot evidence" path="/api/admin/pilot-evidence.md" />
             <EndpointPill label="Meeting pack" path="/api/admin/pilot-meeting-pack.md" />
             <EndpointPill label="Sign-off pack" path={status.pilotSignoff.exportPath} />
+            <EndpointPill
+              label="Accessibility review"
+              path={status.accessibilityUsabilityReview.exportPath}
+            />
             <EndpointPill label="Pilot report" path="/api/admin/report.md" />
             <EndpointPill
               label="KB releases"

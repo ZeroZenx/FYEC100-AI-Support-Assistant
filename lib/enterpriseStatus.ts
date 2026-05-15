@@ -1,5 +1,6 @@
 import { stat } from "fs/promises";
 import path from "path";
+import { getAccessibilityUsabilityReview } from "@/lib/accessibilityUsabilityReview";
 import { getAdminAuthStatus } from "@/lib/adminAuth";
 import { getAdminActionRegister } from "@/lib/adminActions";
 import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
@@ -53,6 +54,7 @@ export async function getEnterpriseStatus() {
   const pilotMeetingPack = await buildPilotMeetingPack();
   const moodlePilotConfig = await buildMoodlePilotConfigPack();
   const adminActions = await getAdminActionRegister();
+  const accessibilityUsabilityReview = await getAccessibilityUsabilityReview();
   const supportPlaybook = getSupportPlaybook();
   const deploymentReadiness = await getDeploymentReadiness();
   const health = await getHealthStatus();
@@ -152,6 +154,13 @@ export async function getEnterpriseStatus() {
       label: "Admin action register",
       status: adminActions.summary.blocked > 0 ? "in-progress" : "complete",
       note: "Admin view now tracks pilot follow-up actions by owner, priority, status, source, and due date."
+    },
+    {
+      label: "Accessibility and Moodle usability review",
+      status: accessibilityUsabilityReview.readyForPilot
+        ? "complete"
+        : "in-progress",
+      note: "Admin view now tracks keyboard, screen-reader, Moodle iframe, and student usability review checks before pilot go-live."
     },
     {
       label: "Pilot session planner",
@@ -256,6 +265,7 @@ export async function getEnterpriseStatus() {
     },
     feedback,
     adminActions,
+    accessibilityUsabilityReview,
     integrationDecision,
     ltiReadiness,
     moodleBlockPlugin,

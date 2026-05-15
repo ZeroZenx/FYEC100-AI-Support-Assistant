@@ -1,0 +1,68 @@
+{
+  "version": "accessibility-usability-review-v0.1",
+  "targetExperience": "FYEC100 assistant embedded in Moodle",
+  "reviewStatus": "pending-review",
+  "reviewer": "",
+  "lastReviewedAt": "",
+  "governanceNotes": [
+    "Use this file as a lightweight Phase 2 accessibility and usability review record.",
+    "Repeat review after the assistant is hosted and embedded in the real Moodle pilot course.",
+    "Do not store student names, student IDs, grades, or disability accommodation details in this file."
+  ],
+  "checks": [
+    {
+      "id": "A11Y-001",
+      "category": "Keyboard",
+      "label": "Responsible-use notice is keyboard accessible",
+      "owner": "Developer",
+      "status": "watch",
+      "evidence": "Dismiss button is visible and should be checked with keyboard-only navigation in Moodle.",
+      "recommendedAction": "Confirm Tab reaches the dismiss button and Enter or Space activates it."
+    },
+    {
+      "id": "A11Y-002",
+      "category": "Keyboard",
+      "label": "Chat input and starter prompts are reachable",
+      "owner": "Developer",
+      "status": "watch",
+      "evidence": "Chat input and starter prompts are rendered as standard focusable controls.",
+      "recommendedAction": "Confirm Tab order inside /embed after the app is placed in Moodle."
+    },
+    {
+      "id": "A11Y-003",
+      "category": "Screen reader",
+      "label": "Loading, error, and feedback status messages are announced",
+      "owner": "Developer",
+      "status": "watch",
+      "evidence": "The interface includes status messaging, but manual screen-reader review is still required.",
+      "recommendedAction": "Run a short VoiceOver test for loading, error, and feedback saved states."
+    },
+    {
+      "id": "A11Y-004",
+      "category": "Moodle iframe",
+      "label": "Embedded assistant fits in Moodle without blocking the input",
+      "owner": "LMS Administrator",
+      "status": "pending",
+      "evidence": "Requires confirmation inside the controlled FYEC100 Moodle course shell.",
+      "recommendedAction": "Review the assistant in Moodle page, block, drawer, or modal placement before pilot use."
+    },
+    {
+      "id": "A11Y-005",
+      "category": "Student usability",
+      "label": "Students can understand assistant limits and academic integrity guidance",
+      "owner": "Lecturer / Content Owner",
+      "status": "watch",
+      "evidence": "Student-facing responsible-use and academic integrity language is visible.",
+      "recommendedAction": "Ask a small pilot group to confirm the language is clear before wider rollout."
+    },
+    {
+      "id": "A11Y-006",
+      "category": "Student usability",
+      "label": "Fallback and escalation guidance is understandable",
+      "owner": "Pilot Review Team",
+      "status": "watch",
+      "evidence": "Fallback guidance directs students to lecturer, LMS, or administrator support paths.",
+      "recommendedAction": "Confirm fallback wording during the dry-run and update the knowledge base if students remain unsure."
+    }
+  ]
+}
