@@ -9,6 +9,7 @@ import {
   useState
 } from "react";
 import type { MoodleLaunchContext } from "@/lib/moodleContext";
+import { getRoleGuidance } from "@/lib/moodleRoleGuidance";
 
 type ChatMessage = {
   feedbackStatus?: "idle" | "sending" | "sent";
@@ -44,7 +45,7 @@ const feedbackOptions: Array<{
   { label: "Lecturer follow-up needed", value: "lecturer-follow-up" }
 ];
 
-const starterPrompts = [
+const defaultStarterPrompts = [
   "What is FYEC100 about?",
   "How should I approach the reflection assignment?",
   "Can you help me make a weekly study plan?",
@@ -60,11 +61,14 @@ export function ChatAssistant({
   embedded = false,
   launchContext
 }: ChatAssistantProps) {
+  const roleGuidance = getRoleGuidance(launchContext?.role);
+  const starterPrompts = launchContext
+    ? roleGuidance.starterPrompts
+    : defaultStarterPrompts;
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content:
-        "Hello. I can help with FYEC100 course questions, study tips, LMS guidance, and academic integrity. I cannot write full assignments or grade your work."
+      content: roleGuidance.assistantIntro
     }
   ]);
   const [input, setInput] = useState("");
@@ -163,6 +167,7 @@ export function ChatAssistant({
         body: JSON.stringify({
           assistantResponse: message.content,
           feedbackCategory: rating,
+          launchContext,
           mode: embedded ? "embedded" : "standalone",
           note: feedbackNote.trim() || undefined,
           rating,
@@ -226,12 +231,22 @@ export function ChatAssistant({
             </p>
           ) : null}
           {embedded && launchContext ? (
-            <dl className="mt-2 grid gap-2 text-xs text-slate-600 sm:grid-cols-4">
-              <ContextItem label="Course" value={launchContext.courseShortName} />
-              <ContextItem label="Course ID" value={launchContext.courseId} />
-              <ContextItem label="Role" value={launchContext.role} />
-              <ContextItem label="Launch" value={launchContext.launchSource} />
-            </dl>
+            <div className="mt-3 grid gap-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-md bg-costaatt-blue px-2.5 py-1 text-xs font-bold text-white">
+                  {roleGuidance.badgeLabel}
+                </span>
+                <span className="rounded-md border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-800">
+                  Pilot context, not authenticated identity
+                </span>
+              </div>
+              <dl className="grid gap-2 text-xs text-slate-600 sm:grid-cols-4">
+                <ContextItem label="Course" value={launchContext.courseShortName} />
+                <ContextItem label="Course ID" value={launchContext.courseId} />
+                <ContextItem label="Role" value={launchContext.role} />
+                <ContextItem label="Launch" value={launchContext.launchSource} />
+              </dl>
+            </div>
           ) : null}
         </div>
         {showUseNotice ? (
@@ -246,10 +261,10 @@ export function ChatAssistant({
                   Responsible use notice
                 </h3>
                 <p className="mt-1 text-sm leading-6 text-slate-700">
-                  This assistant supports learning but does not grade work,
-                  replace your lecturer, or write full assignments. Do not enter
-                  sensitive personal information, and do not submit AI output as
-                  your own work.
+                  {roleGuidance.notice} This assistant supports learning and
+                  pilot review, but it does not grade work, replace official
+                  COSTAATT roles, or write full assignments. Do not enter
+                  sensitive personal information.
                 </p>
               </div>
               <button
@@ -388,6 +403,22 @@ export function ChatAssistant({
             ))}
           </div>
         </section>
+        {embedded && launchContext ? (
+          <section
+            className={`rounded-lg border border-slate-200 bg-white shadow-soft ${
+              embedded ? "p-4" : "p-5"
+            }`}
+          >
+            <h3 className="font-bold text-costaatt-navy">Role-aware focus</h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+              {roleGuidance.focusAreas.map((area) => (
+                <li className="rounded-md bg-slate-50 px-3 py-2" key={area}>
+                  {area}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
         <section
           className={`rounded-lg border border-costaatt-gold/50 bg-yellow-50 text-sm leading-6 text-slate-700 ${
             embedded ? "p-4" : "p-5"

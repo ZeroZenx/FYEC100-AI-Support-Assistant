@@ -87,6 +87,11 @@ The current prototype includes a Moodle pilot launch simulator that generates
 role, course, placement, and launch-source preview URLs for local rehearsal
 before the assistant is placed inside a live Moodle course shell.
 
+The current prototype includes role-aware assistant behavior for student,
+lecturer, LMS administrator, and general pilot launch contexts. This changes
+starter prompts, embedded notices, and provider prompt instructions while
+preserving the rule that pilot context is not authenticated Moodle identity.
+
 The current prototype includes an admin action register for tracking pilot
 follow-up items by owner, priority, status, source, and due date.
 
@@ -187,21 +192,22 @@ Before enterprise launch, the project should add:
 2. Configure the app with either OpenAI or Ollama.
 3. Run `/api/admin/deployment-readiness` and resolve blocking failures.
 4. Use the Moodle launch simulator to rehearse student, lecturer, LMS administrator, and future LTI launch contexts.
-5. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
-6. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
-7. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
-8. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
-9. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
-10. Review the pilot sign-off pack and record project-team approval status.
-11. Export the pilot meeting pack for sponsor and project-team review.
-12. Export the pilot operations runbook for before/during/after pilot procedures.
-13. Export the Moodle pilot configuration pack for LMS setup.
-14. Update the admin action register with follow-up items from the meeting.
-15. Review knowledge base change requests before editing the FYEC100 Markdown content.
-16. Draft proposed knowledge base wording in the draft update workflow before applying approved changes.
-17. Complete the manual knowledge base apply checklist before editing the live Markdown file.
-18. Record knowledge base release notes for the version used in the pilot.
-19. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
-20. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+5. Confirm role-aware assistant behavior for student, lecturer, LMS administrator, and general pilot contexts.
+6. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
+7. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
+8. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
+9. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
+10. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
+11. Review the pilot sign-off pack and record project-team approval status.
+12. Export the pilot meeting pack for sponsor and project-team review.
+13. Export the pilot operations runbook for before/during/after pilot procedures.
+14. Export the Moodle pilot configuration pack for LMS setup.
+15. Update the admin action register with follow-up items from the meeting.
+16. Review knowledge base change requests before editing the FYEC100 Markdown content.
+17. Draft proposed knowledge base wording in the draft update workflow before applying approved changes.
+18. Complete the manual knowledge base apply checklist before editing the live Markdown file.
+19. Record knowledge base release notes for the version used in the pilot.
+20. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
+21. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
 20. Collect feedback from students, lecturers, LMS administration, and IT.
 21. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.

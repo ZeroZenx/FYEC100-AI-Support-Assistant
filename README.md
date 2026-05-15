@@ -199,6 +199,10 @@ The admin page also includes a Moodle pilot launch simulator for generating
 role, course, placement, and launch-source preview URLs before testing inside a
 real Moodle course shell.
 
+The embedded assistant also includes role-aware pilot behavior so student,
+lecturer, LMS administrator, and general pilot launch contexts receive tailored
+starter prompts, notices, and support guidance.
+
 The admin page also includes an action register for tracking pilot follow-up
 items by owner, priority, status, source, and due date.
 
@@ -273,6 +277,7 @@ Related checklists:
 - `docs/pilot-meeting-pack.md`
 - `docs/pilot-operations-runbook.md`
 - `docs/moodle-launch-simulator.md`
+- `docs/role-aware-assistant-behavior.md`
 - `docs/moodle-pilot-configuration-pack.md`
 - `docs/admin-action-register.md`
 - `docs/knowledge-base-apply-checklist.md`

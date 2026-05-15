@@ -173,6 +173,11 @@ export async function getEnterpriseStatus() {
       note: "Admin view now provides role, course, launch-source, and placement preview URLs for rehearsing Moodle launches before live LMS testing."
     },
     {
+      label: "Role-aware assistant behavior",
+      status: "complete",
+      note: "Embedded chat now adapts its intro, starter prompts, role guidance, and system prompt behavior for student, lecturer, LMS administrator, and general pilot launch contexts."
+    },
+    {
       label: "Admin action register",
       status: adminActions.summary.blocked > 0 ? "in-progress" : "complete",
       note: "Admin view now tracks pilot follow-up actions by owner, priority, status, source, and due date."

@@ -29,6 +29,7 @@ import {
   getMoodleContextSystemPrompt,
   type MoodleLaunchContext
 } from "@/lib/moodleContext";
+import { getRoleGuidanceSystemPrompt } from "@/lib/moodleRoleGuidance";
 
 const baseAssistantSystemPrompt = `You are the FYEC100 AI Support Assistant for COSTAATT first-year students.
 
@@ -50,5 +51,7 @@ export function buildAssistantSystemPrompt(context?: MoodleLaunchContext) {
 
   return `${baseAssistantSystemPrompt}
 
-${getMoodleContextSystemPrompt(context)}`;
+${getMoodleContextSystemPrompt(context)}
+
+${getRoleGuidanceSystemPrompt(context)}`;
 }
