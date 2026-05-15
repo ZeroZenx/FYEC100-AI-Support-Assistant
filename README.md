@@ -202,6 +202,10 @@ The admin page also includes a knowledge base change request workflow for
 reviewing proposed FYEC100 content updates before they are added to the live
 Markdown knowledge base.
 
+The admin page also includes a knowledge base draft update workflow for staging
+proposed wording before approved manual edits are applied to the live Markdown
+knowledge base.
+
 The admin page also includes knowledge base release notes for recording content
 version snapshots, approval details, change request references, and known
 limitations.
@@ -263,6 +267,7 @@ Related checklists:
 - `docs/moodle-pilot-configuration-pack.md`
 - `docs/admin-action-register.md`
 - `docs/knowledge-base-change-requests.md`
+- `docs/knowledge-base-draft-updates.md`
 - `docs/knowledge-base-release-notes.md`
 
 ## Pilot Smoke Test

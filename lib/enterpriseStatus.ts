@@ -8,6 +8,7 @@ import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
 import { getKnowledgeBaseChangeRequests } from "@/lib/knowledgeBaseChangeRequests";
+import { getKnowledgeBaseDraftUpdates } from "@/lib/knowledgeBaseDraftUpdates";
 import { getKnowledgeBaseReleases } from "@/lib/knowledgeBaseReleases";
 import { getKnowledgeBaseReviewStatus } from "@/lib/knowledgeBaseReview";
 import { readLaunchAuditSummary } from "@/lib/launchAudit";
@@ -41,6 +42,7 @@ export async function getEnterpriseStatus() {
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const knowledgeBaseMetadata = await getKnowledgeBaseMetadata();
   const knowledgeBaseChangeRequests = await getKnowledgeBaseChangeRequests();
+  const knowledgeBaseDraftUpdates = await getKnowledgeBaseDraftUpdates();
   const knowledgeBaseReleases = await getKnowledgeBaseReleases();
   const knowledgeBaseReview = await getKnowledgeBaseReviewStatus();
   const feedback = await readPilotFeedbackSummary();
@@ -212,6 +214,14 @@ export async function getEnterpriseStatus() {
       note: "Admin view now tracks proposed FYEC100 knowledge base changes before approved content updates are made."
     },
     {
+      label: "Knowledge base draft updates",
+      status:
+        knowledgeBaseDraftUpdates.summary.highPriorityOpen > 0
+          ? "in-progress"
+          : "complete",
+      note: "Admin view now stages proposed FYEC100 knowledge base wording before approved manual edits are applied to the live Markdown file."
+    },
+    {
       label: "Knowledge base release notes",
       status: knowledgeBaseReleases.summary.released > 0 ? "complete" : "in-progress",
       note: "Admin view now records knowledge base release snapshots, change request references, approval details, and known limitations."
@@ -264,6 +274,7 @@ export async function getEnterpriseStatus() {
     knowledgeBase: {
       ...knowledgeBaseMetadata,
       changeRequests: knowledgeBaseChangeRequests,
+      draftUpdates: knowledgeBaseDraftUpdates,
       releases: knowledgeBaseReleases,
       review: knowledgeBaseReview,
       path: "data/fyec100-knowledge-base.md",

@@ -90,6 +90,10 @@ The current prototype includes a knowledge base change request workflow so
 pilot feedback can become reviewed and approved FYEC100 content updates before
 the live Markdown knowledge base is edited.
 
+The current prototype includes a knowledge base draft update workflow that
+stages proposed wording separately from the live FYEC100 Markdown knowledge
+base.
+
 The current prototype includes knowledge base release notes for recording
 content version snapshots, approval details, change request references, and
 known limitations for each pilot stage.
@@ -185,8 +189,9 @@ Before enterprise launch, the project should add:
 12. Export the Moodle pilot configuration pack for LMS setup.
 13. Update the admin action register with follow-up items from the meeting.
 14. Review knowledge base change requests before editing the FYEC100 Markdown content.
-15. Record knowledge base release notes for the version used in the pilot.
-16. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
-17. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-18. Collect feedback from students, lecturers, LMS administration, and IT.
-19. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
+15. Draft proposed knowledge base wording in the draft update workflow before applying approved changes.
+16. Record knowledge base release notes for the version used in the pilot.
+17. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
+18. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+19. Collect feedback from students, lecturers, LMS administration, and IT.
+20. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.

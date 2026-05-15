@@ -1,0 +1,43 @@
+{
+  "version": "phase-2-kb-draft-updates-v0.1",
+  "lastUpdatedAt": "",
+  "governanceNotes": [
+    "Draft updates are proposed wording only and do not automatically change data/fyec100-knowledge-base.md.",
+    "Each draft should link to a knowledge base change request, pilot feedback pattern, lecturer review, or project-team decision.",
+    "Only approved content-owner changes should be manually applied to the live FYEC100 knowledge base and then recorded in release notes."
+  ],
+  "drafts": [
+    {
+      "id": "KBD-001",
+      "title": "Clarify LMS support escalation",
+      "linkedChangeRequestIds": ["KBCR-001"],
+      "knowledgeBaseSection": "LMS Navigation Guidance",
+      "source": "Pilot feedback and support escalation playbook",
+      "owner": "Developer / Lecturer reviewer",
+      "reviewer": "",
+      "status": "draft",
+      "priority": "medium",
+      "rationale": "Students may need a clearer distinction between course-content questions and Moodle access/navigation issues.",
+      "draftWording": "If you cannot find FYEC100 materials, submission links, announcements, or course tools in Moodle, first check the FYEC100 course shell and weekly module area. If access, upload, login, visibility, or navigation problems continue, contact the LMS administrator or official student support channel. For assignment meaning, grading criteria, deadlines, or course-content interpretation, contact the lecturer.",
+      "reviewerNotes": "Confirm final wording with LMS administrator and lecturer before applying to the live knowledge base.",
+      "createdAt": "2026-05-15",
+      "decisionDate": ""
+    },
+    {
+      "id": "KBD-002",
+      "title": "Add responsible AI use reminder for assignments",
+      "linkedChangeRequestIds": ["KBCR-002"],
+      "knowledgeBaseSection": "Academic Integrity",
+      "source": "Pilot feedback intake category: academic integrity concern",
+      "owner": "Lecturer / Content Owner",
+      "reviewer": "",
+      "status": "pending-review",
+      "priority": "high",
+      "rationale": "The knowledge base should reinforce that students may use the assistant for planning and clarification but not full assignment writing.",
+      "draftWording": "For assignment work, use the assistant to understand instructions, plan your approach, generate study questions, or reflect on your own ideas. Do not ask the assistant to write a full assignment, discussion post, reflection, or final submission for you. Your lecturer remains the official source for assignment interpretation, grading criteria, and academic integrity expectations.",
+      "reviewerNotes": "Needs lecturer/content-owner review before inclusion.",
+      "createdAt": "2026-05-15",
+      "decisionDate": ""
+    }
+  ]
+}

@@ -344,6 +344,10 @@ export default async function AdminPage({
               value={status.knowledgeBase.changeRequests.summary.pending}
             />
             <MetricCard
+              label="Drafts"
+              value={status.knowledgeBase.draftUpdates.summary.total}
+            />
+            <MetricCard
               label="Releases"
               value={status.knowledgeBase.releases.summary.total}
             />
@@ -363,7 +367,29 @@ export default async function AdminPage({
                   : "No release snapshots recorded yet."
               }
             />
+            <CompactRecord
+              label="Draft update workflow"
+              status={
+                status.knowledgeBase.draftUpdates.summary.highPriorityOpen > 0
+                  ? "pending-review"
+                  : "draft"
+              }
+              text={`${status.knowledgeBase.draftUpdates.summary.draft} draft / ${status.knowledgeBase.draftUpdates.summary.pendingReview} pending review / ${status.knowledgeBase.draftUpdates.summary.approved} approved. Drafts do not automatically update the live knowledge base.`}
+            />
           </div>
+          <DetailDrawer title="Knowledge base draft updates">
+            <div className="grid gap-3">
+              {status.knowledgeBase.draftUpdates.openDrafts.map((draft) => (
+                <CompactRecord
+                  key={draft.id}
+                  label={`${draft.id}: ${draft.title}`}
+                  meta={`${draft.knowledgeBaseSection} / ${draft.owner}`}
+                  status={draft.status}
+                  text={draft.draftWording}
+                />
+              ))}
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Section headings">
             <ol className="grid gap-2 sm:grid-cols-2">
               {status.knowledgeBase.headings.map((heading, index) => (
@@ -613,6 +639,10 @@ export default async function AdminPage({
             <EndpointPill
               label="KB releases"
               path={status.knowledgeBase.releases.exportPath}
+            />
+            <EndpointPill
+              label="KB draft updates"
+              path={status.knowledgeBase.draftUpdates.exportPath}
             />
           </div>
           <DetailDrawer title="Environment examples">
