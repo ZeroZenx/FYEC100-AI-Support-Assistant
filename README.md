@@ -206,6 +206,10 @@ The admin page also includes a knowledge base draft update workflow for staging
 proposed wording before approved manual edits are applied to the live Markdown
 knowledge base.
 
+The admin page also includes a knowledge base apply checklist for tracking the
+manual review, edit, guardrail, smoke test, and release-note steps required
+before approved draft wording becomes live course content.
+
 The admin page also includes knowledge base release notes for recording content
 version snapshots, approval details, change request references, and known
 limitations.
@@ -266,6 +270,7 @@ Related checklists:
 - `docs/pilot-operations-runbook.md`
 - `docs/moodle-pilot-configuration-pack.md`
 - `docs/admin-action-register.md`
+- `docs/knowledge-base-apply-checklist.md`
 - `docs/knowledge-base-change-requests.md`
 - `docs/knowledge-base-draft-updates.md`
 - `docs/knowledge-base-release-notes.md`

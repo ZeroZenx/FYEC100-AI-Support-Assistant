@@ -7,6 +7,7 @@ import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
+import { getKnowledgeBaseApplyChecklist } from "@/lib/knowledgeBaseApplyChecklist";
 import { getKnowledgeBaseChangeRequests } from "@/lib/knowledgeBaseChangeRequests";
 import { getKnowledgeBaseDraftUpdates } from "@/lib/knowledgeBaseDraftUpdates";
 import { getKnowledgeBaseReleases } from "@/lib/knowledgeBaseReleases";
@@ -41,6 +42,7 @@ export async function getEnterpriseStatus() {
   const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const knowledgeBaseMetadata = await getKnowledgeBaseMetadata();
+  const knowledgeBaseApplyChecklist = await getKnowledgeBaseApplyChecklist();
   const knowledgeBaseChangeRequests = await getKnowledgeBaseChangeRequests();
   const knowledgeBaseDraftUpdates = await getKnowledgeBaseDraftUpdates();
   const knowledgeBaseReleases = await getKnowledgeBaseReleases();
@@ -214,6 +216,13 @@ export async function getEnterpriseStatus() {
       note: "Admin view now tracks proposed FYEC100 knowledge base changes before approved content updates are made."
     },
     {
+      label: "Knowledge base apply checklist",
+      status: knowledgeBaseApplyChecklist.readyToApply
+        ? "complete"
+        : "in-progress",
+      note: "Admin view now tracks the manual review, edit, guardrail, smoke test, and release-note steps for applying approved draft wording to the live knowledge base."
+    },
+    {
       label: "Knowledge base draft updates",
       status:
         knowledgeBaseDraftUpdates.summary.highPriorityOpen > 0
@@ -273,6 +282,7 @@ export async function getEnterpriseStatus() {
     providerStatus,
     knowledgeBase: {
       ...knowledgeBaseMetadata,
+      applyChecklist: knowledgeBaseApplyChecklist,
       changeRequests: knowledgeBaseChangeRequests,
       draftUpdates: knowledgeBaseDraftUpdates,
       releases: knowledgeBaseReleases,

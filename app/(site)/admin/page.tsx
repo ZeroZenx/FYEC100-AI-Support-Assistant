@@ -37,6 +37,7 @@ const statusStyles: Record<string, string> = {
   ready: "bg-emerald-100 text-emerald-800",
   "ready for LMS review": "bg-emerald-100 text-emerald-800",
   rejected: "bg-red-100 text-red-800",
+  "ready-to-apply": "bg-emerald-100 text-emerald-800",
   "review warnings": "bg-amber-100 text-amber-800",
   reviewed: "bg-emerald-100 text-emerald-800",
   released: "bg-emerald-100 text-emerald-800",
@@ -351,6 +352,10 @@ export default async function AdminPage({
               label="Releases"
               value={status.knowledgeBase.releases.summary.total}
             />
+            <MetricCard
+              label="Apply steps"
+              value={status.knowledgeBase.applyChecklist.summary.total}
+            />
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             <CompactRecord
@@ -376,7 +381,27 @@ export default async function AdminPage({
               }
               text={`${status.knowledgeBase.draftUpdates.summary.draft} draft / ${status.knowledgeBase.draftUpdates.summary.pendingReview} pending review / ${status.knowledgeBase.draftUpdates.summary.approved} approved. Drafts do not automatically update the live knowledge base.`}
             />
+            <CompactRecord
+              label="Manual apply checklist"
+              status={status.knowledgeBase.applyChecklist.record.applyStatus}
+              text={status.knowledgeBase.applyChecklist.statusMessage}
+            />
           </div>
+          <DetailDrawer title="Knowledge base apply checklist">
+            <div className="grid gap-3">
+              {status.knowledgeBase.applyChecklist.record.steps.map((step) => (
+                <CompactRecord
+                  key={step.id}
+                  label={`${step.id}: ${step.label}`}
+                  meta={`${step.owner} / Required: ${
+                    step.requiredBeforeApply ? "yes" : "no"
+                  }`}
+                  status={step.status}
+                  text={step.evidence}
+                />
+              ))}
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Knowledge base draft updates">
             <div className="grid gap-3">
               {status.knowledgeBase.draftUpdates.openDrafts.map((draft) => (
@@ -643,6 +668,10 @@ export default async function AdminPage({
             <EndpointPill
               label="KB draft updates"
               path={status.knowledgeBase.draftUpdates.exportPath}
+            />
+            <EndpointPill
+              label="KB apply checklist"
+              path={status.knowledgeBase.applyChecklist.exportPath}
             />
           </div>
           <DetailDrawer title="Environment examples">

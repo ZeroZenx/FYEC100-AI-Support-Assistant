@@ -1,0 +1,66 @@
+{
+  "version": "phase-2-kb-apply-checklist-v0.1",
+  "lastUpdatedAt": "",
+  "targetKnowledgeBasePath": "data/fyec100-knowledge-base.md",
+  "linkedDraftUpdateIds": ["KBD-001", "KBD-002"],
+  "linkedChangeRequestIds": ["KBCR-001", "KBCR-002"],
+  "linkedReleaseId": "KBR-001",
+  "applyStatus": "pending-review",
+  "applyOwner": "Developer / Lecturer reviewer",
+  "reviewer": "",
+  "governanceNotes": [
+    "This checklist does not automatically edit the live FYEC100 knowledge base.",
+    "Use it to document the manual process for applying approved draft wording.",
+    "After the live Markdown file is edited, run the smoke test and update knowledge base release notes."
+  ],
+  "steps": [
+    {
+      "id": "KBA-001",
+      "label": "Pre-apply review",
+      "owner": "Lecturer / Content Owner",
+      "status": "pending",
+      "evidence": "Review linked draft updates and change requests before live content edits.",
+      "requiredBeforeApply": true
+    },
+    {
+      "id": "KBA-002",
+      "label": "Content-owner approval",
+      "owner": "Lecturer / Content Owner",
+      "status": "pending",
+      "evidence": "Confirm wording is approved for FYEC100 controlled pilot use.",
+      "requiredBeforeApply": true
+    },
+    {
+      "id": "KBA-003",
+      "label": "Manual Markdown edit",
+      "owner": "Developer",
+      "status": "pending",
+      "evidence": "Apply approved wording manually to data/fyec100-knowledge-base.md.",
+      "requiredBeforeApply": true
+    },
+    {
+      "id": "KBA-004",
+      "label": "Guardrail review",
+      "owner": "Project Lead / Lecturer",
+      "status": "pending",
+      "evidence": "Confirm updated wording does not weaken academic integrity, grading, or assignment-writing boundaries.",
+      "requiredBeforeApply": true
+    },
+    {
+      "id": "KBA-005",
+      "label": "Smoke test",
+      "owner": "Developer / Technical Lead",
+      "status": "pending",
+      "evidence": "Run npm run smoke:pilot after the manual knowledge base edit.",
+      "requiredBeforeApply": true
+    },
+    {
+      "id": "KBA-006",
+      "label": "Release note update",
+      "owner": "Developer / Project Lead",
+      "status": "pending",
+      "evidence": "Record applied change in data/kb-release-notes.json with related draft and change request IDs.",
+      "requiredBeforeApply": true
+    }
+  ]
+}

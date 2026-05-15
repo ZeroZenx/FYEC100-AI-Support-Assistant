@@ -26,6 +26,11 @@ await runJsonCheck(
   { admin: true }
 );
 await runJsonCheck(
+  "Knowledge base apply checklist endpoint",
+  `${baseUrl}/api/admin/knowledge-base/apply-checklist`,
+  { admin: true }
+);
+await runJsonCheck(
   "Knowledge base change requests endpoint",
   `${baseUrl}/api/admin/knowledge-base/change-requests`,
   { admin: true }
