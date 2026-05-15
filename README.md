@@ -185,6 +185,10 @@ The admin page includes a pilot evidence dashboard that aggregates readiness,
 knowledge base review, feedback, Moodle launch audit, Moodle block, and LTI
 signals for sponsor go/no-go discussion.
 
+The admin page also includes a pilot analytics summary for privacy-light launch,
+feedback, role/source, escalation, and session signals during controlled Moodle
+testing.
+
 The admin page also includes a pilot sign-off pack for tracking project-team
 approval owners before expanding the controlled Moodle pilot.
 
@@ -273,6 +277,7 @@ Related checklists:
 - `docs/moodle-block-plugin-scaffold.md`
 - `docs/lti-readiness-scaffold.md`
 - `docs/pilot-evidence-dashboard.md`
+- `docs/pilot-analytics-summary.md`
 - `docs/pilot-signoff-pack.md`
 - `docs/pilot-meeting-pack.md`
 - `docs/pilot-operations-runbook.md`
@@ -348,6 +353,8 @@ http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook
 http://localhost:4100/api/admin/pilot-evidence
 http://localhost:4100/api/admin/pilot-evidence.md
+http://localhost:4100/api/admin/pilot-analytics
+http://localhost:4100/api/admin/pilot-analytics.md
 http://localhost:4100/api/admin/pilot-signoff
 http://localhost:4100/api/admin/pilot-signoff.md
 http://localhost:4100/api/admin/pilot-meeting-pack

@@ -22,6 +22,7 @@ import {
   getMoodleContextQueryString
 } from "@/lib/moodleContext";
 import { buildPilotReport } from "@/lib/pilotReport";
+import { buildPilotAnalytics } from "@/lib/pilotAnalytics";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 import { readPilotSessionSummary } from "@/lib/pilotSessions";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
@@ -55,6 +56,7 @@ export async function getEnterpriseStatus() {
   const moodleBlockPlugin = await getMoodleBlockPluginStatus();
   const moodleLaunchSimulator = await buildMoodleLaunchSimulator();
   const pilotSessions = await readPilotSessionSummary();
+  const pilotAnalytics = await buildPilotAnalytics();
   const pilotReport = await buildPilotReport();
   const pilotEvidence = await buildPilotEvidenceDashboard();
   const pilotSignoff = await getPilotSignoffStatus();
@@ -136,6 +138,11 @@ export async function getEnterpriseStatus() {
       label: "Pilot reporting",
       status: "complete",
       note: "Admin report endpoints provide JSON and Markdown summaries for project-team review meetings."
+    },
+    {
+      label: "Pilot analytics summary",
+      status: "complete",
+      note: "Admin view now summarizes launch audit, feedback, sessions, escalation candidates, and privacy-light risk signals without a database."
     },
     {
       label: "Pilot evidence dashboard",
@@ -316,6 +323,7 @@ export async function getEnterpriseStatus() {
     moodleLaunchSimulator,
     launchAudit,
     pilotSessions,
+    pilotAnalytics,
     deploymentReadiness,
     pilotEvidence,
     pilotMeetingPack,

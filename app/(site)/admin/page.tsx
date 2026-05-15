@@ -634,6 +634,50 @@ export default async function AdminPage({
             <MetricCard label="Launches" value={status.launchAudit.total} />
             <MetricCard label="Feedback" value={status.feedback.total} />
           </div>
+          <DetailDrawer title="Pilot analytics summary">
+            <div className="grid gap-4">
+              <div className="grid gap-3 sm:grid-cols-4">
+                <MetricCard
+                  label="Helpful"
+                  suffix="%"
+                  value={status.pilotAnalytics.summary.helpfulRate}
+                />
+                <MetricCard
+                  label="Embedded"
+                  value={status.pilotAnalytics.summary.embeddedFeedback}
+                />
+                <MetricCard
+                  label="Standalone"
+                  value={status.pilotAnalytics.summary.standaloneFeedback}
+                />
+                <MetricCard
+                  label="Escalations"
+                  value={status.pilotAnalytics.summary.escalationCandidates}
+                />
+              </div>
+              <div className="grid gap-3 md:grid-cols-2">
+                <AnalyticsCounts
+                  counts={status.pilotAnalytics.launchAudit.countsByRole}
+                  title="Launches by role"
+                />
+                <AnalyticsCounts
+                  counts={status.pilotAnalytics.launchAudit.countsBySource}
+                  title="Launches by source"
+                />
+              </div>
+              <div className="grid gap-3">
+                {status.pilotAnalytics.riskSignals.map((signal) => (
+                  <CompactRecord
+                    key={signal.label}
+                    label={signal.label}
+                    meta={`Owner: ${signal.owner}`}
+                    status={signal.status}
+                    text={signal.text}
+                  />
+                ))}
+              </div>
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Feedback categories and routing">
             <div className="grid gap-4 lg:grid-cols-2">
               <div className="rounded-lg border border-slate-200 bg-white p-4">
@@ -737,6 +781,10 @@ export default async function AdminPage({
               path={status.moodleLaunchSimulator.exportPath}
             />
             <EndpointPill label="Pilot report" path="/api/admin/report.md" />
+            <EndpointPill
+              label="Pilot analytics"
+              path={status.pilotAnalytics.exportPath}
+            />
             <EndpointPill
               label="KB releases"
               path={status.knowledgeBase.releases.exportPath}
@@ -915,6 +963,33 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     <div className="flex items-center justify-between gap-3 rounded-md bg-slate-50 px-3 py-2 text-sm">
       <span className="font-semibold text-slate-600">{label}</span>
       <span className="text-right font-bold text-costaatt-navy">{value}</span>
+    </div>
+  );
+}
+
+function AnalyticsCounts({
+  counts,
+  title
+}: {
+  counts: Record<string, number>;
+  title: string;
+}) {
+  const entries = Object.entries(counts);
+
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-4">
+      <h3 className="font-bold text-costaatt-navy">{title}</h3>
+      <div className="mt-3 grid gap-2">
+        {entries.length > 0 ? (
+          entries.map(([label, value]) => (
+            <InfoRow key={label} label={label} value={String(value)} />
+          ))
+        ) : (
+          <p className="rounded-md bg-slate-50 px-3 py-2 text-sm text-slate-600">
+            No counts recorded yet.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

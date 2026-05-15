@@ -53,6 +53,9 @@ await runJsonCheck(
 await runJsonCheck("Pilot evidence endpoint", `${baseUrl}/api/admin/pilot-evidence`, {
   admin: true
 });
+await runJsonCheck("Pilot analytics endpoint", `${baseUrl}/api/admin/pilot-analytics`, {
+  admin: true
+});
 await runJsonCheck("Pilot sign-off endpoint", `${baseUrl}/api/admin/pilot-signoff`, {
   admin: true
 });

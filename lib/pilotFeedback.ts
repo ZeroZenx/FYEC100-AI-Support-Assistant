@@ -108,33 +108,37 @@ export async function readPilotFeedbackSummary(): Promise<PilotFeedbackSummary> 
   const counts = getEmptyFeedbackCounts();
   const escalationCounts = getEmptyEscalationCounts();
   const recommendedOwnerCounts: Record<string, number> = {};
+  const records = await readPilotFeedbackRecords();
 
+  for (const record of records) {
+    counts[record.rating] += 1;
+    escalationCounts[record.escalationCategory ?? "none"] += 1;
+    const owner = record.escalationOwner ?? "Pilot review team";
+    recommendedOwnerCounts[owner] = (recommendedOwnerCounts[owner] ?? 0) + 1;
+  }
+  const reviewQueue = records
+    .filter((record) => record.escalationCategory !== "none")
+    .slice(-10)
+    .reverse();
+
+  return {
+    counts,
+    escalationCounts,
+    recommendedOwnerCounts,
+    latest: records.slice(-5).reverse(),
+    reviewQueue,
+    total: records.length
+  };
+}
+
+export async function readPilotFeedbackRecords(): Promise<PilotFeedbackRecord[]> {
   try {
     const content = await readFile(FEEDBACK_PATH, "utf8");
-    const records = content
+
+    return content
       .split("\n")
       .filter(Boolean)
       .map((line) => classifyFeedback(JSON.parse(line) as PilotFeedbackRecord));
-
-    for (const record of records) {
-      counts[record.rating] += 1;
-      escalationCounts[record.escalationCategory ?? "none"] += 1;
-      const owner = record.escalationOwner ?? "Pilot review team";
-      recommendedOwnerCounts[owner] = (recommendedOwnerCounts[owner] ?? 0) + 1;
-    }
-    const reviewQueue = records
-      .filter((record) => record.escalationCategory !== "none")
-      .slice(-10)
-      .reverse();
-
-    return {
-      counts,
-      escalationCounts,
-      recommendedOwnerCounts,
-      latest: records.slice(-5).reverse(),
-      reviewQueue,
-      total: records.length
-    };
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
 
@@ -142,14 +146,7 @@ export async function readPilotFeedbackSummary(): Promise<PilotFeedbackSummary> 
       throw error;
     }
 
-    return {
-      counts,
-      escalationCounts,
-      recommendedOwnerCounts,
-      latest: [],
-      reviewQueue: [],
-      total: 0
-    };
+    return [];
   }
 }
 

@@ -11,6 +11,8 @@ use the assistant.
 - `/api/admin/deployment-readiness` has no `fail` checks.
 - `/api/admin/pilot-evidence` has been reviewed by the project team.
 - `/api/admin/pilot-evidence.md` has been exported for the pilot record.
+- `/api/admin/pilot-analytics` has been reviewed for aggregate launch, feedback, and risk signals.
+- `/api/admin/pilot-analytics.md` has been exported for the pilot record.
 - `/api/admin/pilot-signoff` has been reviewed by approval owners.
 - `/api/admin/pilot-signoff.md` has been exported for the pilot record.
 - `/api/admin/pilot-meeting-pack.md` has been exported for project-team review.
