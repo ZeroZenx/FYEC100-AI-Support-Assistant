@@ -72,6 +72,11 @@ await runJsonCheck(
   { admin: true }
 );
 await runJsonCheck(
+  "Moodle launch simulator endpoint",
+  `${baseUrl}/api/admin/moodle-launch-simulator`,
+  { admin: true }
+);
+await runJsonCheck(
   "Accessibility usability endpoint",
   `${baseUrl}/api/admin/accessibility-usability`,
   { admin: true }

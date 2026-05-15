@@ -16,6 +16,7 @@ import { readLaunchAuditSummary } from "@/lib/launchAudit";
 import { getLtiReadiness } from "@/lib/ltiReadiness";
 import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
 import { getMoodleBlockPluginStatus } from "@/lib/moodleBlockPlugin";
+import { buildMoodleLaunchSimulator } from "@/lib/moodleLaunchSimulator";
 import {
   getDefaultMoodleContext,
   getMoodleContextQueryString
@@ -52,6 +53,7 @@ export async function getEnterpriseStatus() {
   const integrationDecision = getMoodleIntegrationDecision();
   const ltiReadiness = getLtiReadiness();
   const moodleBlockPlugin = await getMoodleBlockPluginStatus();
+  const moodleLaunchSimulator = await buildMoodleLaunchSimulator();
   const pilotSessions = await readPilotSessionSummary();
   const pilotReport = await buildPilotReport();
   const pilotEvidence = await buildPilotEvidenceDashboard();
@@ -94,8 +96,9 @@ export async function getEnterpriseStatus() {
     },
     {
       label: "Moodle launch context",
-      status: "in-progress",
-      note: "The embed route accepts course, role, and launch-source context as pilot query parameters. Production should replace this with Moodle block or LTI trust."
+      status:
+        moodleLaunchSimulator.summary.watchChecks > 0 ? "in-progress" : "complete",
+      note: "The embed route accepts course, role, and launch-source context as pilot query parameters. The admin launch simulator now generates safe preview URLs for Moodle rehearsal."
     },
     {
       label: "Moodle integration decision",
@@ -160,6 +163,14 @@ export async function getEnterpriseStatus() {
       label: "Moodle pilot configuration pack",
       status: "complete",
       note: "Admin view now provides LMS-ready Moodle embed snippets, setup steps, and trust-boundary guidance."
+    },
+    {
+      label: "Moodle pilot launch simulator",
+      status:
+        moodleLaunchSimulator.summary.readyScenarios > 0
+          ? "complete"
+          : "in-progress",
+      note: "Admin view now provides role, course, launch-source, and placement preview URLs for rehearsing Moodle launches before live LMS testing."
     },
     {
       label: "Admin action register",
@@ -297,6 +308,7 @@ export async function getEnterpriseStatus() {
     integrationDecision,
     ltiReadiness,
     moodleBlockPlugin,
+    moodleLaunchSimulator,
     launchAudit,
     pilotSessions,
     deploymentReadiness,

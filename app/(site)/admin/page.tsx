@@ -287,8 +287,80 @@ export default async function AdminPage({
               ))}
             </div>
           </DetailDrawer>
+          <DetailDrawer title="Launch simulator preview links">
+            <div className="grid gap-3">
+              {status.moodleLaunchSimulator.scenarioPreviews.map((scenario) => (
+                <CompactRecord
+                  key={scenario.id}
+                  label={`${scenario.id}: ${scenario.title}`}
+                  meta={`${scenario.role} / ${scenario.launchSource} / ${scenario.moodlePlacement}`}
+                  status={scenario.status}
+                  text={scenario.previewUrl}
+                />
+              ))}
+            </div>
+          </DetailDrawer>
         </AdminGroup>
 
+        <AdminGroup
+          eyebrow="Moodle"
+          title="Launch simulator"
+          summary={status.moodleLaunchSimulator.statusMessage}
+        >
+          <div className="grid gap-3 sm:grid-cols-3">
+            <MetricCard
+              label="Scenarios"
+              value={status.moodleLaunchSimulator.summary.scenarios}
+            />
+            <MetricCard
+              label="Ready"
+              value={status.moodleLaunchSimulator.summary.readyScenarios}
+            />
+            <MetricCard
+              label="Watch"
+              value={status.moodleLaunchSimulator.summary.watchChecks}
+            />
+          </div>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <CompactRecord
+              label="Default preview"
+              status={status.moodleLaunchSimulator.record.simulatorStatus}
+              text={`${status.moodleLaunchSimulator.record.defaultPreview.role} / ${status.moodleLaunchSimulator.record.defaultPreview.launchSource} / ${status.moodleLaunchSimulator.record.defaultPreview.moodlePlacement}`}
+            />
+            <CompactRecord
+              label="Fallback link"
+              status="ready"
+              text={status.moodleLaunchSimulator.fallbackUrl}
+            />
+          </div>
+          <DetailDrawer title="Simulator validation checks">
+            <div className="grid gap-3">
+              {status.moodleLaunchSimulator.record.requiredChecks.map((check) => (
+                <CompactRecord
+                  key={check.id}
+                  label={`${check.id}: ${check.label}`}
+                  meta={`Owner: ${check.owner}`}
+                  status={check.status}
+                  text={check.evidence}
+                />
+              ))}
+            </div>
+          </DetailDrawer>
+          <DetailDrawer title="Iframe snippets by scenario">
+            <div className="grid gap-3">
+              {status.moodleLaunchSimulator.scenarioPreviews.map((scenario) => (
+                <SnippetBlock
+                  key={scenario.id}
+                  code={scenario.iframeSnippet}
+                  label={`${scenario.id}: ${scenario.title}`}
+                />
+              ))}
+            </div>
+          </DetailDrawer>
+        </AdminGroup>
+      </section>
+
+      <section className="mt-6 grid gap-4 lg:grid-cols-2">
         <AdminGroup
           eyebrow="Moodle"
           title="Block plugin and LTI"
@@ -659,6 +731,10 @@ export default async function AdminPage({
             <EndpointPill
               label="Accessibility review"
               path={status.accessibilityUsabilityReview.exportPath}
+            />
+            <EndpointPill
+              label="Moodle simulator"
+              path={status.moodleLaunchSimulator.exportPath}
             />
             <EndpointPill label="Pilot report" path="/api/admin/report.md" />
             <EndpointPill

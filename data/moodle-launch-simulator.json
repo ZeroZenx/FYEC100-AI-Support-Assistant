@@ -1,0 +1,100 @@
+{
+  "version": "phase-2-moodle-launch-simulator-v0.1",
+  "simulatorStatus": "ready",
+  "targetCourse": {
+    "courseId": "FYEC100",
+    "courseShortName": "FYEC100",
+    "courseFullName": "First Year Experience Course",
+    "pilotLocation": "Controlled FYEC100 Moodle pilot course shell"
+  },
+  "defaultPreview": {
+    "role": "student",
+    "launchSource": "iframe",
+    "moodlePlacement": "Course page iframe",
+    "coursePage": "FYEC100 orientation and academic support page"
+  },
+  "scenarios": [
+    {
+      "id": "MLS-001",
+      "title": "Student iframe launch",
+      "role": "student",
+      "launchSource": "iframe",
+      "moodlePlacement": "Course page iframe",
+      "coursePage": "FYEC100 orientation and academic support page",
+      "expectedBehavior": "Assistant uses student-facing learning support tone, explains FYEC100 expectations, and keeps academic integrity reminders visible.",
+      "status": "ready"
+    },
+    {
+      "id": "MLS-002",
+      "title": "Lecturer review launch",
+      "role": "lecturer",
+      "launchSource": "iframe",
+      "moodlePlacement": "Hidden pilot review page",
+      "coursePage": "Lecturer and project-team review space",
+      "expectedBehavior": "Assistant supports pilot testing, course content review, and escalation planning without claiming access to private student records.",
+      "status": "ready"
+    },
+    {
+      "id": "MLS-003",
+      "title": "LMS administrator block launch",
+      "role": "lms-admin",
+      "launchSource": "moodle-block",
+      "moodlePlacement": "Moodle block region",
+      "coursePage": "FYEC100 course dashboard block",
+      "expectedBehavior": "Assistant supports LMS placement checks, fallback link testing, and Moodle navigation guidance.",
+      "status": "ready"
+    },
+    {
+      "id": "MLS-004",
+      "title": "Future LTI launch rehearsal",
+      "role": "student",
+      "launchSource": "lti",
+      "moodlePlacement": "External tool activity",
+      "coursePage": "Future LTI 1.3 validation activity",
+      "expectedBehavior": "Assistant treats the launch as a future trust-boundary rehearsal and reminds admins that Phase 2 does not validate LTI identity yet.",
+      "status": "planned"
+    }
+  ],
+  "requiredChecks": [
+    {
+      "id": "MLC-001",
+      "label": "Course context",
+      "status": "ready",
+      "owner": "LMS Administrator",
+      "evidence": "Simulated launch URLs include courseId and courseShortName."
+    },
+    {
+      "id": "MLC-002",
+      "label": "Role context",
+      "status": "ready",
+      "owner": "Technical Lead",
+      "evidence": "Simulated launch URLs include role values for student, lecturer, or LMS administrator testing."
+    },
+    {
+      "id": "MLC-003",
+      "label": "Launch source context",
+      "status": "ready",
+      "owner": "Developer",
+      "evidence": "Simulated launch URLs include iframe, Moodle block, direct, or future LTI launch source values."
+    },
+    {
+      "id": "MLC-004",
+      "label": "Fallback link",
+      "status": "ready",
+      "owner": "LMS Administrator",
+      "evidence": "The simulator provides a fallback link for use when iframe embedding is blocked."
+    },
+    {
+      "id": "MLC-005",
+      "label": "Moodle origin",
+      "status": "watch",
+      "owner": "System Administrator",
+      "evidence": "MOODLE_ORIGIN must be configured before hosted iframe testing."
+    }
+  ],
+  "notes": [
+    "This simulator is a Phase 2 pilot aid. It does not authenticate Moodle users.",
+    "Use the generated preview links to test the embedded assistant behavior before placing it inside a live Moodle course.",
+    "Production role and course trust should come from Moodle-side validation or LTI 1.3 launch validation."
+  ]
+}

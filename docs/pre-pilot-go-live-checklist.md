@@ -16,6 +16,7 @@ use the assistant.
 - `/api/admin/pilot-meeting-pack.md` has been exported for project-team review.
 - `/api/admin/pilot-operations-runbook` has been reviewed with session owners.
 - `/api/admin/pilot-operations-runbook.md` has been exported for the pilot record.
+- `/api/admin/moodle-launch-simulator.md` has been exported for role and launch-source rehearsal.
 - `/api/admin/moodle-pilot-config.md` has been exported for LMS setup.
 - `/api/admin/accessibility-usability` has been reviewed for pending or failed checks.
 - `/api/admin/accessibility-usability.md` has been exported for the pilot record.
@@ -50,6 +51,7 @@ use the assistant.
 - Moodle allows iframe embedding from the assistant domain.
 - Assistant response headers allow framing by the approved Moodle origin.
 - `/embed` loads inside a controlled FYEC100 course shell.
+- Moodle launch simulator preview links have been tested for student, lecturer, LMS administrator, and future LTI rehearsal contexts.
 - Moodle block scaffold has been reviewed in a test Moodle environment if used.
 - Student responsible-use notice is visible.
 - Keyboard navigation works inside the Moodle embed.
