@@ -75,6 +75,10 @@ The current prototype includes a pilot meeting pack that consolidates evidence,
 sign-off, readiness, feedback, launch audit, knowledge base review, and Moodle
 integration status into one Markdown briefing.
 
+The current prototype includes a pilot operations runbook with before-session,
+during-session, student support, incident response, post-session, and stop-pilot
+procedures for controlled Moodle testing.
+
 The current prototype includes a Moodle pilot configuration pack with LMS-ready
 embed snippets, setup steps, preflight signals, and trust-boundary guidance.
 
@@ -176,11 +180,12 @@ Before enterprise launch, the project should add:
 8. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
 9. Review the pilot sign-off pack and record project-team approval status.
 10. Export the pilot meeting pack for sponsor and project-team review.
-11. Export the Moodle pilot configuration pack for LMS setup.
-12. Update the admin action register with follow-up items from the meeting.
-13. Review knowledge base change requests before editing the FYEC100 Markdown content.
-14. Record knowledge base release notes for the version used in the pilot.
-15. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
-16. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-17. Collect feedback from students, lecturers, LMS administration, and IT.
-18. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
+11. Export the pilot operations runbook for before/during/after pilot procedures.
+12. Export the Moodle pilot configuration pack for LMS setup.
+13. Update the admin action register with follow-up items from the meeting.
+14. Review knowledge base change requests before editing the FYEC100 Markdown content.
+15. Record knowledge base release notes for the version used in the pilot.
+16. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
+17. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+18. Collect feedback from students, lecturers, LMS administration, and IT.
+19. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.

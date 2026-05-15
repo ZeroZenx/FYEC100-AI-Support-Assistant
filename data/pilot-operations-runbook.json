@@ -1,0 +1,157 @@
+{
+  "version": "pilot-operations-runbook-v0.1",
+  "pilotStage": "Controlled FYEC100 Moodle pilot",
+  "runbookStatus": "draft",
+  "lastReviewedAt": "",
+  "reviewOwner": "Project Lead and Technical Lead",
+  "operatingPrinciples": [
+    "Keep Moodle as the student-facing entry point during the pilot.",
+    "Use the assistant for support, clarification, study guidance, and LMS navigation help.",
+    "Do not use the assistant for grading, official academic decisions, or full assignment writing.",
+    "Escalate academic, LMS, technical, privacy, and accessibility concerns to named project-team owners.",
+    "Stop or pause the pilot if student experience, safety, privacy, or support readiness is in doubt."
+  ],
+  "roles": [
+    {
+      "name": "Project Sponsor",
+      "owner": "Kevin Ramsoobhag",
+      "responsibility": "Approve pilot continuation, escalation decisions, and stakeholder communication."
+    },
+    {
+      "name": "Project Lead and Technical Lead",
+      "owner": "Darren Headley",
+      "responsibility": "Coordinate pilot operations, technical readiness, evidence review, and go/no-go recommendations."
+    },
+    {
+      "name": "Developer",
+      "owner": "Deborah Romero",
+      "responsibility": "Support application behavior, endpoints, bug fixes, and documented limitations."
+    },
+    {
+      "name": "LMS Administrator",
+      "owner": "Kester David",
+      "responsibility": "Manage Moodle course placement, embed behavior, fallback links, and LMS navigation issues."
+    },
+    {
+      "name": "System Administrator and Infrastructure Support",
+      "owner": "Kevin Reece",
+      "responsibility": "Support hosting, environment variables, provider connectivity, logs, and infrastructure availability."
+    }
+  ],
+  "procedures": [
+    {
+      "id": "OPS-001",
+      "phase": "Before session",
+      "title": "Pre-session readiness check",
+      "owner": "Project Lead and Technical Lead",
+      "status": "ready",
+      "steps": [
+        "Run the pilot smoke test against the active pilot URL.",
+        "Review deployment readiness warnings and confirm no blocking failures.",
+        "Confirm the provider test responds for the selected OpenAI or Ollama provider.",
+        "Review the pilot evidence dashboard, action register, and accessibility usability review.",
+        "Confirm Moodle embed placement and fallback link with the LMS administrator."
+      ],
+      "outputs": [
+        "Smoke test result",
+        "Readiness decision",
+        "Known warnings accepted for controlled pilot"
+      ]
+    },
+    {
+      "id": "OPS-002",
+      "phase": "During session",
+      "title": "Live pilot monitoring",
+      "owner": "Pilot Review Team",
+      "status": "ready",
+      "steps": [
+        "Observe whether students remain inside Moodle while using the assistant.",
+        "Confirm the responsible-use notice is visible and understandable.",
+        "Watch for repeated missing-answer, LMS navigation, or assignment-integrity questions.",
+        "Capture student feedback using the built-in feedback controls.",
+        "Record any issue that requires lecturer, LMS, technical, accessibility, or knowledge base follow-up."
+      ],
+      "outputs": [
+        "Feedback records",
+        "Launch audit evidence",
+        "Action register updates"
+      ]
+    },
+    {
+      "id": "OPS-003",
+      "phase": "During session",
+      "title": "Student support flow",
+      "owner": "LMS Administrator / Lecturer",
+      "status": "ready",
+      "steps": [
+        "For LMS access or navigation issues, route the student to the LMS administrator.",
+        "For assignment interpretation or official course guidance, route the student to the lecturer.",
+        "For AI misuse or academic integrity concerns, reinforce responsible-use expectations and escalate to the lecturer.",
+        "For missing or unclear assistant answers, capture the question as a knowledge base review item.",
+        "For technical/provider errors, pause use if needed and notify the technical lead."
+      ],
+      "outputs": [
+        "Resolved support path",
+        "Escalation owner identified",
+        "Follow-up action if needed"
+      ]
+    },
+    {
+      "id": "OPS-004",
+      "phase": "Incident response",
+      "title": "Pause or stop-pilot trigger",
+      "owner": "Project Sponsor / Project Lead",
+      "status": "watch",
+      "steps": [
+        "Pause the pilot if Moodle embedding fails for the pilot group.",
+        "Pause the pilot if the assistant produces repeated unsafe, misleading, or assignment-writing responses.",
+        "Pause the pilot if privacy, accessibility, or support concerns cannot be handled during the session.",
+        "Switch students to the fallback support path if the AI provider or hosted app is unavailable.",
+        "Document the trigger, owner, immediate response, and decision before resuming."
+      ],
+      "outputs": [
+        "Pause or continue decision",
+        "Incident notes without student identifiers",
+        "Corrective actions"
+      ]
+    },
+    {
+      "id": "OPS-005",
+      "phase": "After session",
+      "title": "Post-session review",
+      "owner": "Project Lead and Technical Lead",
+      "status": "ready",
+      "steps": [
+        "Review pilot feedback, launch audit, and support issues.",
+        "Update the admin action register with owners, priority, source, and due date.",
+        "Convert repeated missing-answer issues into knowledge base change requests.",
+        "Update pilot meeting pack and pilot report exports for project-team review.",
+        "Decide whether to continue iframe testing, move to Moodle block review, or hold for fixes."
+      ],
+      "outputs": [
+        "Updated action register",
+        "Pilot report export",
+        "Next-session decision"
+      ]
+    }
+  ],
+  "stopPilotTriggers": [
+    "Assistant is unavailable for the pilot group and fallback support is not ready.",
+    "Students cannot access the assistant inside Moodle and are required to leave the approved course interface.",
+    "Repeated responses appear to write full assignments or imply grading authority.",
+    "Privacy, accessibility, or cybersecurity concerns are raised and cannot be resolved during the session.",
+    "Project sponsor, project lead, lecturer, LMS administrator, or IT support path requests a pause."
+  ],
+  "postSessionQuestions": [
+    "Did students remain inside Moodle while using the assistant?",
+    "Did students understand what the assistant can and cannot do?",
+    "Were any questions outside the knowledge base repeated?",
+    "Were support issues routed to the correct owner?",
+    "Should the next test remain iframe-based, move to Moodle block review, or pause for fixes?"
+  ],
+  "governanceNotes": [
+    "This runbook is a Phase 2 pilot operations artifact, not a production incident management system.",
+    "Do not record student names, IDs, grades, disability details, or protected student record information in this runbook.",
+    "Use formal institutional policies for production incident response, accessibility accommodations, privacy review, and academic misconduct handling."
+  ]
+}

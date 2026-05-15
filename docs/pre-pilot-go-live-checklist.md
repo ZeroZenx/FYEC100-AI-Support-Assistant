@@ -14,6 +14,8 @@ use the assistant.
 - `/api/admin/pilot-signoff` has been reviewed by approval owners.
 - `/api/admin/pilot-signoff.md` has been exported for the pilot record.
 - `/api/admin/pilot-meeting-pack.md` has been exported for project-team review.
+- `/api/admin/pilot-operations-runbook` has been reviewed with session owners.
+- `/api/admin/pilot-operations-runbook.md` has been exported for the pilot record.
 - `/api/admin/moodle-pilot-config.md` has been exported for LMS setup.
 - `/api/admin/accessibility-usability` has been reviewed for pending or failed checks.
 - `/api/admin/accessibility-usability.md` has been exported for the pilot record.
@@ -63,6 +65,7 @@ use the assistant.
 - Pilot evidence dashboard status and recommended actions have been reviewed.
 - Pilot sign-off pack approval owners and decision status have been reviewed.
 - Pilot meeting pack has been reviewed with sponsor and project team.
+- Pilot operations runbook has been reviewed for before, during, after, escalation, and stop-pilot procedures.
 - Moodle pilot configuration pack has been reviewed with the LMS administrator.
 - Admin action register has owners and statuses for follow-up items.
 - Knowledge base change requests have been reviewed before live content edits.

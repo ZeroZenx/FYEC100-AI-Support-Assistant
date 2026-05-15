@@ -51,6 +51,11 @@ await runJsonCheck(
   { admin: true }
 );
 await runJsonCheck(
+  "Pilot operations runbook endpoint",
+  `${baseUrl}/api/admin/pilot-operations-runbook`,
+  { admin: true }
+);
+await runJsonCheck(
   "Moodle pilot config endpoint",
   `${baseUrl}/api/admin/moodle-pilot-config`,
   { admin: true }

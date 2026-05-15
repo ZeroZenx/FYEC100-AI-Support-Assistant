@@ -191,6 +191,10 @@ approval owners before expanding the controlled Moodle pilot.
 The admin page also includes a pilot meeting pack and Moodle pilot
 configuration pack for project-team briefings and LMS setup.
 
+The admin page also includes a pilot operations runbook for before-session,
+during-session, student support, incident response, post-session, and stop-pilot
+procedures.
+
 The admin page also includes an action register for tracking pilot follow-up
 items by owner, priority, status, source, and due date.
 
@@ -255,6 +259,7 @@ Related checklists:
 - `docs/pilot-evidence-dashboard.md`
 - `docs/pilot-signoff-pack.md`
 - `docs/pilot-meeting-pack.md`
+- `docs/pilot-operations-runbook.md`
 - `docs/moodle-pilot-configuration-pack.md`
 - `docs/admin-action-register.md`
 - `docs/knowledge-base-change-requests.md`

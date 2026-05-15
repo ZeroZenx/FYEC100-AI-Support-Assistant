@@ -24,6 +24,7 @@ import { readPilotSessionSummary } from "@/lib/pilotSessions";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
 import { buildPilotEvidenceDashboard } from "@/lib/pilotEvidence";
 import { buildPilotMeetingPack } from "@/lib/pilotMeetingPack";
+import { getPilotOperationsRunbook } from "@/lib/pilotOperationsRunbook";
 import { getPilotSignoffStatus } from "@/lib/pilotSignoff";
 import { buildMoodlePilotConfigPack } from "@/lib/moodlePilotConfig";
 
@@ -52,6 +53,7 @@ export async function getEnterpriseStatus() {
   const pilotEvidence = await buildPilotEvidenceDashboard();
   const pilotSignoff = await getPilotSignoffStatus();
   const pilotMeetingPack = await buildPilotMeetingPack();
+  const pilotOperationsRunbook = await getPilotOperationsRunbook();
   const moodlePilotConfig = await buildMoodlePilotConfigPack();
   const adminActions = await getAdminActionRegister();
   const accessibilityUsabilityReview = await getAccessibilityUsabilityReview();
@@ -144,6 +146,11 @@ export async function getEnterpriseStatus() {
       label: "Pilot meeting pack",
       status: "complete",
       note: "Admin view now exports one consolidated sponsor/project-team meeting brief for pilot review."
+    },
+    {
+      label: "Pilot operations runbook",
+      status: pilotOperationsRunbook.readyForPilot ? "complete" : "in-progress",
+      note: "Admin view now provides before, during, after, escalation, and stop-pilot procedures for controlled Moodle pilot operations."
     },
     {
       label: "Moodle pilot configuration pack",
@@ -274,6 +281,7 @@ export async function getEnterpriseStatus() {
     deploymentReadiness,
     pilotEvidence,
     pilotMeetingPack,
+    pilotOperationsRunbook,
     pilotSignoff,
     moodlePilotConfig,
     pilotReport,

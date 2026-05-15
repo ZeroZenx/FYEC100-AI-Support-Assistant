@@ -25,6 +25,7 @@ const statusStyles: Record<string, string> = {
   "needs env vars": "bg-amber-100 text-amber-800",
   "needs files": "bg-red-100 text-red-800",
   "needs review": "bg-amber-100 text-amber-800",
+  "needs-review": "bg-amber-100 text-amber-800",
   "needs setup": "bg-amber-100 text-amber-800",
   "not-started": "bg-slate-100 text-slate-700",
   ok: "bg-emerald-100 text-emerald-800",
@@ -510,6 +511,37 @@ export default async function AdminPage({
             <MetricCard label="Launches" value={status.launchAudit.total} />
             <MetricCard label="Feedback" value={status.feedback.total} />
           </div>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <CompactRecord
+              label="Operations runbook"
+              status={status.pilotOperationsRunbook.record.runbookStatus}
+              text={status.pilotOperationsRunbook.statusMessage}
+            />
+            <CompactRecord
+              label="Stop-pilot triggers"
+              status={
+                status.pilotOperationsRunbook.summary.blocked > 0
+                  ? "blocked"
+                  : "watch"
+              }
+              text={`${status.pilotOperationsRunbook.record.stopPilotTriggers.length} triggers documented for pause or stop decisions.`}
+            />
+          </div>
+          <DetailDrawer title="Pilot operations procedures">
+            <div className="grid gap-3">
+              {status.pilotOperationsRunbook.record.procedures.map(
+                (procedure) => (
+                  <CompactRecord
+                    key={procedure.id}
+                    label={`${procedure.id}: ${procedure.title}`}
+                    meta={`${procedure.phase} / ${procedure.owner}`}
+                    status={procedure.status}
+                    text={procedure.steps[0] ?? "Review procedure steps."}
+                  />
+                )
+              )}
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Support playbook">
             <div className="grid gap-3">
               {status.supportPlaybook.items.map((item) => (
@@ -536,6 +568,10 @@ export default async function AdminPage({
             <EndpointPill label="Admin status" path="/api/admin/status" />
             <EndpointPill label="Pilot evidence" path="/api/admin/pilot-evidence.md" />
             <EndpointPill label="Meeting pack" path="/api/admin/pilot-meeting-pack.md" />
+            <EndpointPill
+              label="Operations runbook"
+              path={status.pilotOperationsRunbook.exportPath}
+            />
             <EndpointPill label="Sign-off pack" path={status.pilotSignoff.exportPath} />
             <EndpointPill
               label="Accessibility review"
