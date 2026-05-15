@@ -13,6 +13,7 @@ prototype to a controlled hosted pilot URL.
 - Approved environment secret storage
 - Persistent writable storage if local JSONL pilot feedback remains enabled
 - Outbound access to OpenAI if using `AI_PROVIDER=openai`
+- Outbound access to DeepSeek if using `AI_PROVIDER=deepseek`
 - Network access to the Ollama host if using `AI_PROVIDER=ollama`
 - Platform access controls around `/admin` and `/api/admin/*`
 - `ADMIN_ACCESS_TOKEN` configured before hosted testing
@@ -39,6 +40,14 @@ For Ollama:
 ```bash
 OLLAMA_BASE_URL=http://ollama.internal:11434
 OLLAMA_MODEL=llama3.1
+```
+
+For DeepSeek:
+
+```bash
+DEEPSEEK_API_KEY=replace_with_secure_secret
+DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_BASE_URL=https://api.deepseek.com
 ```
 
 Set pilot rate limits:

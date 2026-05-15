@@ -1,5 +1,6 @@
 import { access, appendFile, mkdir } from "fs/promises";
 import path from "path";
+import { getProviderStatus } from "@/lib/aiProvider";
 import { getRateLimitSummary } from "@/lib/rateLimit";
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -14,11 +15,7 @@ type HealthCheck = {
 };
 
 export async function getHealthStatus() {
-  const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
-  const providerConfigured =
-    provider === "ollama"
-      ? Boolean(process.env.OLLAMA_BASE_URL || process.env.OLLAMA_MODEL)
-      : Boolean(process.env.OPENAI_API_KEY);
+  const providerStatus = getProviderStatus();
 
   const checks: HealthCheck[] = [
     {
@@ -28,10 +25,10 @@ export async function getHealthStatus() {
     },
     {
       label: "AI provider",
-      message: providerConfigured
-        ? `${provider} provider variables are configured.`
-        : `${provider} provider variables need configuration before pilot use.`,
-      status: providerConfigured ? "ok" : "warning"
+      message: providerStatus.configured
+        ? `${providerStatus.provider} provider variables are configured.`
+        : `${providerStatus.provider} provider variables need configuration before pilot use.`,
+      status: providerStatus.configured ? "ok" : "warning"
     },
     await checkKnowledgeBase(),
     checkRateLimiting(),
@@ -42,7 +39,7 @@ export async function getHealthStatus() {
   return {
     checks,
     ok: checks.every((check) => check.status !== "error"),
-    provider,
+    provider: providerStatus.provider,
     timestamp: new Date().toISOString()
   };
 }

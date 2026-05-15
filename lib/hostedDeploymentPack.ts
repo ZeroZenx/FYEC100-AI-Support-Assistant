@@ -154,6 +154,8 @@ function buildEnvironmentMatrix({
   rateLimits: ReturnType<typeof getRateLimitSummary>;
 }): EnvironmentItem[] {
   const providerIsOllama = provider.provider === "ollama";
+  const providerIsDeepSeek = provider.provider === "deepseek";
+  const providerIsOpenAI = provider.provider === "openai";
 
   return [
     {
@@ -183,21 +185,21 @@ function buildEnvironmentMatrix({
     {
       name: "OPENAI_API_KEY",
       purpose: "Required when AI_PROVIDER=openai.",
-      status: providerIsOllama
-        ? "optional"
-        : process.env.OPENAI_API_KEY
+      status: providerIsOpenAI
+        ? process.env.OPENAI_API_KEY
           ? "configured"
-          : "missing",
-      valuePreview: providerIsOllama
-        ? "not required for Ollama"
-        : process.env.OPENAI_API_KEY
+          : "missing"
+        : "optional",
+      valuePreview: providerIsOpenAI
+        ? process.env.OPENAI_API_KEY
           ? "set"
           : "not set"
+        : "not required for selected provider"
     },
     {
       name: "OPENAI_MODEL",
       purpose: "Optional OpenAI model override.",
-      status: providerIsOllama ? "optional" : "configured",
+      status: providerIsOpenAI ? "configured" : "optional",
       valuePreview: process.env.OPENAI_MODEL ?? "gpt-4o-mini"
     },
     {
@@ -215,6 +217,32 @@ function buildEnvironmentMatrix({
       purpose: "Model name when AI_PROVIDER=ollama.",
       status: providerIsOllama ? "configured" : "optional",
       valuePreview: process.env.OLLAMA_MODEL ?? "llama3.1"
+    },
+    {
+      name: "DEEPSEEK_API_KEY",
+      purpose: "Required when AI_PROVIDER=deepseek.",
+      status: providerIsDeepSeek
+        ? process.env.DEEPSEEK_API_KEY
+          ? "configured"
+          : "missing"
+        : "optional",
+      valuePreview: providerIsDeepSeek
+        ? process.env.DEEPSEEK_API_KEY
+          ? "set"
+          : "not set"
+        : "not required for selected provider"
+    },
+    {
+      name: "DEEPSEEK_MODEL",
+      purpose: "Model name when AI_PROVIDER=deepseek.",
+      status: providerIsDeepSeek ? "configured" : "optional",
+      valuePreview: process.env.DEEPSEEK_MODEL ?? "deepseek-chat"
+    },
+    {
+      name: "DEEPSEEK_BASE_URL",
+      purpose: "Optional DeepSeek OpenAI-compatible API base URL override.",
+      status: "optional",
+      valuePreview: process.env.DEEPSEEK_BASE_URL ?? "https://api.deepseek.com"
     },
     {
       name: "CHAT_RATE_LIMIT_PER_MINUTE",

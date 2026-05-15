@@ -97,9 +97,9 @@ npm run dev
 http://localhost:4100
 ```
 
-## OpenAI Integration
+## AI Provider Integration
 
-The chat assistant can use OpenAI or Ollama through a Next.js API route. The route reads `data/fyec100-knowledge-base.md` and passes it to the model as context. If the selected provider is not configured, the chat page still loads and returns a setup reminder.
+The chat assistant can use OpenAI, Ollama, or DeepSeek through a Next.js API route. The route reads `data/fyec100-knowledge-base.md` and passes it to the model as context. If the selected provider is not configured, the chat page still loads and returns a setup reminder.
 
 OpenAI example:
 
@@ -115,6 +115,14 @@ Ollama example:
 AI_PROVIDER=ollama
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=llama3.1
+```
+
+DeepSeek example:
+
+```bash
+AI_PROVIDER=deepseek
+DEEPSEEK_API_KEY=your_api_key_here
+DEEPSEEK_MODEL=deepseek-chat
 ```
 
 Provider test endpoint:

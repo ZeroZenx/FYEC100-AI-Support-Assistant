@@ -39,7 +39,7 @@ Use `x-admin-token` or `?adminToken=...` when `ADMIN_ACCESS_TOKEN` is configured
 - Configure `NEXT_PUBLIC_APP_BASE_URL`.
 - Configure `MOODLE_ORIGIN`.
 - Configure `ADMIN_ACCESS_TOKEN`.
-- Confirm OpenAI or Ollama provider variables.
+- Confirm OpenAI, Ollama, or DeepSeek provider variables.
 - Confirm writable storage or approved replacement storage.
 - Run `PILOT_BASE_URL=<hosted-url> npm run smoke:pilot`.
 - Keep `/admin` and `/api/admin/*` internal or protected.

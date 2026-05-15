@@ -227,7 +227,7 @@ function classifyFeedback(record: PilotFeedbackRecord): PilotFeedbackRecord {
     );
   }
 
-  if (/(error|api|provider|openai|ollama|timeout|slow|not respond|server)/i.test(text)) {
+  if (/(error|api|provider|openai|ollama|deepseek|timeout|slow|not respond|server)/i.test(text)) {
     return withEscalation(
       normalizedRecord,
       "technical-provider-issue",

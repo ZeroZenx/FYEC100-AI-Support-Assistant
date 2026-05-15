@@ -43,7 +43,6 @@ export type DeploymentChecklistItem = {
 };
 
 export async function getEnterpriseStatus() {
-  const provider = (process.env.AI_PROVIDER ?? "openai").toLowerCase();
   const knowledgeBaseStats = await stat(KNOWLEDGE_BASE_PATH);
   const knowledgeBaseMetadata = await getKnowledgeBaseMetadata();
   const knowledgeBaseApplyChecklist = await getKnowledgeBaseApplyChecklist();
@@ -84,15 +83,8 @@ export async function getEnterpriseStatus() {
   });
   const sampleMoodleEmbedUrl = `${embedBaseUrl}/embed?${sampleMoodleQuery}`;
 
-  const providerConfigured =
-    provider === "ollama"
-      ? Boolean(process.env.OLLAMA_BASE_URL || process.env.OLLAMA_MODEL)
-      : Boolean(process.env.OPENAI_API_KEY);
-
-  const providerLabel =
-    provider === "ollama"
-      ? `Ollama (${process.env.OLLAMA_MODEL ?? "llama3.1"})`
-      : `OpenAI (${process.env.OPENAI_MODEL ?? "gpt-4o-mini"})`;
+  const providerConfigured = providerStatus.configured;
+  const providerLabel = `${formatProviderName(providerStatus.provider)} (${providerStatus.model})`;
 
   const checklist: DeploymentChecklistItem[] = [
     {
@@ -126,7 +118,7 @@ export async function getEnterpriseStatus() {
       status: providerConfigured ? "complete" : "in-progress",
       note: providerConfigured
         ? `${providerLabel} is selected through environment configuration.`
-        : "Set OpenAI or Ollama environment variables before pilot testing."
+        : "Set OpenAI, Ollama, or DeepSeek environment variables before pilot testing."
     },
     {
       label: "API rate limiting",
@@ -319,7 +311,7 @@ export async function getEnterpriseStatus() {
       },
       sampleEmbedUrl: sampleMoodleEmbedUrl
     },
-    provider,
+    provider: providerStatus.provider,
     providerConfigured,
     providerLabel,
     providerStatus,
@@ -357,4 +349,16 @@ export async function getEnterpriseStatus() {
     health,
     checklist
   };
+}
+
+function formatProviderName(provider: string) {
+  if (provider === "ollama") {
+    return "Ollama";
+  }
+
+  if (provider === "deepseek") {
+    return "DeepSeek";
+  }
+
+  return "OpenAI";
 }

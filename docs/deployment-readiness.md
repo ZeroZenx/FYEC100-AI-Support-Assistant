@@ -11,6 +11,7 @@ This document supports Phase 2 planning for moving the FYEC100 AI Support Assist
 - HTTPS-capable hosting
 - Persistent writable storage for local pilot feedback if JSONL feedback capture remains enabled
 - Outbound network access to OpenAI if using `AI_PROVIDER=openai`
+- Outbound network access to DeepSeek if using `AI_PROVIDER=deepseek`
 - Network access to the Ollama host if using `AI_PROVIDER=ollama`
 
 ## Environment Variables
@@ -36,6 +37,14 @@ Ollama:
 ```bash
 OLLAMA_BASE_URL=http://ollama.internal:11434
 OLLAMA_MODEL=llama3.1
+```
+
+DeepSeek:
+
+```bash
+DEEPSEEK_API_KEY=replace_with_secure_secret
+DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_BASE_URL=https://api.deepseek.com
 ```
 
 Pilot rate limits:

@@ -39,6 +39,7 @@ The app now supports provider configuration:
 
 - `AI_PROVIDER=openai` for OpenAI API usage
 - `AI_PROVIDER=ollama` for locally hosted Ollama models
+- `AI_PROVIDER=deepseek` for DeepSeek API usage through its OpenAI-compatible chat endpoint
 
 This allows COSTAATT to test cloud and local AI options without rebuilding the chat interface.
 
@@ -201,7 +202,7 @@ Before enterprise launch, the project should add:
 ## Recommended Pilot Path
 
 1. Host the assistant internally or on an approved cloud environment.
-2. Configure the app with either OpenAI or Ollama.
+2. Configure the app with OpenAI, Ollama, or DeepSeek.
 3. Run `/api/admin/deployment-readiness` and resolve blocking failures.
 4. Export `/api/admin/hosted-deployment-pack.md` for IT review.
 5. Review `/api/admin/moodle-security-hardening.md` for Moodle iframe security readiness.

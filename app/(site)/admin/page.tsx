@@ -59,6 +59,10 @@ const ollamaEnvExample = `AI_PROVIDER=ollama
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=llama3.1`;
 
+const deepSeekEnvExample = `AI_PROVIDER=deepseek
+DEEPSEEK_API_KEY=your_api_key_here
+DEEPSEEK_MODEL=deepseek-chat`;
+
 const adminNav = [
   { href: "#pilot", label: "Pilot Control" },
   { href: "#moodle", label: "Moodle" },
@@ -919,6 +923,7 @@ export default async function AdminPage({
             <div className="grid gap-3 md:grid-cols-2">
               <SnippetBlock code={openAiEnvExample} label="OpenAI .env.local" />
               <SnippetBlock code={ollamaEnvExample} label="Ollama .env.local" />
+              <SnippetBlock code={deepSeekEnvExample} label="DeepSeek .env.local" />
             </div>
           </DetailDrawer>
         </AdminGroup>
