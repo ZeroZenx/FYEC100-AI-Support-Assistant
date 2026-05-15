@@ -19,6 +19,9 @@ export type PilotReport = {
   };
   counts: Awaited<ReturnType<typeof readPilotFeedbackSummary>>["counts"];
   escalationCounts: Record<EscalationCategory, number>;
+  recommendedOwnerCounts: Awaited<
+    ReturnType<typeof readPilotFeedbackSummary>
+  >["recommendedOwnerCounts"];
   topReviewItems: PilotFeedbackRecord[];
   knowledgeBaseCandidates: PilotFeedbackRecord[];
   technicalIssues: PilotFeedbackRecord[];
@@ -47,6 +50,7 @@ export async function buildPilotReport(): Promise<PilotReport> {
     },
     counts: feedback.counts,
     escalationCounts: feedback.escalationCounts,
+    recommendedOwnerCounts: feedback.recommendedOwnerCounts,
     topReviewItems: reviewItems.slice(0, 5),
     knowledgeBaseCandidates: filterByCategory(
       reviewItems,
@@ -77,12 +81,22 @@ export function renderPilotReportMarkdown(report: PilotReport) {
     "",
     `- Helpful: ${report.counts.helpful}`,
     `- Not helpful: ${report.counts["not-helpful"]}`,
+    `- LMS/navigation issue: ${report.counts["lms-navigation-issue"]}`,
+    `- Missing course information: ${report.counts["missing-course-information"]}`,
+    `- Academic integrity concern: ${report.counts["academic-integrity-concern"]}`,
+    `- Technical issue: ${report.counts["technical-issue"]}`,
     `- Lecturer follow-up: ${report.counts["lecturer-follow-up"]}`,
     "",
     "## Escalation Counts",
     "",
     ...Object.entries(report.escalationCounts).map(
       ([category, value]) => `- ${category}: ${value}`
+    ),
+    "",
+    "## Recommended Owner Counts",
+    "",
+    ...Object.entries(report.recommendedOwnerCounts).map(
+      ([owner, value]) => `- ${owner}: ${value}`
     ),
     "",
     "## Suggested Actions",
@@ -147,6 +161,14 @@ function buildSuggestedActions(
     });
   }
 
+  if (feedback.escalationCounts["academic-integrity"] > 0) {
+    actions.push({
+      owner: "Lecturer / Project Sponsor",
+      priority: "high",
+      text: "Review academic integrity feedback and reinforce student-facing responsible-use guidance."
+    });
+  }
+
   if (feedback.total === 0) {
     actions.push({
       owner: "Pilot review team",
@@ -193,6 +215,7 @@ function formatItems(items: PilotFeedbackRecord[]) {
       item.escalationOwner ?? "Pilot review team"
     }`,
     `   - Rating: ${item.rating}`,
+    `   - Feedback category: ${item.feedbackCategory ?? item.rating}`,
     `   - Question: ${item.studentQuestionExcerpt}`,
     `   - Reason: ${item.escalationReason ?? "No reason recorded."}`,
     item.note ? `   - Note: ${item.note}` : ""

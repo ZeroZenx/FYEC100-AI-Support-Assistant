@@ -11,6 +11,7 @@ const checks = [];
 await runCheck("Home page", `${baseUrl}/`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
+await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
 await runJsonCheck(
   "Deployment readiness endpoint",
   `${baseUrl}/api/admin/deployment-readiness`,

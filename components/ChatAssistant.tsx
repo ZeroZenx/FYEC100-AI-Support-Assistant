@@ -16,7 +16,33 @@ type ChatMessage = {
   content: string;
 };
 
-type FeedbackRating = "helpful" | "not-helpful" | "lecturer-follow-up";
+type FeedbackRating =
+  | "academic-integrity-concern"
+  | "helpful"
+  | "lecturer-follow-up"
+  | "lms-navigation-issue"
+  | "missing-course-information"
+  | "not-helpful"
+  | "technical-issue";
+
+const feedbackOptions: Array<{
+  label: string;
+  value: FeedbackRating;
+}> = [
+  { label: "Helpful", value: "helpful" },
+  { label: "Not helpful", value: "not-helpful" },
+  { label: "LMS/navigation issue", value: "lms-navigation-issue" },
+  {
+    label: "Missing course information",
+    value: "missing-course-information"
+  },
+  {
+    label: "Academic integrity concern",
+    value: "academic-integrity-concern"
+  },
+  { label: "Technical issue", value: "technical-issue" },
+  { label: "Lecturer follow-up needed", value: "lecturer-follow-up" }
+];
 
 const starterPrompts = [
   "What is FYEC100 about?",
@@ -44,6 +70,8 @@ export function ChatAssistant({
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [feedbackCategory, setFeedbackCategory] =
+    useState<FeedbackRating>("helpful");
   const [feedbackNote, setFeedbackNote] = useState("");
   const [statusMessage, setStatusMessage] = useState(
     "FYEC100 assistant ready."
@@ -134,6 +162,7 @@ export function ChatAssistant({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           assistantResponse: message.content,
+          feedbackCategory: rating,
           mode: embedded ? "embedded" : "standalone",
           note: feedbackNote.trim() || undefined,
           rating,
@@ -152,6 +181,7 @@ export function ChatAssistant({
           itemIndex === index ? { ...item, feedbackStatus: "sent" } : item
         )
       );
+      setFeedbackCategory("helpful");
       setFeedbackNote("");
       setStatusMessage("Feedback saved for pilot review.");
     } catch (err) {
@@ -268,7 +298,9 @@ export function ChatAssistant({
                     disabled={message.feedbackStatus === "sending"}
                     id={`feedback-note-${index}`}
                     labelId={`feedback-label-${index}`}
+                    category={feedbackCategory}
                     note={feedbackNote}
+                    onCategoryChange={setFeedbackCategory}
                     onNoteChange={setFeedbackNote}
                     onSubmit={(rating) => void sendFeedback(index, rating)}
                     status={message.feedbackStatus ?? "idle"}
@@ -385,18 +417,22 @@ function ContextItem({ label, value }: { label: string; value: string }) {
 }
 
 function FeedbackPanel({
+  category,
   disabled,
   id,
   labelId,
   note,
+  onCategoryChange,
   onNoteChange,
   onSubmit,
   status
 }: {
+  category: FeedbackRating;
   disabled: boolean;
   id: string;
   labelId: string;
   note: string;
+  onCategoryChange: (value: FeedbackRating) => void;
   onNoteChange: (value: string) => void;
   onSubmit: (rating: FeedbackRating) => void;
   status: "idle" | "sending" | "sent";
@@ -415,37 +451,30 @@ function FeedbackPanel({
       className="mt-2 rounded-md border border-slate-200 bg-white p-3"
     >
       <p className="text-xs font-semibold text-slate-700" id={labelId}>
-        Was this response useful?
+        Help us route this pilot feedback
       </p>
-      <div aria-labelledby={labelId} className="mt-2 flex flex-wrap gap-2">
-        <button
-          aria-label="Mark this assistant response as helpful"
-          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-emerald-500 hover:text-emerald-700 disabled:opacity-60"
-          disabled={disabled}
-          onClick={() => onSubmit("helpful")}
-          type="button"
-        >
-          Helpful
-        </button>
-        <button
-          aria-label="Mark this assistant response as not helpful"
-          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-red-500 hover:text-red-700 disabled:opacity-60"
-          disabled={disabled}
-          onClick={() => onSubmit("not-helpful")}
-          type="button"
-        >
-          Not helpful
-        </button>
-        <button
-          aria-label="Mark this assistant response as needing lecturer follow-up"
-          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-amber-500 hover:text-amber-700 disabled:opacity-60"
-          disabled={disabled}
-          onClick={() => onSubmit("lecturer-follow-up")}
-          type="button"
-        >
-          Needs lecturer follow-up
-        </button>
-      </div>
+      <label
+        className="mt-2 block text-xs font-semibold text-slate-700"
+        htmlFor={`${id}-category`}
+      >
+        Category
+      </label>
+      <select
+        aria-labelledby={labelId}
+        className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20 disabled:opacity-60"
+        disabled={disabled}
+        id={`${id}-category`}
+        onChange={(event) =>
+          onCategoryChange(event.target.value as FeedbackRating)
+        }
+        value={category}
+      >
+        {feedbackOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       <label
         className="mt-3 block text-xs font-semibold text-slate-700"
         htmlFor={id}
@@ -454,11 +483,21 @@ function FeedbackPanel({
         <textarea
           id={id}
           className="mt-1 min-h-16 w-full resize-none rounded-md border border-slate-300 px-3 py-2 text-xs leading-5 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20"
+          disabled={disabled}
           onChange={(event) => onNoteChange(event.target.value)}
-          placeholder="What was missing or confusing?"
+          placeholder="Optional: what should the pilot team know? Do not enter names, IDs, grades, or private information."
           value={note}
         />
       </label>
+      <button
+        aria-label="Submit pilot feedback"
+        className="mt-3 rounded-md bg-costaatt-navy px-3 py-2 text-xs font-semibold text-white hover:bg-costaatt-blue disabled:cursor-not-allowed disabled:bg-slate-300"
+        disabled={disabled}
+        onClick={() => onSubmit(category)}
+        type="button"
+      >
+        Save feedback
+      </button>
     </div>
   );
 }

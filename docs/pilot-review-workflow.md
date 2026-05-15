@@ -18,8 +18,9 @@ http://localhost:4100/admin
 The pilot review section shows:
 
 - Total feedback received
-- Helpful, not helpful, and lecturer follow-up counts
+- Helpful, not helpful, LMS/navigation issue, missing course information, academic integrity concern, technical issue, and lecturer follow-up counts
 - Escalation category counts
+- Recommended owner counts
 - Automatically categorized review queue
 - Latest feedback excerpts
 - Suggested owner for each item
@@ -33,7 +34,7 @@ For meeting-ready summaries, use the pilot reporting endpoints documented in
 ### Lecturer Follow-Up
 
 Use when feedback involves assignment interpretation, course expectations,
-academic integrity, or unclear FYEC100 guidance.
+official academic guidance, or unclear FYEC100 guidance.
 
 Suggested owner: Lecturer / Project Lead
 
@@ -58,6 +59,14 @@ OpenAI, or server reliability.
 
 Suggested owner: Technical Lead / System Administrator
 
+### Academic Integrity
+
+Use when feedback suggests students are unsure about acceptable AI use,
+assignment-writing boundaries, grading authority, citation expectations, or
+responsible-use guidance.
+
+Suggested owner: Lecturer / Project Sponsor
+
 ### None
 
 Use when the feedback does not require immediate escalation.
@@ -72,6 +81,7 @@ During a controlled pilot:
 - Check lecturer follow-up items first.
 - Check LMS access or Moodle navigation issues before the next student session.
 - Convert repeated missing-answer reports into knowledge base update requests.
+- Route academic integrity concerns to the lecturer and project sponsor.
 - Log technical/provider issues for IT review.
 - Summarize findings for the project sponsor before expanding the pilot group.
 

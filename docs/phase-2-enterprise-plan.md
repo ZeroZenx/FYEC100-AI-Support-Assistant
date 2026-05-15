@@ -59,7 +59,8 @@ management system.
 
 The current prototype also includes an admin pilot review workflow that
 categorizes feedback and suggests escalation owners for lecturer follow-up, LMS
-administrator issues, knowledge base updates, and technical/provider issues.
+administrator issues, knowledge base updates, academic integrity concerns, and
+technical/provider issues.
 
 The current prototype includes pilot reporting endpoints that return JSON and
 Markdown summaries for project-team review meetings.

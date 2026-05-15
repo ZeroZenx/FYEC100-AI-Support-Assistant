@@ -281,9 +281,10 @@ PILOT_BASE_URL=https://fyec100-assistant.example.edu npm run smoke:pilot
 
 ## Pilot Feedback Capture
 
-Phase 2 includes local-only feedback capture for pilot testing. Students can mark
-assistant replies as helpful, not helpful, or needing lecturer follow-up, with an
-optional note.
+Phase 2 includes local-only feedback capture for pilot testing. Students can
+categorize assistant replies as helpful, not helpful, LMS/navigation issue,
+missing course information, academic integrity concern, technical issue, or
+lecturer follow-up needed, with an optional note.
 
 Feedback is stored locally in:
 
@@ -295,7 +296,8 @@ This file is ignored by Git and should not be treated as a production analytics
 or student record system.
 
 The `/admin` page includes a pilot review workflow that categorizes feedback and
-suggests escalation owners. See `docs/pilot-review-workflow.md`.
+suggests escalation owners while keeping feedback privacy-light. See
+`docs/pilot-review-workflow.md`.
 
 Pilot report endpoints are also available for project-team review meetings:
 

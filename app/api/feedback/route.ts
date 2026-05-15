@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import {
+  type FeedbackCategory,
   type FeedbackRating,
+  feedbackCategories,
   readPilotFeedbackSummary,
   savePilotFeedback
 } from "@/lib/pilotFeedback";
@@ -10,11 +12,7 @@ import {
   rateLimitResponse
 } from "@/lib/rateLimit";
 
-const ratings: FeedbackRating[] = [
-  "helpful",
-  "not-helpful",
-  "lecturer-follow-up"
-];
+const ratings: FeedbackRating[] = feedbackCategories;
 
 export async function GET() {
   const summary = await readPilotFeedbackSummary();
@@ -32,6 +30,7 @@ export async function POST(request: Request) {
 
     const body = (await request.json()) as {
       assistantResponse?: string;
+      feedbackCategory?: FeedbackCategory;
       mode?: "standalone" | "embedded";
       note?: string;
       rating?: FeedbackRating;
@@ -54,6 +53,7 @@ export async function POST(request: Request) {
 
     const record = await savePilotFeedback({
       assistantResponse: body.assistantResponse,
+      feedbackCategory: body.feedbackCategory,
       mode: body.mode,
       note: body.note,
       rating: body.rating,

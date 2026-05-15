@@ -511,6 +511,38 @@ export default async function AdminPage({
             <MetricCard label="Launches" value={status.launchAudit.total} />
             <MetricCard label="Feedback" value={status.feedback.total} />
           </div>
+          <DetailDrawer title="Feedback categories and routing">
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <h3 className="font-bold text-costaatt-navy">
+                  Category counts
+                </h3>
+                <div className="mt-3 grid gap-2">
+                  {Object.entries(status.feedback.counts).map(
+                    ([category, value]) => (
+                      <InfoRow
+                        key={category}
+                        label={category}
+                        value={String(value)}
+                      />
+                    )
+                  )}
+                </div>
+              </div>
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <h3 className="font-bold text-costaatt-navy">
+                  Recommended owners
+                </h3>
+                <div className="mt-3 grid gap-2">
+                  {Object.entries(status.feedback.recommendedOwnerCounts).map(
+                    ([owner, value]) => (
+                      <InfoRow key={owner} label={owner} value={String(value)} />
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          </DetailDrawer>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             <CompactRecord
               label="Operations runbook"
