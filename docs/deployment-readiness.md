@@ -115,6 +115,8 @@ Use this endpoint before hosted pilot use:
 
 ```text
 /api/admin/deployment-readiness
+/api/admin/hosted-deployment-pack
+/api/admin/hosted-deployment-pack.md
 ```
 
 The deployment readiness check reports pass, warning, and failure states for:
@@ -134,6 +136,9 @@ The deployment readiness check reports pass, warning, and failure states for:
 Warnings do not automatically block a controlled pilot, but they should be
 reviewed by the project lead and technical lead. Failures should be resolved
 before Moodle pilot use.
+
+The hosted deployment pack expands these checks into an IT-facing environment
+matrix, deployment target review, production caveats, and verification steps.
 
 ## Provider Test
 

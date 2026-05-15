@@ -5,6 +5,7 @@ import { getAdminAuthStatus } from "@/lib/adminAuth";
 import { getAdminActionRegister } from "@/lib/adminActions";
 import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
+import { buildHostedDeploymentPack } from "@/lib/hostedDeploymentPack";
 import { getHealthStatus } from "@/lib/health";
 import { getKnowledgeBaseMetadata } from "@/lib/knowledgeBase";
 import { getKnowledgeBaseApplyChecklist } from "@/lib/knowledgeBaseApplyChecklist";
@@ -67,6 +68,7 @@ export async function getEnterpriseStatus() {
   const accessibilityUsabilityReview = await getAccessibilityUsabilityReview();
   const supportPlaybook = getSupportPlaybook();
   const deploymentReadiness = await getDeploymentReadiness();
+  const hostedDeploymentPack = await buildHostedDeploymentPack();
   const health = await getHealthStatus();
   const adminAuth = getAdminAuthStatus();
   const providerStatus = getProviderStatus();
@@ -217,6 +219,14 @@ export async function getEnterpriseStatus() {
       note: "Deployment readiness checks validate hosted URL, HTTPS, provider config, storage, rate limits, and admin exposure warnings."
     },
     {
+      label: "Hosted deployment readiness pack",
+      status:
+        hostedDeploymentPack.summary.readinessFailures > 0
+          ? "in-progress"
+          : "complete",
+      note: "Admin view now provides environment readiness, hosting target options, production caveats, and hosted pilot verification steps for IT review."
+    },
+    {
       label: "Admin protection scaffold",
       status: adminAuth.configured ? "complete" : "in-progress",
       note: adminAuth.configured
@@ -325,6 +335,7 @@ export async function getEnterpriseStatus() {
     pilotSessions,
     pilotAnalytics,
     deploymentReadiness,
+    hostedDeploymentPack,
     pilotEvidence,
     pilotMeetingPack,
     pilotOperationsRunbook,

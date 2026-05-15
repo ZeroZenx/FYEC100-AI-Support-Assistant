@@ -17,6 +17,11 @@ await runJsonCheck(
   `${baseUrl}/api/admin/deployment-readiness`,
   { admin: true }
 );
+await runJsonCheck(
+  "Hosted deployment pack endpoint",
+  `${baseUrl}/api/admin/hosted-deployment-pack`,
+  { admin: true }
+);
 await runJsonCheck("Admin actions endpoint", `${baseUrl}/api/admin/actions`, {
   admin: true
 });

@@ -33,11 +33,15 @@ const statusStyles: Record<string, string> = {
   pass: "bg-emerald-100 text-emerald-800",
   pending: "bg-slate-100 text-slate-700",
   "pending-review": "bg-amber-100 text-amber-800",
+  possible: "bg-blue-100 text-blue-800",
   planned: "bg-blue-100 text-blue-800",
   ready: "bg-emerald-100 text-emerald-800",
   "ready for LMS review": "bg-emerald-100 text-emerald-800",
   rejected: "bg-red-100 text-red-800",
   "ready-to-apply": "bg-emerald-100 text-emerald-800",
+  recommended: "bg-emerald-100 text-emerald-800",
+  required: "bg-red-100 text-red-800",
+  review: "bg-amber-100 text-amber-800",
   "review warnings": "bg-amber-100 text-amber-800",
   reviewed: "bg-emerald-100 text-emerald-800",
   released: "bg-emerald-100 text-emerald-800",
@@ -574,6 +578,15 @@ export default async function AdminPage({
               text="Use ADMIN_ACCESS_TOKEN before hosted pilot access."
             />
             <CompactRecord
+              label="Hosted deployment pack"
+              status={
+                status.hostedDeploymentPack.summary.readinessFailures > 0
+                  ? "review"
+                  : "ready"
+              }
+              text={status.hostedDeploymentPack.statusMessage}
+            />
+            <CompactRecord
               label="Accessibility review"
               status={status.accessibilityUsabilityReview.record.reviewStatus}
               text={status.accessibilityUsabilityReview.statusMessage}
@@ -599,6 +612,65 @@ export default async function AdminPage({
                   text={check.recommendedAction}
                 />
               ))}
+            </div>
+          </DetailDrawer>
+          <DetailDrawer title="Hosted deployment readiness pack">
+            <div className="grid gap-4">
+              <div className="grid gap-3 sm:grid-cols-4">
+                <MetricCard
+                  label="Pass"
+                  value={status.hostedDeploymentPack.summary.readinessPasses}
+                />
+                <MetricCard
+                  label="Warnings"
+                  value={status.hostedDeploymentPack.summary.readinessWarnings}
+                />
+                <MetricCard
+                  label="Missing env"
+                  value={status.hostedDeploymentPack.summary.missingEnv}
+                />
+                <MetricCard
+                  label="Local env"
+                  value={status.hostedDeploymentPack.summary.localEnv}
+                />
+              </div>
+              <div className="grid gap-3">
+                {status.hostedDeploymentPack.environmentMatrix.map((item) => (
+                  <CompactRecord
+                    key={item.name}
+                    label={item.name}
+                    meta={item.purpose}
+                    status={item.status}
+                    text={item.valuePreview}
+                  />
+                ))}
+              </div>
+              <DetailDrawer title="Deployment target options">
+                <div className="grid gap-3">
+                  {status.hostedDeploymentPack.deploymentTargets.map((target) => (
+                    <CompactRecord
+                      key={target.name}
+                      label={target.name}
+                      meta={target.bestFor}
+                      status={target.status}
+                      text={target.notes.join(" ")}
+                    />
+                  ))}
+                </div>
+              </DetailDrawer>
+              <DetailDrawer title="Production caveats">
+                <div className="grid gap-3">
+                  {status.hostedDeploymentPack.caveats.map((caveat) => (
+                    <CompactRecord
+                      key={caveat.label}
+                      label={caveat.label}
+                      meta={`Owner: ${caveat.owner}`}
+                      status={caveat.status}
+                      text={caveat.note}
+                    />
+                  ))}
+                </div>
+              </DetailDrawer>
             </div>
           </DetailDrawer>
           <DetailDrawer title="Health checks">
@@ -784,6 +856,10 @@ export default async function AdminPage({
             <EndpointPill
               label="Pilot analytics"
               path={status.pilotAnalytics.exportPath}
+            />
+            <EndpointPill
+              label="Hosted deployment"
+              path={status.hostedDeploymentPack.exportPath}
             />
             <EndpointPill
               label="KB releases"

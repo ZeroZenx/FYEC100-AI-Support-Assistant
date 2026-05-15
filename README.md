@@ -189,6 +189,10 @@ The admin page also includes a pilot analytics summary for privacy-light launch,
 feedback, role/source, escalation, and session signals during controlled Moodle
 testing.
 
+The admin page also includes a hosted deployment readiness pack for IT review
+of environment variables, hosting targets, production caveats, and hosted pilot
+verification steps.
+
 The admin page also includes a pilot sign-off pack for tracking project-team
 approval owners before expanding the controlled Moodle pilot.
 
@@ -258,11 +262,14 @@ Before a hosted Moodle pilot, use the deployment readiness endpoint:
 
 ```text
 http://localhost:4100/api/admin/deployment-readiness
+http://localhost:4100/api/admin/hosted-deployment-pack
+http://localhost:4100/api/admin/hosted-deployment-pack.md
 ```
 
 Related checklists:
 
 - `docs/internal-hosting-checklist.md`
+- `docs/hosted-deployment-readiness-pack.md`
 - `docs/pre-pilot-go-live-checklist.md`
 - `docs/stop-pilot-procedure.md`
 - `docs/admin-protection.md`
@@ -346,6 +353,8 @@ Protected admin endpoints:
 
 ```text
 http://localhost:4100/api/admin/integration-decision
+http://localhost:4100/api/admin/hosted-deployment-pack
+http://localhost:4100/api/admin/hosted-deployment-pack.md
 http://localhost:4100/api/admin/lti-readiness
 http://localhost:4100/api/admin/moodle-block
 http://localhost:4100/api/admin/pilot-sessions

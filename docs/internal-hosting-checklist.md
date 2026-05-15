@@ -68,15 +68,16 @@ After deployment:
 1. Run `PILOT_BASE_URL=<hosted-url> npm run smoke:pilot`.
 2. Open `/api/health`.
 3. Open `/api/admin/deployment-readiness`.
-4. Confirm there are no `fail` checks.
-5. Review warnings with the project lead and technical lead.
-6. Run `POST /api/admin/provider-test`.
-7. Open `/embed`.
-8. Confirm Moodle can iframe the hosted `/embed` URL.
-9. Confirm `/admin` requires `?adminToken=...` or platform controls.
-10. Confirm `/api/admin/*` requires `x-admin-token` or platform controls.
-11. Confirm the `Content-Security-Policy` frame-ancestors header includes the Moodle origin.
-12. Rebuild the app after changing `MOODLE_ORIGIN`; header configuration is applied at build time.
+4. Open `/api/admin/hosted-deployment-pack.md`.
+5. Confirm there are no `fail` checks.
+6. Review warnings with the project lead and technical lead.
+7. Run `POST /api/admin/provider-test`.
+8. Open `/embed`.
+9. Confirm Moodle can iframe the hosted `/embed` URL.
+10. Confirm `/admin` requires `?adminToken=...` or platform controls.
+11. Confirm `/api/admin/*` requires `x-admin-token` or platform controls.
+12. Confirm the `Content-Security-Policy` frame-ancestors header includes the Moodle origin.
+13. Rebuild the app after changing `MOODLE_ORIGIN`; header configuration is applied at build time.
 
 ## Notes
 

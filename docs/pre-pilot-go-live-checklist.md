@@ -9,6 +9,8 @@ use the assistant.
 
 - `/api/health` returns successfully.
 - `/api/admin/deployment-readiness` has no `fail` checks.
+- `/api/admin/hosted-deployment-pack` has been reviewed for environment and hosting readiness.
+- `/api/admin/hosted-deployment-pack.md` has been exported for IT review.
 - `/api/admin/pilot-evidence` has been reviewed by the project team.
 - `/api/admin/pilot-evidence.md` has been exported for the pilot record.
 - `/api/admin/pilot-analytics` has been reviewed for aggregate launch, feedback, and risk signals.
