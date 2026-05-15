@@ -22,6 +22,8 @@ use the assistant.
 - `/api/admin/pilot-operations-runbook.md` has been exported for the pilot record.
 - `/api/admin/moodle-launch-simulator.md` has been exported for role and launch-source rehearsal.
 - `/api/admin/moodle-pilot-config.md` has been exported for LMS setup.
+- `/api/admin/moodle-security-hardening` has been reviewed for Moodle origin and iframe header readiness.
+- `/api/admin/moodle-security-hardening.md` has been exported for LMS/system administrator review.
 - `docs/role-aware-assistant-behavior.md` has been reviewed for role-specific pilot guidance.
 - `/api/admin/accessibility-usability` has been reviewed for pending or failed checks.
 - `/api/admin/accessibility-usability.md` has been exported for the pilot record.
@@ -55,6 +57,7 @@ use the assistant.
 
 - Moodle allows iframe embedding from the assistant domain.
 - Assistant response headers allow framing by the approved Moodle origin.
+- Moodle security hardening checks have been reviewed after configuring `MOODLE_ORIGIN`.
 - `/embed` loads inside a controlled FYEC100 course shell.
 - Moodle launch simulator preview links have been tested for student, lecturer, LMS administrator, and future LTI rehearsal contexts.
 - Role-aware assistant prompts and notices have been checked in the embedded student, lecturer, and LMS administrator preview links.

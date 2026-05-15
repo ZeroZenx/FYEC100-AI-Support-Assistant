@@ -152,6 +152,10 @@ approved authentication and authorization for production.
 The current prototype includes Moodle iframe polish and configurable
 `frame-ancestors` security headers through `MOODLE_ORIGIN`.
 
+The current prototype includes a Moodle security hardening pack for Moodle
+origin quality, expected `Content-Security-Policy` frame-ancestors behavior,
+rebuild requirements, admin exposure, and pilot trust-boundary review.
+
 The current prototype includes student-facing accessibility and usability
 improvements for keyboard navigation, status messaging, focus visibility, and
 Moodle iframe review.
@@ -200,24 +204,25 @@ Before enterprise launch, the project should add:
 2. Configure the app with either OpenAI or Ollama.
 3. Run `/api/admin/deployment-readiness` and resolve blocking failures.
 4. Export `/api/admin/hosted-deployment-pack.md` for IT review.
-5. Use the Moodle launch simulator to rehearse student, lecturer, LMS administrator, and future LTI launch contexts.
-6. Confirm role-aware assistant behavior for student, lecturer, LMS administrator, and general pilot contexts.
-7. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
-8. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
-9. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
-10. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
-11. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
-12. Review the pilot analytics summary for aggregate launch, feedback, and risk signals.
-13. Review the pilot sign-off pack and record project-team approval status.
-14. Export the pilot meeting pack for sponsor and project-team review.
-15. Export the pilot operations runbook for before/during/after pilot procedures.
-16. Export the Moodle pilot configuration pack for LMS setup.
-17. Update the admin action register with follow-up items from the meeting.
-18. Review knowledge base change requests before editing the FYEC100 Markdown content.
-19. Draft proposed knowledge base wording in the draft update workflow before applying approved changes.
-20. Complete the manual knowledge base apply checklist before editing the live Markdown file.
-21. Record knowledge base release notes for the version used in the pilot.
-22. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
-23. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-24. Collect feedback from students, lecturers, LMS administration, and IT.
-25. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
+5. Review `/api/admin/moodle-security-hardening.md` for Moodle iframe security readiness.
+6. Use the Moodle launch simulator to rehearse student, lecturer, LMS administrator, and future LTI launch contexts.
+7. Confirm role-aware assistant behavior for student, lecturer, LMS administrator, and general pilot contexts.
+8. Embed `/embed` inside a Moodle FYEC100 pilot course, optionally using pilot context fields.
+9. Use `/admin` to confirm provider status, knowledge base status, and readiness items.
+10. Review captured pilot feedback after each controlled session using the admin pilot review workflow.
+11. Review launch audit diagnostics to confirm the assistant is being opened from the intended Moodle course context.
+12. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
+13. Review the pilot analytics summary for aggregate launch, feedback, and risk signals.
+14. Review the pilot sign-off pack and record project-team approval status.
+15. Export the pilot meeting pack for sponsor and project-team review.
+16. Export the pilot operations runbook for before/during/after pilot procedures.
+17. Export the Moodle pilot configuration pack for LMS setup.
+18. Update the admin action register with follow-up items from the meeting.
+19. Review knowledge base change requests before editing the FYEC100 Markdown content.
+20. Draft proposed knowledge base wording in the draft update workflow before applying approved changes.
+21. Complete the manual knowledge base apply checklist before editing the live Markdown file.
+22. Record knowledge base release notes for the version used in the pilot.
+23. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
+24. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+25. Collect feedback from students, lecturers, LMS administration, and IT.
+26. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.

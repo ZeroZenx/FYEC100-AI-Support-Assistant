@@ -50,6 +50,7 @@ Replace the URL with the hosted assistant URL:
 - Confirm Moodle permits iframe content from the assistant domain.
 - Configure `MOODLE_ORIGIN` before hosted pilot testing.
 - Rebuild and redeploy the app after changing `MOODLE_ORIGIN`; Next.js applies these headers at build time.
+- Review `/api/admin/moodle-security-hardening.md` before hosted Moodle pilot use.
 - Keep `/admin` and `/api/admin/*` protected by token or platform controls.
 - Treat query-string launch context as pilot-only, not trusted identity.
 

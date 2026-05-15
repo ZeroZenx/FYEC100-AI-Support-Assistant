@@ -95,6 +95,11 @@ await runJsonCheck("LTI readiness endpoint", `${baseUrl}/api/admin/lti-readiness
 await runJsonCheck("Moodle block endpoint", `${baseUrl}/api/admin/moodle-block`, {
   admin: true
 });
+await runJsonCheck(
+  "Moodle security hardening endpoint",
+  `${baseUrl}/api/admin/moodle-security-hardening`,
+  { admin: true }
+);
 await runJsonCheck("LTI JWKS scaffold endpoint", `${baseUrl}/api/lti/jwks`);
 await runJsonCheck("Pilot sessions endpoint", `${baseUrl}/api/admin/pilot-sessions`, {
   admin: true

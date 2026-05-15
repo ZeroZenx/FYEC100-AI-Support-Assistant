@@ -291,6 +291,43 @@ export default async function AdminPage({
               ))}
             </div>
           </DetailDrawer>
+          <DetailDrawer title="Moodle security hardening">
+            <div className="grid gap-4">
+              <div className="grid gap-3 sm:grid-cols-3">
+                <MetricCard
+                  label="Pass"
+                  value={status.moodleSecurityHardening.summary.pass}
+                />
+                <MetricCard
+                  label="Watch"
+                  value={status.moodleSecurityHardening.summary.watch}
+                />
+                <MetricCard
+                  label="Fail"
+                  value={status.moodleSecurityHardening.summary.fail}
+                />
+              </div>
+              <CompactRecord
+                label="Expected frame ancestors"
+                status={status.moodleSecurityHardening.moodleOrigin ? "configured" : "watch"}
+                text={
+                  status.moodleSecurityHardening.headerBehavior
+                    .expectedFrameAncestors
+                }
+              />
+              <div className="grid gap-3">
+                {status.moodleSecurityHardening.checks.map((check) => (
+                  <CompactRecord
+                    key={check.label}
+                    label={check.label}
+                    meta={`Owner: ${check.owner}`}
+                    status={check.status}
+                    text={check.message}
+                  />
+                ))}
+              </div>
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Launch simulator preview links">
             <div className="grid gap-3">
               {status.moodleLaunchSimulator.scenarioPreviews.map((scenario) => (
@@ -851,6 +888,10 @@ export default async function AdminPage({
             <EndpointPill
               label="Moodle simulator"
               path={status.moodleLaunchSimulator.exportPath}
+            />
+            <EndpointPill
+              label="Moodle security"
+              path={status.moodleSecurityHardening.exportPath}
             />
             <EndpointPill label="Pilot report" path="/api/admin/report.md" />
             <EndpointPill

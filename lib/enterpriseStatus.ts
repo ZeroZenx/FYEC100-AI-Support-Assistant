@@ -18,6 +18,7 @@ import { getLtiReadiness } from "@/lib/ltiReadiness";
 import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
 import { getMoodleBlockPluginStatus } from "@/lib/moodleBlockPlugin";
 import { buildMoodleLaunchSimulator } from "@/lib/moodleLaunchSimulator";
+import { buildMoodleSecurityHardening } from "@/lib/moodleSecurityHardening";
 import {
   getDefaultMoodleContext,
   getMoodleContextQueryString
@@ -56,6 +57,7 @@ export async function getEnterpriseStatus() {
   const ltiReadiness = getLtiReadiness();
   const moodleBlockPlugin = await getMoodleBlockPluginStatus();
   const moodleLaunchSimulator = await buildMoodleLaunchSimulator();
+  const moodleSecurityHardening = buildMoodleSecurityHardening();
   const pilotSessions = await readPilotSessionSummary();
   const pilotAnalytics = await buildPilotAnalytics();
   const pilotReport = await buildPilotReport();
@@ -180,6 +182,14 @@ export async function getEnterpriseStatus() {
           ? "complete"
           : "in-progress",
       note: "Admin view now provides role, course, launch-source, and placement preview URLs for rehearsing Moodle launches before live LMS testing."
+    },
+    {
+      label: "Moodle security hardening",
+      status:
+        moodleSecurityHardening.summary.fail > 0
+          ? "in-progress"
+          : "complete",
+      note: "Admin view now tracks Moodle origin, frame-ancestors header expectations, rebuild requirements, and iframe trust-boundary guidance."
     },
     {
       label: "Role-aware assistant behavior",
@@ -331,6 +341,7 @@ export async function getEnterpriseStatus() {
     ltiReadiness,
     moodleBlockPlugin,
     moodleLaunchSimulator,
+    moodleSecurityHardening,
     launchAudit,
     pilotSessions,
     pilotAnalytics,

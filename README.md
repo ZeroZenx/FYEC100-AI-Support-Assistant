@@ -207,6 +207,9 @@ The admin page also includes a Moodle pilot launch simulator for generating
 role, course, placement, and launch-source preview URLs before testing inside a
 real Moodle course shell.
 
+The admin page also includes a Moodle security hardening pack for Moodle origin,
+frame-ancestors headers, rebuild requirements, and iframe trust-boundary review.
+
 The embedded assistant also includes role-aware pilot behavior so student,
 lecturer, LMS administrator, and general pilot launch contexts receive tailored
 starter prompts, notices, and support guidance.
@@ -274,6 +277,7 @@ Related checklists:
 - `docs/stop-pilot-procedure.md`
 - `docs/admin-protection.md`
 - `docs/moodle-iframe-security.md`
+- `docs/moodle-security-hardening.md`
 - `docs/pilot-smoke-test.md`
 - `docs/accessibility-usability-checklist.md`
 - `docs/knowledge-base-management.md`
@@ -357,6 +361,8 @@ http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.md
 http://localhost:4100/api/admin/lti-readiness
 http://localhost:4100/api/admin/moodle-block
+http://localhost:4100/api/admin/moodle-security-hardening
+http://localhost:4100/api/admin/moodle-security-hardening.md
 http://localhost:4100/api/admin/pilot-sessions
 http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook
