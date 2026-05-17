@@ -25,6 +25,7 @@ import {
 } from "@/lib/moodleContext";
 import { buildPilotReport } from "@/lib/pilotReport";
 import { buildPilotAnalytics } from "@/lib/pilotAnalytics";
+import { buildPilotDataCleanupPreview } from "@/lib/pilotDataCleanup";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 import { readPilotSessionSummary } from "@/lib/pilotSessions";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
@@ -60,6 +61,7 @@ export async function getEnterpriseStatus() {
   const moodleSecurityHardening = buildMoodleSecurityHardening();
   const pilotSessions = await readPilotSessionSummary();
   const pilotAnalytics = await buildPilotAnalytics();
+  const pilotDataCleanup = await buildPilotDataCleanupPreview();
   const pilotReport = await buildPilotReport();
   const pilotEvidence = await buildPilotEvidenceDashboard();
   const pilotSignoff = await getPilotSignoffStatus();
@@ -146,6 +148,11 @@ export async function getEnterpriseStatus() {
       label: "Student support triage",
       status: supportTriage.summary.activeQueue > 0 ? "in-progress" : "complete",
       note: "Admin support triage routes student feedback issues to lecturer, LMS, IT, knowledge base, or academic integrity owners."
+    },
+    {
+      label: "Pilot data cleanup",
+      status: "complete",
+      note: "Admin preview and guarded reset endpoints can clear local pilot feedback and Moodle launch audit test records before demos or controlled pilot starts."
     },
     {
       label: "Pilot evidence dashboard",
@@ -344,6 +351,7 @@ export async function getEnterpriseStatus() {
     launchAudit,
     pilotSessions,
     pilotAnalytics,
+    pilotDataCleanup,
     deploymentReadiness,
     hostedDeploymentPack,
     pilotEvidence,

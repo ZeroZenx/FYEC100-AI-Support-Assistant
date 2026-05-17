@@ -41,6 +41,7 @@ Each queue item includes:
 3. Route items to the named owner.
 4. Use `/api/admin/support-triage.md` for meeting notes.
 5. Keep student identity and sensitive record details out of feedback notes.
+6. Export needed triage notes before using the pilot data cleanup tool.
 
 ## Privacy Boundary
 

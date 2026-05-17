@@ -833,6 +833,49 @@ export default async function AdminPage({
               </DetailDrawer>
             </div>
           </DetailDrawer>
+          <DetailDrawer title="Pilot data cleanup preview">
+            <div className="grid gap-4">
+              <div className="grid gap-3 sm:grid-cols-3">
+                <MetricCard
+                  label="Records"
+                  value={status.pilotDataCleanup.summary.totalRecords}
+                />
+                <MetricCard
+                  label="Files"
+                  value={status.pilotDataCleanup.summary.resettableFiles}
+                />
+                <MetricCard
+                  label="Bytes"
+                  value={status.pilotDataCleanup.summary.totalBytes}
+                />
+              </div>
+              <CompactRecord
+                label="Reset scope"
+                status={
+                  status.pilotDataCleanup.summary.totalRecords > 0
+                    ? "review"
+                    : "clear"
+                }
+                text={status.pilotDataCleanup.resetScope}
+              />
+              <CompactRecord
+                label="Confirmation phrase"
+                status="required"
+                text={status.pilotDataCleanup.confirmationPhrase}
+              />
+              <div className="grid gap-3">
+                {status.pilotDataCleanup.files.map((file) => (
+                  <CompactRecord
+                    key={file.path}
+                    label={file.label}
+                    meta={file.path}
+                    status={file.exists ? "ready" : "clear"}
+                    text={`${file.recordCount} record(s), ${file.sizeBytes} byte(s). ${file.description}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Pilot analytics summary">
             <div className="grid gap-4">
               <div className="grid gap-3 sm:grid-cols-4">
@@ -991,6 +1034,10 @@ export default async function AdminPage({
             <EndpointPill
               label="Support triage"
               path={status.supportTriage.exportPath}
+            />
+            <EndpointPill
+              label="Pilot data cleanup"
+              path={status.pilotDataCleanup.exportPath}
             />
             <EndpointPill
               label="Hosted deployment"

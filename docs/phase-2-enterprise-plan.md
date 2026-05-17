@@ -131,6 +131,10 @@ The current prototype includes a student support triage panel that turns pilot
 feedback into a privacy-light owner queue for staff follow-up before wider
 Moodle pilot expansion.
 
+The current prototype includes a guarded pilot data cleanup tool for previewing
+and resetting local demo telemetry before clean rehearsals or controlled pilot
+starts.
+
 The current prototype includes a Moodle integration decision matrix comparing
 iframe pilot, custom Moodle block, and LTI 1.3 paths.
 
@@ -219,16 +223,17 @@ Before enterprise launch, the project should add:
 12. Review the pilot evidence dashboard and export the Markdown snapshot for project-team records.
 13. Review the pilot analytics summary for aggregate launch, feedback, and risk signals.
 14. Review `/api/admin/support-triage.md` for queued student support follow-up.
-15. Review the pilot sign-off pack and record project-team approval status.
-16. Export the pilot meeting pack for sponsor and project-team review.
-17. Export the pilot operations runbook for before/during/after pilot procedures.
-18. Export the Moodle pilot configuration pack for LMS setup.
-19. Update the admin action register with follow-up items from the meeting.
-20. Review knowledge base change requests before editing the FYEC100 Markdown content.
-21. Draft proposed knowledge base wording in the draft update workflow before applying approved changes.
-22. Complete the manual knowledge base apply checklist before editing the live Markdown file.
-23. Record knowledge base release notes for the version used in the pilot.
-24. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
-25. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
-26. Collect feedback from students, lecturers, LMS administration, and IT.
-27. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
+15. Export needed pilot records, then use the cleanup preview before clean demos or controlled pilot starts.
+16. Review the pilot sign-off pack and record project-team approval status.
+17. Export the pilot meeting pack for sponsor and project-team review.
+18. Export the pilot operations runbook for before/during/after pilot procedures.
+19. Export the Moodle pilot configuration pack for LMS setup.
+20. Update the admin action register with follow-up items from the meeting.
+21. Review knowledge base change requests before editing the FYEC100 Markdown content.
+22. Draft proposed knowledge base wording in the draft update workflow before applying approved changes.
+23. Complete the manual knowledge base apply checklist before editing the live Markdown file.
+24. Record knowledge base release notes for the version used in the pilot.
+25. Review the accessibility and Moodle usability pack inside the controlled Moodle shell.
+26. Generate a pilot report for sponsor, lecturer, LMS administrator, and IT review.
+27. Collect feedback from students, lecturers, LMS administration, and IT.
+28. Use the integration decision matrix to decide whether to proceed with a Moodle block plugin or LTI integration.
