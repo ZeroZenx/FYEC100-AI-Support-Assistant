@@ -26,6 +26,7 @@ Set:
 ```bash
 NEXT_PUBLIC_APP_BASE_URL=https://fyec100-assistant.example.edu
 AI_PROVIDER=openai
+PILOT_MODE=pilot
 ```
 
 For OpenAI:

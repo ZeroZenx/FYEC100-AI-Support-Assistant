@@ -3,6 +3,7 @@ import path from "path";
 import { getAdminAuthStatus } from "@/lib/adminAuth";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getKnowledgeBaseReviewStatus } from "@/lib/knowledgeBaseReview";
+import { getPilotModeStatus } from "@/lib/pilotMode";
 import { getRateLimitSummary } from "@/lib/rateLimit";
 
 type ReadinessStatus = "pass" | "warn" | "fail";
@@ -21,6 +22,7 @@ export async function getDeploymentReadiness() {
   const appBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
   const providerStatus = getProviderStatus();
+  const pilotMode = getPilotModeStatus();
   const rateLimits = getRateLimitSummary();
   const moodleOrigin = process.env.MOODLE_ORIGIN ?? "";
   const checks: ReadinessCheck[] = [
@@ -34,7 +36,7 @@ export async function getDeploymentReadiness() {
     await checkFeedbackStorage(),
     checkAdminToken(),
     checkAdminExposure(),
-    checkPilotMode()
+    checkPilotMode(pilotMode)
   ];
   const summary = {
     fail: checks.filter((check) => check.status === "fail").length,
@@ -47,6 +49,7 @@ export async function getDeploymentReadiness() {
     checks,
     okForControlledPilot: summary.fail === 0,
     moodleOrigin: moodleOrigin || null,
+    pilotMode,
     provider: providerStatus,
     rateLimits,
     summary,
@@ -207,11 +210,10 @@ function checkAdminToken(): ReadinessCheck {
   };
 }
 
-function checkPilotMode(): ReadinessCheck {
+function checkPilotMode(pilotMode: ReturnType<typeof getPilotModeStatus>): ReadinessCheck {
   return {
-    label: "Pilot scope",
-    message:
-      "This build is suitable for controlled Phase 2 pilot testing, not open production deployment.",
-    status: "warn"
+    label: "Pilot mode",
+    message: pilotMode.summary,
+    status: pilotMode.isPilot ? "pass" : "warn"
   };
 }

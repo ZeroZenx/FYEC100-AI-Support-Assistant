@@ -135,6 +135,9 @@ The current prototype includes a guarded pilot data cleanup tool for previewing
 and resetting local demo telemetry before clean rehearsals or controlled pilot
 starts.
 
+The current prototype includes a `PILOT_MODE=demo|pilot` toggle so admins can
+distinguish resettable rehearsals from controlled pilot evidence collection.
+
 The current prototype includes a Moodle integration decision matrix comparing
 iframe pilot, custom Moodle block, and LTI 1.3 paths.
 

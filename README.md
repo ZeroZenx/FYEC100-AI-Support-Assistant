@@ -133,6 +133,18 @@ POST http://localhost:4100/api/admin/provider-test
 
 See `docs/ollama-local-setup.md` for local Ollama setup.
 
+## Pilot Mode
+
+Use `PILOT_MODE` to distinguish rehearsals from controlled pilot use:
+
+```bash
+PILOT_MODE=demo
+```
+
+Use `demo` for rehearsals, sponsor walkthroughs, and resettable test data. Use
+`pilot` when running a controlled FYEC100 Moodle pilot where feedback and launch
+records should be exported and reviewed before cleanup.
+
 ## Pilot Admin Protection
 
 Phase 2 admin pages and admin API routes can be protected with:
@@ -202,7 +214,8 @@ items to lecturer, LMS administrator, IT, knowledge base, or academic integrity
 owners.
 
 The admin page also includes a pilot data cleanup preview and guarded reset
-endpoint for clearing local demo/test telemetry before clean rehearsals.
+endpoint for clearing local demo/test telemetry before clean rehearsals. In
+pilot mode, the cleanup preview warns admins to export records before reset.
 
 The admin page also includes a hosted deployment readiness pack for IT review
 of environment variables, hosting targets, production caveats, and hosted pilot

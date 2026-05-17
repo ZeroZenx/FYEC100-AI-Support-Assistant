@@ -40,6 +40,7 @@ use the assistant.
 - `npm run smoke:pilot` passes against the hosted pilot URL.
 - `NEXT_PUBLIC_APP_BASE_URL` is the hosted HTTPS URL.
 - `MOODLE_ORIGIN` is the approved Moodle HTTPS origin.
+- `PILOT_MODE=pilot` is set for controlled pilot use.
 - AI provider variables are configured.
 - Provider test endpoint responds successfully.
 - Rate limits are configured.

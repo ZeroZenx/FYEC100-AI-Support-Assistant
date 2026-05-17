@@ -9,6 +9,8 @@ const statusStyles: Record<string, string> = {
   clear: "bg-emerald-100 text-emerald-800",
   complete: "bg-emerald-100 text-emerald-800",
   configured: "bg-emerald-100 text-emerald-800",
+  "controlled-pilot": "bg-emerald-100 text-emerald-800",
+  demo: "bg-blue-100 text-blue-800",
   done: "bg-emerald-100 text-emerald-800",
   draft: "bg-slate-100 text-slate-700",
   error: "bg-red-100 text-red-800",
@@ -115,12 +117,18 @@ export default async function AdminPage({
       ) : null}
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="grid gap-3 md:grid-cols-5">
           <StatusTile
             label="Go/no-go"
             status={status.pilotEvidence.goNoGo.label}
             tone={status.pilotEvidence.goNoGo.status}
             value={status.pilotEvidence.goNoGo.status.toUpperCase()}
+          />
+          <StatusTile
+            label="Mode"
+            status={status.pilotMode.status}
+            tone={status.pilotMode.status}
+            value={status.pilotMode.mode.toUpperCase()}
           />
           <StatusTile
             label="Provider"
@@ -849,6 +857,11 @@ export default async function AdminPage({
                   value={status.pilotDataCleanup.summary.totalBytes}
                 />
               </div>
+              <CompactRecord
+                label="Active pilot mode"
+                status={status.pilotDataCleanup.pilotMode.status}
+                text={status.pilotDataCleanup.modeWarning}
+              />
               <CompactRecord
                 label="Reset scope"
                 status={

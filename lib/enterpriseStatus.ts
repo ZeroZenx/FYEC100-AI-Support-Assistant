@@ -19,6 +19,7 @@ import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
 import { getMoodleBlockPluginStatus } from "@/lib/moodleBlockPlugin";
 import { buildMoodleLaunchSimulator } from "@/lib/moodleLaunchSimulator";
 import { buildMoodleSecurityHardening } from "@/lib/moodleSecurityHardening";
+import { getPilotModeStatus } from "@/lib/pilotMode";
 import {
   getDefaultMoodleContext,
   getMoodleContextQueryString
@@ -76,6 +77,7 @@ export async function getEnterpriseStatus() {
   const hostedDeploymentPack = await buildHostedDeploymentPack();
   const health = await getHealthStatus();
   const adminAuth = getAdminAuthStatus();
+  const pilotMode = getPilotModeStatus();
   const providerStatus = getProviderStatus();
   const embedBaseUrl =
     process.env.NEXT_PUBLIC_APP_BASE_URL ?? "http://localhost:4100";
@@ -91,6 +93,11 @@ export async function getEnterpriseStatus() {
   const providerLabel = `${formatProviderName(providerStatus.provider)} (${providerStatus.model})`;
 
   const checklist: DeploymentChecklistItem[] = [
+    {
+      label: "Pilot mode toggle",
+      status: "complete",
+      note: `${pilotMode.summary} Configure PILOT_MODE=demo or PILOT_MODE=pilot before rehearsals or controlled pilot use.`
+    },
     {
       label: "Moodle embedded route",
       status: "complete",
@@ -325,6 +332,7 @@ export async function getEnterpriseStatus() {
       },
       sampleEmbedUrl: sampleMoodleEmbedUrl
     },
+    pilotMode,
     provider: providerStatus.provider,
     providerConfigured,
     providerLabel,

@@ -40,6 +40,14 @@ Allowed targets:
 - `feedback`
 - `launch-audit`
 
+## Pilot Mode
+
+Set `PILOT_MODE=demo` for rehearsals, sponsor walkthroughs, and disposable
+test records. Set `PILOT_MODE=pilot` for controlled FYEC100 Moodle pilot runs.
+
+When pilot mode is active, export needed pilot analytics, support triage, and
+reports before using the reset action.
+
 ## Governance Notes
 
 - Export any reports needed for review before resetting pilot data.

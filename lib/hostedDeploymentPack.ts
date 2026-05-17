@@ -1,5 +1,6 @@
 import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
+import { getPilotModeStatus } from "@/lib/pilotMode";
 import { getRateLimitSummary } from "@/lib/rateLimit";
 
 type EnvStatus = "configured" | "missing" | "local" | "optional";
@@ -29,6 +30,7 @@ type ProductionCaveat = {
 
 export async function buildHostedDeploymentPack() {
   const readiness = await getDeploymentReadiness();
+  const pilotMode = getPilotModeStatus();
   const provider = getProviderStatus();
   const rateLimits = getRateLimitSummary();
   const appBaseUrl =
@@ -52,6 +54,7 @@ export async function buildHostedDeploymentPack() {
     exportPath: "/api/admin/hosted-deployment-pack.md",
     generatedAt: new Date().toISOString(),
     readiness,
+    pilotMode,
     statusMessage:
       readiness.summary.fail > 0
         ? "Hosted deployment pack has blocking readiness failures to resolve before Moodle pilot use."
@@ -175,6 +178,12 @@ function buildEnvironmentMatrix({
       purpose: "Pilot admin gate for /admin and /api/admin/* routes.",
       status: process.env.ADMIN_ACCESS_TOKEN ? "configured" : "missing",
       valuePreview: process.env.ADMIN_ACCESS_TOKEN ? "set" : "not set"
+    },
+    {
+      name: "PILOT_MODE",
+      purpose: "Operational mode for demos/rehearsals or controlled pilot use.",
+      status: "configured",
+      valuePreview: process.env.PILOT_MODE ?? "demo"
     },
     {
       name: "AI_PROVIDER",

@@ -1,6 +1,7 @@
 import { access, appendFile, mkdir } from "fs/promises";
 import path from "path";
 import { getProviderStatus } from "@/lib/aiProvider";
+import { getPilotModeStatus } from "@/lib/pilotMode";
 import { getRateLimitSummary } from "@/lib/rateLimit";
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -16,12 +17,18 @@ type HealthCheck = {
 
 export async function getHealthStatus() {
   const providerStatus = getProviderStatus();
+  const pilotMode = getPilotModeStatus();
 
   const checks: HealthCheck[] = [
     {
       label: "Application",
       message: "Next.js application is responding.",
       status: "ok"
+    },
+    {
+      label: "Pilot mode",
+      message: pilotMode.summary,
+      status: pilotMode.isPilot ? "ok" : "warning"
     },
     {
       label: "AI provider",
@@ -39,6 +46,7 @@ export async function getHealthStatus() {
   return {
     checks,
     ok: checks.every((check) => check.status !== "error"),
+    pilotMode: pilotMode.mode,
     provider: providerStatus.provider,
     timestamp: new Date().toISOString()
   };

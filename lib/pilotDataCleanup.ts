@@ -1,5 +1,6 @@
 import { mkdir, readFile, stat, writeFile } from "fs/promises";
 import path from "path";
+import { getPilotModeStatus } from "@/lib/pilotMode";
 
 type CleanupFileStatus = {
   description: string;
@@ -35,6 +36,7 @@ export const cleanupConfirmationPhrase = "RESET PILOT DATA";
 
 export async function buildPilotDataCleanupPreview() {
   const files = await Promise.all(cleanupFiles.map(getFileStatus));
+  const pilotMode = getPilotModeStatus();
   const totalRecords = files.reduce((sum, file) => sum + file.recordCount, 0);
   const totalBytes = files.reduce((sum, file) => sum + file.sizeBytes, 0);
 
@@ -43,6 +45,11 @@ export async function buildPilotDataCleanupPreview() {
     exportPath: "/api/admin/pilot-data-cleanup.md",
     files,
     generatedAt: new Date().toISOString(),
+    modeWarning:
+      pilotMode.mode === "pilot"
+        ? "Pilot mode is active. Export needed records before any reset."
+        : "Demo mode is active. Reset is intended for rehearsal and walkthrough cleanup.",
+    pilotMode,
     resetEndpoint: "/api/admin/pilot-data-cleanup",
     resetMethod: "POST",
     resetScope:
@@ -117,11 +124,16 @@ export async function renderPilotDataCleanupMarkdown() {
     `- Total pilot telemetry records: ${preview.summary.totalRecords}`,
     `- Total telemetry bytes: ${preview.summary.totalBytes}`,
     `- Resettable files: ${preview.summary.resettableFiles}`,
+    `- Pilot mode: ${preview.pilotMode.mode}`,
     `- Confirmation phrase: ${preview.confirmationPhrase}`,
     "",
     "## Reset Scope",
     "",
     preview.resetScope,
+    "",
+    "## Mode Warning",
+    "",
+    preview.modeWarning,
     "",
     "## Files",
     "",
