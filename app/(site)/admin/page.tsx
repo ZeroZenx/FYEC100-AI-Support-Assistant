@@ -6,6 +6,7 @@ const statusStyles: Record<string, string> = {
   approved: "bg-emerald-100 text-emerald-800",
   blocked: "bg-red-100 text-red-800",
   "changes-requested": "bg-red-100 text-red-800",
+  clear: "bg-emerald-100 text-emerald-800",
   complete: "bg-emerald-100 text-emerald-800",
   configured: "bg-emerald-100 text-emerald-800",
   done: "bg-emerald-100 text-emerald-800",
@@ -22,6 +23,7 @@ const statusStyles: Record<string, string> = {
   "local only": "bg-amber-100 text-amber-800",
   low: "bg-slate-100 text-slate-700",
   medium: "bg-blue-100 text-blue-800",
+  monitor: "bg-blue-100 text-blue-800",
   "needs env vars": "bg-amber-100 text-amber-800",
   "needs files": "bg-red-100 text-red-800",
   "needs review": "bg-amber-100 text-amber-800",
@@ -747,6 +749,90 @@ export default async function AdminPage({
             <MetricCard label="Launches" value={status.launchAudit.total} />
             <MetricCard label="Feedback" value={status.feedback.total} />
           </div>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <CompactRecord
+              label="Student support triage"
+              status={status.supportTriage.status}
+              text={status.supportTriage.statusMessage}
+            />
+            <CompactRecord
+              label="Queued owners"
+              status={
+                status.supportTriage.summary.owners > 0 ? "review" : "clear"
+              }
+              text={`${status.supportTriage.summary.owners} owner(s) have queued support items. ${status.supportTriage.summary.highPriority} high-priority item(s).`}
+            />
+          </div>
+          <DetailDrawer title="Student support triage">
+            <div className="grid gap-4">
+              <div className="grid gap-3 sm:grid-cols-4">
+                <MetricCard
+                  label="Active queue"
+                  value={status.supportTriage.summary.activeQueue}
+                />
+                <MetricCard
+                  label="High priority"
+                  value={status.supportTriage.summary.highPriority}
+                />
+                <MetricCard
+                  label="Medium"
+                  value={status.supportTriage.summary.mediumPriority}
+                />
+                <MetricCard
+                  label="Owners"
+                  value={status.supportTriage.summary.owners}
+                />
+              </div>
+              <div className="grid gap-3">
+                {status.supportTriage.signals.map((signal) => (
+                  <CompactRecord
+                    key={signal.label}
+                    label={signal.label}
+                    meta={`Owner: ${signal.owner}`}
+                    status={signal.status}
+                    text={signal.text}
+                  />
+                ))}
+              </div>
+              <DetailDrawer title="Owner queue">
+                <div className="grid gap-3">
+                  {status.supportTriage.ownerSummary.length > 0 ? (
+                    status.supportTriage.ownerSummary.map((owner) => (
+                      <CompactRecord
+                        key={owner.owner}
+                        label={owner.owner}
+                        status={owner.priority}
+                        text={`${owner.count} queued item(s)`}
+                      />
+                    ))
+                  ) : (
+                    <p className="text-sm text-slate-600">
+                      No owners currently have queued support items.
+                    </p>
+                  )}
+                </div>
+              </DetailDrawer>
+              <DetailDrawer title="Active triage queue">
+                <div className="grid gap-3">
+                  {status.supportTriage.queue.length > 0 ? (
+                    status.supportTriage.queue.map((item) => (
+                      <CompactRecord
+                        key={`${item.timestamp}-${item.category}`}
+                        label={`${item.category} / ${item.owner}`}
+                        meta={`${item.priority} / ${item.ageLabel} / ${item.mode}`}
+                        status={item.priority}
+                        text={`${item.question} Recommended action: ${item.recommendedAction}`}
+                      />
+                    ))
+                  ) : (
+                    <p className="text-sm text-slate-600">
+                      No active support triage items.
+                    </p>
+                  )}
+                </div>
+              </DetailDrawer>
+            </div>
+          </DetailDrawer>
           <DetailDrawer title="Pilot analytics summary">
             <div className="grid gap-4">
               <div className="grid gap-3 sm:grid-cols-4">
@@ -901,6 +987,10 @@ export default async function AdminPage({
             <EndpointPill
               label="Pilot analytics"
               path={status.pilotAnalytics.exportPath}
+            />
+            <EndpointPill
+              label="Support triage"
+              path={status.supportTriage.exportPath}
             />
             <EndpointPill
               label="Hosted deployment"

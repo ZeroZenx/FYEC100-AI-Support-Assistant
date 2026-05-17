@@ -6,6 +6,8 @@ Phase 2 includes an admin support playbook for routing common pilot issues.
 
 ```text
 /api/admin/support-playbook
+/api/admin/support-triage
+/api/admin/support-triage.md
 ```
 
 ## Escalation Categories
@@ -27,3 +29,6 @@ During pilot review:
 5. Pause or stop the pilot if a high-priority technical, privacy, or academic integrity issue cannot be resolved quickly.
 
 This playbook is not a ticketing system. It is a Phase 2 support scaffold for controlled pilot governance.
+
+For active pilot feedback routing, use the Student Support Triage Panel in
+`docs/support-triage-panel.md`.

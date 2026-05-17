@@ -107,6 +107,9 @@ await runJsonCheck("Pilot sessions endpoint", `${baseUrl}/api/admin/pilot-sessio
 await runJsonCheck("Support playbook endpoint", `${baseUrl}/api/admin/support-playbook`, {
   admin: true
 });
+await runJsonCheck("Support triage endpoint", `${baseUrl}/api/admin/support-triage`, {
+  admin: true
+});
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {
   admin: true
 });

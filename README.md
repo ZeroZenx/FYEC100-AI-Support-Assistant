@@ -197,6 +197,10 @@ The admin page also includes a pilot analytics summary for privacy-light launch,
 feedback, role/source, escalation, and session signals during controlled Moodle
 testing.
 
+The admin page also includes a student support triage panel for routing feedback
+items to lecturer, LMS administrator, IT, knowledge base, or academic integrity
+owners.
+
 The admin page also includes a hosted deployment readiness pack for IT review
 of environment variables, hosting targets, production caveats, and hosted pilot
 verification steps.
@@ -297,6 +301,7 @@ Related checklists:
 - `docs/lti-readiness-scaffold.md`
 - `docs/pilot-evidence-dashboard.md`
 - `docs/pilot-analytics-summary.md`
+- `docs/support-triage-panel.md`
 - `docs/pilot-signoff-pack.md`
 - `docs/pilot-meeting-pack.md`
 - `docs/pilot-operations-runbook.md`
@@ -374,6 +379,8 @@ http://localhost:4100/api/admin/moodle-security-hardening.md
 http://localhost:4100/api/admin/pilot-sessions
 http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook
+http://localhost:4100/api/admin/support-triage
+http://localhost:4100/api/admin/support-triage.md
 http://localhost:4100/api/admin/pilot-evidence
 http://localhost:4100/api/admin/pilot-evidence.md
 http://localhost:4100/api/admin/pilot-analytics

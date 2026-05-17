@@ -28,6 +28,7 @@ import { buildPilotAnalytics } from "@/lib/pilotAnalytics";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
 import { readPilotSessionSummary } from "@/lib/pilotSessions";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
+import { buildSupportTriage } from "@/lib/supportTriage";
 import { buildPilotEvidenceDashboard } from "@/lib/pilotEvidence";
 import { buildPilotMeetingPack } from "@/lib/pilotMeetingPack";
 import { getPilotOperationsRunbook } from "@/lib/pilotOperationsRunbook";
@@ -68,6 +69,7 @@ export async function getEnterpriseStatus() {
   const adminActions = await getAdminActionRegister();
   const accessibilityUsabilityReview = await getAccessibilityUsabilityReview();
   const supportPlaybook = getSupportPlaybook();
+  const supportTriage = await buildSupportTriage();
   const deploymentReadiness = await getDeploymentReadiness();
   const hostedDeploymentPack = await buildHostedDeploymentPack();
   const health = await getHealthStatus();
@@ -139,6 +141,11 @@ export async function getEnterpriseStatus() {
       label: "Pilot analytics summary",
       status: "complete",
       note: "Admin view now summarizes launch audit, feedback, sessions, escalation candidates, and privacy-light risk signals without a database."
+    },
+    {
+      label: "Student support triage",
+      status: supportTriage.summary.activeQueue > 0 ? "in-progress" : "complete",
+      note: "Admin support triage routes student feedback issues to lecturer, LMS, IT, knowledge base, or academic integrity owners."
     },
     {
       label: "Pilot evidence dashboard",
@@ -346,6 +353,7 @@ export async function getEnterpriseStatus() {
     moodlePilotConfig,
     pilotReport,
     supportPlaybook,
+    supportTriage,
     health,
     checklist
   };
