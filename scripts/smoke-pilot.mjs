@@ -115,6 +115,9 @@ await runJsonCheck(
   `${baseUrl}/api/admin/pilot-data-cleanup`,
   { admin: true }
 );
+await runCheck("Pilot export bundle HTML", `${baseUrl}/api/admin/pilot-export-bundle.html`, {
+  admin: true
+});
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {
   admin: true
 });
@@ -140,10 +143,10 @@ printResults();
 const failed = checks.some((check) => check.status === "fail");
 process.exitCode = failed ? 1 : 0;
 
-async function runCheck(label, url) {
+async function runCheck(label, url, options = {}) {
   try {
     const response = await fetch(url, {
-      headers: requestHeaders(false),
+      headers: requestHeaders(Boolean(options.admin)),
       redirect: "manual"
     });
 

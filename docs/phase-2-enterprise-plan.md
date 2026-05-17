@@ -138,6 +138,10 @@ starts.
 The current prototype includes a `PILOT_MODE=demo|pilot` toggle so admins can
 distinguish resettable rehearsals from controlled pilot evidence collection.
 
+The current prototype includes a consolidated HTML pilot export bundle with
+diagrams, technical breakdowns, and source-report links for human-readable
+project-team review.
+
 The current prototype includes a Moodle integration decision matrix comparing
 iframe pilot, custom Moodle block, and LTI 1.3 paths.
 

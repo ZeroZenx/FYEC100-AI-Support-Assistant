@@ -217,6 +217,10 @@ The admin page also includes a pilot data cleanup preview and guarded reset
 endpoint for clearing local demo/test telemetry before clean rehearsals. In
 pilot mode, the cleanup preview warns admins to export records before reset.
 
+The admin page also includes a consolidated HTML pilot export bundle for
+human-readable meeting review, with diagrams, technical breakdowns, and links
+to the detailed source reports.
+
 The admin page also includes a hosted deployment readiness pack for IT review
 of environment variables, hosting targets, production caveats, and hosted pilot
 verification steps.
@@ -319,6 +323,7 @@ Related checklists:
 - `docs/pilot-analytics-summary.md`
 - `docs/support-triage-panel.md`
 - `docs/pilot-data-cleanup.md`
+- `docs/pilot-export-bundle.md`
 - `docs/pilot-signoff-pack.md`
 - `docs/pilot-meeting-pack.md`
 - `docs/pilot-operations-runbook.md`
@@ -386,6 +391,8 @@ testing:
 Protected admin endpoints:
 
 ```text
+http://localhost:4100/api/admin/pilot-export-bundle.html
+http://localhost:4100/api/admin/pilot-export-bundle.md
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.md
