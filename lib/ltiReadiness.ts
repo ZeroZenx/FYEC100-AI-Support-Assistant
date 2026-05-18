@@ -71,6 +71,52 @@ export function getLtiReadiness() {
   };
 }
 
+export function renderLtiReadinessMarkdown() {
+  const readiness = getLtiReadiness();
+
+  return [
+    "# FYEC100 LTI 1.3 Readiness Scaffold",
+    "",
+    `Generated: ${new Date().toLocaleString()}`,
+    "",
+    "## Summary",
+    "",
+    `- Configured checks: ${readiness.summary.configured}`,
+    `- Warnings: ${readiness.summary.warnings}`,
+    "",
+    "## Tool Endpoints",
+    "",
+    `- Login URL: ${readiness.toolEndpoints.loginUrl}`,
+    `- Launch URL: ${readiness.toolEndpoints.launchUrl}`,
+    `- JWKS URL: ${readiness.toolEndpoints.jwksUrl}`,
+    `- Tool URL: ${readiness.toolEndpoints.toolUrl}`,
+    "",
+    "## Platform Values",
+    "",
+    `- Issuer: ${readiness.platform.issuer || "Not configured"}`,
+    `- Client ID: ${readiness.platform.clientId || "Not configured"}`,
+    `- Deployment ID: ${readiness.platform.deploymentId || "Not configured"}`,
+    `- Authorization URL: ${readiness.platform.authorizationUrl || "Not configured"}`,
+    `- Token URL: ${readiness.platform.tokenUrl || "Not configured"}`,
+    `- JWKS URL: ${readiness.platform.jwksUrl || "Not configured"}`,
+    "",
+    "## Checks",
+    "",
+    ...readiness.checks.map(
+      (check) => `- [${check.status}] ${check.label}: ${check.message}`
+    ),
+    "",
+    "## Workflow",
+    "",
+    ...readiness.workflow.map((step, index) => `${index + 1}. ${step}`),
+    "",
+    "## Trust Boundary",
+    "",
+    readiness.trustBoundary,
+    ""
+  ].join("\n");
+}
+
 function checkEnvironmentVariable(name: string): LtiReadinessCheck {
   const configured = Boolean(process.env[name]);
 

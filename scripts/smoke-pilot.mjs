@@ -9,6 +9,7 @@ const moodleOrigin = process.env.MOODLE_ORIGIN;
 const checks = [];
 
 await runCheck("Home page", `${baseUrl}/`);
+await runCheck("Reports library page", `${baseUrl}/reports`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -90,6 +91,9 @@ await runJsonCheck(
   { admin: true }
 );
 await runJsonCheck("LTI readiness endpoint", `${baseUrl}/api/admin/lti-readiness`, {
+  admin: true
+});
+await runCheck("LTI readiness markdown endpoint", `${baseUrl}/api/admin/lti-readiness.md`, {
   admin: true
 });
 await runJsonCheck("Moodle block endpoint", `${baseUrl}/api/admin/moodle-block`, {

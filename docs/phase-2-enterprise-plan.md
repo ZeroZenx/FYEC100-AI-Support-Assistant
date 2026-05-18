@@ -142,6 +142,10 @@ The current prototype includes a consolidated HTML pilot export bundle with
 diagrams, technical breakdowns, and source-report links for human-readable
 project-team review.
 
+The current prototype includes a `/reports` library page that groups project
+reports by audience and makes the HTML bundle the primary human-readable entry
+point.
+
 The current prototype includes a Moodle integration decision matrix comparing
 iframe pilot, custom Moodle block, and LTI 1.3 paths.
 

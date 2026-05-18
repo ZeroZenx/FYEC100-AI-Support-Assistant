@@ -221,6 +221,10 @@ The admin page also includes a consolidated HTML pilot export bundle for
 human-readable meeting review, with diagrams, technical breakdowns, and links
 to the detailed source reports.
 
+The app also includes a `/reports` library page that groups human-readable
+project reports by executive review, Moodle readiness, support operations,
+technical deployment, and knowledge base governance.
+
 The admin page also includes a hosted deployment readiness pack for IT review
 of environment variables, hosting targets, production caveats, and hosted pilot
 verification steps.

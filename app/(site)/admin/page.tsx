@@ -1019,6 +1019,7 @@ export default async function AdminPage({
           summary="Use these endpoints for sponsor briefings, LMS review, and controlled pilot records."
         >
           <div className="grid gap-3 sm:grid-cols-2">
+            <EndpointPill label="Report library" path="/reports" />
             <EndpointPill
               label="HTML export bundle"
               path="/api/admin/pilot-export-bundle.html"
