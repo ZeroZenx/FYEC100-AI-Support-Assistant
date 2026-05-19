@@ -290,6 +290,16 @@ http://localhost:4100/knowledge-base-review
 http://localhost:4100/feedback-inbox
 http://localhost:4100/moodle-preview
 http://localhost:4100/go-live
+http://localhost:4100/role-views
+http://localhost:4100/decision-packet
+http://localhost:4100/pilot-sessions
+http://localhost:4100/production-hardening
+```
+
+The decision packet can also be opened as a standalone HTML report:
+
+```text
+http://localhost:4100/api/admin/pilot-decision-packet.html
 ```
 
 ## Pilot Rate Limiting
@@ -417,6 +427,7 @@ Protected admin endpoints:
 ```text
 http://localhost:4100/api/admin/pilot-export-bundle.html
 http://localhost:4100/api/admin/pilot-export-bundle.md
+http://localhost:4100/api/admin/pilot-decision-packet.html
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.html

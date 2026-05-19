@@ -15,6 +15,10 @@ Current Phase 2 pilot workspaces include:
 - Pilot feedback inbox with filters by category, owner, priority, mode, and escalation type.
 - Moodle embed preview studio for student, lecturer, LMS administrator, iframe, Moodle block, and future LTI rehearsal.
 - Pre-pilot go-live dashboard showing ready, needs review, or blocked status for controlled pilot launch checks.
+- Role-based admin views for project sponsor, project lead, LMS administrator, developer, and system administrator.
+- Pilot decision packet generator with a sponsor-ready HTML export.
+- Moodle pilot session console for dry runs, controlled student pilot checks, and post-session review.
+- Production hardening checklist dashboard for hosting, frame security, admin protection, provider secrets, and support readiness.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

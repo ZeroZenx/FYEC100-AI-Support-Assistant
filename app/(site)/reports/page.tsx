@@ -27,6 +27,42 @@ const reportGroups: Array<{ description: string; reports: ReportItem[]; title: s
       {
         category: "Staff Workspaces",
         description:
+          "Focused views for sponsor, project lead, LMS administrator, developer, and system administrator responsibilities.",
+        htmlPath: "/role-views",
+        markdownPath: "/api/admin/actions.md",
+        owner: "Project Team",
+        title: "Role-Based Admin Views"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Sponsor-ready packet with decision summary, evidence signals, risks, sign-off ownership, and HTML export.",
+        htmlPath: "/decision-packet",
+        markdownPath: "/api/admin/pilot-evidence.md",
+        owner: "Project Sponsor / Project Lead",
+        title: "Pilot Decision Packet"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Session console for Moodle dry runs and controlled student pilot planning, checks, and success criteria.",
+        htmlPath: "/pilot-sessions",
+        markdownPath: "/api/admin/pilot-operations-runbook.md",
+        owner: "Project Lead / LMS Administrator",
+        title: "Moodle Pilot Session Console"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Production hardening checklist for hosting, Moodle frame security, admin protection, provider secrets, and support readiness.",
+        htmlPath: "/production-hardening",
+        markdownPath: "/api/admin/hosted-deployment-pack.md",
+        owner: "Technical Lead / System Administrator",
+        title: "Production Hardening Dashboard"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
           "Review FYEC100 sections, change requests, draft updates, apply checklist, and release notes in one readable workspace.",
         htmlPath: "/knowledge-base-review",
         markdownPath: "/api/admin/knowledge-base/review.md",

@@ -14,6 +14,10 @@ await runCheck("Knowledge base review workspace", `${baseUrl}/knowledge-base-rev
 await runCheck("Pilot feedback inbox", `${baseUrl}/feedback-inbox`);
 await runCheck("Moodle embed preview studio", `${baseUrl}/moodle-preview`);
 await runCheck("Pre-pilot go-live dashboard", `${baseUrl}/go-live`);
+await runCheck("Role-based admin views", `${baseUrl}/role-views`);
+await runCheck("Pilot decision packet page", `${baseUrl}/decision-packet`);
+await runCheck("Pilot session console", `${baseUrl}/pilot-sessions`);
+await runCheck("Production hardening dashboard", `${baseUrl}/production-hardening`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -129,6 +133,11 @@ await runCheck("Pilot export bundle HTML", `${baseUrl}/api/admin/pilot-export-bu
 await runCheck("Pilot evidence HTML", `${baseUrl}/api/admin/pilot-evidence.html`, {
   admin: true
 });
+await runCheck(
+  "Pilot decision packet HTML",
+  `${baseUrl}/api/admin/pilot-decision-packet.html`,
+  { admin: true }
+);
 await runCheck("Support triage HTML", `${baseUrl}/api/admin/support-triage.html`, {
   admin: true
 });
