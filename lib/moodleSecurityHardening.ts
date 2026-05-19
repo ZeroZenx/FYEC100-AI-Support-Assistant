@@ -1,3 +1,12 @@
+import {
+  callout,
+  codeBlock,
+  list,
+  metric,
+  recordCard,
+  renderHtmlReport
+} from "@/lib/htmlReport";
+
 type HardeningStatus = "pass" | "watch" | "fail";
 
 type SecurityCheck = {
@@ -151,6 +160,91 @@ export function renderMoodleSecurityHardeningMarkdown() {
     "This hardening pack supports a controlled Phase 2 Moodle iframe pilot. Production should use approved authentication, Moodle-side validation, or LTI 1.3 for trusted role and course context.",
     ""
   ].join("\n");
+}
+
+export function renderMoodleSecurityHardeningHtml() {
+  const pack = buildMoodleSecurityHardening();
+
+  return renderHtmlReport({
+    generatedAt: pack.generatedAt,
+    lede:
+      "A human-readable iframe and Moodle-origin hardening pack for the controlled FYEC100 assistant pilot.",
+    title: "FYEC100 Moodle Security Hardening Pack",
+    sections: [
+      {
+        id: "summary",
+        title: "Summary",
+        body: [
+          callout("Current security posture", pack.statusMessage, pack.summary.fail > 0 ? "fail" : "watch"),
+          `<div class="metric-grid">
+            ${metric("Pass", pack.summary.pass, "checks")}
+            ${metric("Watch", pack.summary.watch, "checks")}
+            ${metric("Fail", pack.summary.fail, "checks")}
+            ${metric("Moodle Origin", pack.moodleOrigin ?? "Not set", "approved origin")}
+          </div>`
+        ].join("")
+      },
+      {
+        id: "headers",
+        title: "Header Behavior",
+        body: [
+          `<div class="record-grid">
+            ${recordCard({
+              label: "Applied Routes",
+              meta: "next.config.mjs",
+              status: "watch",
+              text: pack.headerBehavior.appliedRoutes.join(", ")
+            })}
+            ${recordCard({
+              label: "Expected Frame Ancestors",
+              meta: "Content-Security-Policy",
+              status: pack.moodleOrigin ? "pass" : "watch",
+              text: pack.headerBehavior.expectedFrameAncestors
+            })}
+          </div>`,
+          callout("Implementation note", pack.headerBehavior.note, "watch")
+        ].join("")
+      },
+      {
+        id: "checks",
+        title: "Security Checks",
+        body: `<div class="record-grid">${pack.checks
+          .map((check) =>
+            recordCard({
+              label: check.label,
+              meta: check.owner,
+              status: check.status,
+              text: check.message
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "configuration",
+        title: "Configuration Examples",
+        body: pack.configExamples
+          .map(
+            (example) =>
+              `<h3>${example.label}</h3>${codeBlock(example.text)}`
+          )
+          .join("")
+      },
+      {
+        id: "verification",
+        title: "Verification Steps",
+        body: list(pack.verificationSteps)
+      },
+      {
+        id: "trust",
+        title: "Trust Boundary",
+        body: callout(
+          "Controlled pilot only",
+          "This hardening pack supports a controlled Phase 2 Moodle iframe pilot. Production should use approved authentication, Moodle-side validation, or LTI 1.3 for trusted role and course context.",
+          "watch"
+        )
+      }
+    ]
+  });
 }
 
 function assessMoodleOrigin(value: string) {

@@ -222,8 +222,19 @@ human-readable meeting review, with diagrams, technical breakdowns, and links
 to the detailed source reports.
 
 The app also includes a `/reports` library page that groups human-readable
-project reports by executive review, Moodle readiness, support operations,
-technical deployment, and knowledge base governance.
+project reports and staff workspaces by executive review, Moodle readiness,
+support operations, technical deployment, and knowledge base governance.
+
+The report library now opens high-value HTML reports first for non-technical
+reviewers, while keeping Markdown source exports available for project-team
+traceability:
+
+```text
+http://localhost:4100/api/admin/pilot-evidence.html
+http://localhost:4100/api/admin/support-triage.html
+http://localhost:4100/api/admin/moodle-security-hardening.html
+http://localhost:4100/api/admin/hosted-deployment-pack.html
+```
 
 The admin page also includes a hosted deployment readiness pack for IT review
 of environment variables, hosting targets, production caveats, and hosted pilot
@@ -271,6 +282,15 @@ limitations.
 
 The admin page also includes an accessibility and Moodle usability review pack
 for keyboard, screen-reader, embedded Moodle, and student clarity checks.
+
+Phase 2 also includes staff-friendly workspaces for day-to-day pilot review:
+
+```text
+http://localhost:4100/knowledge-base-review
+http://localhost:4100/feedback-inbox
+http://localhost:4100/moodle-preview
+http://localhost:4100/go-live
+```
 
 ## Pilot Rate Limiting
 
@@ -399,19 +419,23 @@ http://localhost:4100/api/admin/pilot-export-bundle.html
 http://localhost:4100/api/admin/pilot-export-bundle.md
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
+http://localhost:4100/api/admin/hosted-deployment-pack.html
 http://localhost:4100/api/admin/hosted-deployment-pack.md
 http://localhost:4100/api/admin/lti-readiness
 http://localhost:4100/api/admin/moodle-block
 http://localhost:4100/api/admin/moodle-security-hardening
+http://localhost:4100/api/admin/moodle-security-hardening.html
 http://localhost:4100/api/admin/moodle-security-hardening.md
 http://localhost:4100/api/admin/pilot-sessions
 http://localhost:4100/api/admin/launch-audit
 http://localhost:4100/api/admin/support-playbook
 http://localhost:4100/api/admin/support-triage
+http://localhost:4100/api/admin/support-triage.html
 http://localhost:4100/api/admin/support-triage.md
 http://localhost:4100/api/admin/pilot-data-cleanup
 http://localhost:4100/api/admin/pilot-data-cleanup.md
 http://localhost:4100/api/admin/pilot-evidence
+http://localhost:4100/api/admin/pilot-evidence.html
 http://localhost:4100/api/admin/pilot-evidence.md
 http://localhost:4100/api/admin/pilot-analytics
 http://localhost:4100/api/admin/pilot-analytics.md

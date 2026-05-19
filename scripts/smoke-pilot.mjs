@@ -10,6 +10,10 @@ const checks = [];
 
 await runCheck("Home page", `${baseUrl}/`);
 await runCheck("Reports library page", `${baseUrl}/reports`);
+await runCheck("Knowledge base review workspace", `${baseUrl}/knowledge-base-review`);
+await runCheck("Pilot feedback inbox", `${baseUrl}/feedback-inbox`);
+await runCheck("Moodle embed preview studio", `${baseUrl}/moodle-preview`);
+await runCheck("Pre-pilot go-live dashboard", `${baseUrl}/go-live`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -122,6 +126,22 @@ await runJsonCheck(
 await runCheck("Pilot export bundle HTML", `${baseUrl}/api/admin/pilot-export-bundle.html`, {
   admin: true
 });
+await runCheck("Pilot evidence HTML", `${baseUrl}/api/admin/pilot-evidence.html`, {
+  admin: true
+});
+await runCheck("Support triage HTML", `${baseUrl}/api/admin/support-triage.html`, {
+  admin: true
+});
+await runCheck(
+  "Moodle security hardening HTML",
+  `${baseUrl}/api/admin/moodle-security-hardening.html`,
+  { admin: true }
+);
+await runCheck(
+  "Hosted deployment readiness HTML",
+  `${baseUrl}/api/admin/hosted-deployment-pack.html`,
+  { admin: true }
+);
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {
   admin: true
 });

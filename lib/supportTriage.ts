@@ -4,6 +4,13 @@ import {
   readPilotFeedbackRecords,
   readPilotFeedbackSummary
 } from "@/lib/pilotFeedback";
+import {
+  callout,
+  metric,
+  recordCard,
+  renderHtmlReport,
+  table
+} from "@/lib/htmlReport";
 import { getSupportPlaybook } from "@/lib/supportPlaybook";
 
 type TriageStatus = "clear" | "monitor" | "review";
@@ -146,6 +153,98 @@ export async function renderSupportTriageMarkdown() {
     triage.privacyNotice,
     ""
   ].join("\n");
+}
+
+export async function renderSupportTriageHtml() {
+  const triage = await buildSupportTriage();
+
+  return renderHtmlReport({
+    generatedAt: triage.generatedAt,
+    lede:
+      "A readable support queue for routing FYEC100 pilot feedback to lecturer, LMS, IT, knowledge base, and academic integrity owners.",
+    title: "FYEC100 Student Support Triage Pack",
+    sections: [
+      {
+        id: "summary",
+        title: "Summary",
+        body: [
+          callout("Current triage status", triage.statusMessage, triage.status),
+          `<div class="metric-grid">
+            ${metric("Feedback", triage.summary.totalFeedback, "total records")}
+            ${metric("Active Queue", triage.summary.activeQueue, "items")}
+            ${metric("High Priority", triage.summary.highPriority, "items")}
+            ${metric("Medium Priority", triage.summary.mediumPriority, "items")}
+            ${metric("Owners", triage.summary.owners, "with queued work")}
+          </div>`
+        ].join("")
+      },
+      {
+        id: "signals",
+        title: "Triage Signals",
+        body: `<div class="record-grid">${triage.signals
+          .map((signal) =>
+            recordCard({
+              label: signal.label,
+              meta: signal.owner,
+              status: signal.status,
+              text: signal.text
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "owners",
+        title: "Owner Queue",
+        body:
+          triage.ownerSummary.length > 0
+            ? table(
+                ["Owner", "Priority", "Queued Items"],
+                triage.ownerSummary.map((item) => [
+                  item.owner,
+                  item.priority,
+                  item.count
+                ])
+              )
+            : `<p class="muted">No owners currently have queued support items.</p>`
+      },
+      {
+        id: "queue",
+        title: "Active Queue",
+        body:
+          triage.queue.length > 0
+            ? `<div class="record-grid">${triage.queue
+                .map((item) =>
+                  recordCard({
+                    label: `${item.category} - ${item.ageLabel}`,
+                    meta: `${item.owner} / ${item.mode}`,
+                    status: item.priority,
+                    text: `${item.question} Recommended action: ${item.recommendedAction}`
+                  })
+                )
+                .join("")}</div>`
+            : `<p class="muted">No active queue items.</p>`
+      },
+      {
+        id: "playbook",
+        title: "Support Playbook",
+        body: `<div class="record-grid">${triage.playbook
+          .map((item) =>
+            recordCard({
+              label: item.category,
+              meta: item.owner,
+              status: item.priority,
+              text: item.firstResponse
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "privacy",
+        title: "Privacy Notice",
+        body: callout("Privacy-light support records", triage.privacyNotice, "watch")
+      }
+    ]
+  });
 }
 
 function toQueueItem(record: PilotFeedbackRecord): TriageQueueItem {

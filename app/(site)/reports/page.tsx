@@ -20,6 +20,49 @@ const featuredReport = {
 
 const reportGroups: Array<{ description: string; reports: ReportItem[]; title: string }> = [
   {
+    title: "Staff Workspaces",
+    description:
+      "Interactive pages for people running the pilot, reviewing content, and rehearsing Moodle launch behavior.",
+    reports: [
+      {
+        category: "Staff Workspaces",
+        description:
+          "Review FYEC100 sections, change requests, draft updates, apply checklist, and release notes in one readable workspace.",
+        htmlPath: "/knowledge-base-review",
+        markdownPath: "/api/admin/knowledge-base/review.md",
+        owner: "Lecturer / Developer",
+        title: "Knowledge Base Review Workspace"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Filter pilot feedback by category, owner, priority, mode, and escalation type for support follow-up.",
+        htmlPath: "/feedback-inbox",
+        markdownPath: "/api/admin/support-triage.md",
+        owner: "Pilot Review Team",
+        title: "Pilot Feedback Inbox"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Preview the assistant as different Moodle roles and launch modes before touching the Moodle course shell.",
+        htmlPath: "/moodle-preview",
+        markdownPath: "/api/admin/moodle-launch-simulator.md",
+        owner: "LMS Administrator / Developer",
+        title: "Moodle Embed Preview Studio"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "One-page ready, needs-review, and blocked dashboard for the exact items COSTAATT must confirm before pilot go-live.",
+        htmlPath: "/go-live",
+        markdownPath: "/api/admin/pilot-evidence.md",
+        owner: "Project Sponsor / Project Lead",
+        title: "Pre-Pilot Go-Live Dashboard"
+      }
+    ]
+  },
+  {
     title: "Executive Review",
     description: "Sponsor and project-team material for go/no-go discussions.",
     reports: [
@@ -27,6 +70,7 @@ const reportGroups: Array<{ description: string; reports: ReportItem[]; title: s
         category: "Executive Review",
         description:
           "Evidence signals, readiness summary, feedback totals, and recommended actions for the controlled pilot decision.",
+        htmlPath: "/api/admin/pilot-evidence.html",
         markdownPath: "/api/admin/pilot-evidence.md",
         owner: "Project Sponsor / Project Lead",
         title: "Pilot Evidence Dashboard"
@@ -57,6 +101,7 @@ const reportGroups: Array<{ description: string; reports: ReportItem[]; title: s
         category: "Moodle Readiness",
         description:
           "Moodle origin, frame-ancestors expectations, rebuild requirements, and iframe trust-boundary checks.",
+        htmlPath: "/api/admin/moodle-security-hardening.html",
         markdownPath: "/api/admin/moodle-security-hardening.md",
         owner: "Technical Lead / LMS Administrator",
         title: "Moodle Security Hardening"
@@ -87,6 +132,7 @@ const reportGroups: Array<{ description: string; reports: ReportItem[]; title: s
         category: "Support Operations",
         description:
           "Privacy-light queue that routes feedback to lecturer, LMS, IT, knowledge base, or academic integrity owners.",
+        htmlPath: "/api/admin/support-triage.html",
         markdownPath: "/api/admin/support-triage.md",
         owner: "Pilot Review Team",
         title: "Student Support Triage"
@@ -125,6 +171,7 @@ const reportGroups: Array<{ description: string; reports: ReportItem[]; title: s
         category: "Technical Deployment",
         description:
           "Hosted URL, HTTPS, provider, admin protection, rate limit, storage, and production caveat checks.",
+        htmlPath: "/api/admin/hosted-deployment-pack.html",
         markdownPath: "/api/admin/hosted-deployment-pack.md",
         owner: "Technical Lead / System Administrator",
         title: "Hosted Deployment Readiness"

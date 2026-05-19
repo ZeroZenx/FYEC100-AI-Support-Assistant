@@ -2,6 +2,14 @@ import { getDeploymentReadiness } from "@/lib/deploymentReadiness";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getPilotModeStatus } from "@/lib/pilotMode";
 import { getRateLimitSummary } from "@/lib/rateLimit";
+import {
+  callout,
+  list,
+  metric,
+  recordCard,
+  renderHtmlReport,
+  table
+} from "@/lib/htmlReport";
 
 type EnvStatus = "configured" | "missing" | "local" | "optional";
 type TargetStatus = "recommended" | "possible" | "future";
@@ -143,6 +151,103 @@ export async function renderHostedDeploymentPackMarkdown() {
     "This pack supports a controlled Phase 2 hosted pilot. It is not a production security approval, production privacy assessment, or final Moodle/LTI authentication design.",
     ""
   ].join("\n");
+}
+
+export async function renderHostedDeploymentPackHtml() {
+  const pack = await buildHostedDeploymentPack();
+
+  return renderHtmlReport({
+    generatedAt: pack.generatedAt,
+    lede:
+      "A practical deployment review pack for moving the FYEC100 assistant from local prototype toward controlled hosted Moodle pilot use.",
+    title: "FYEC100 Hosted Deployment Readiness Pack",
+    sections: [
+      {
+        id: "summary",
+        title: "Summary",
+        body: [
+          callout("Hosted deployment status", pack.statusMessage, pack.summary.readinessFailures > 0 ? "fail" : "watch"),
+          `<div class="metric-grid">
+            ${metric("Readiness Pass", pack.summary.readinessPasses, "checks")}
+            ${metric("Warnings", pack.summary.readinessWarnings, "checks")}
+            ${metric("Failures", pack.summary.readinessFailures, "checks")}
+            ${metric("Configured Env", pack.summary.configuredEnv, "items")}
+            ${metric("Missing Env", pack.summary.missingEnv, "items")}
+            ${metric("Required Caveats", pack.summary.unresolvedRequired, "items")}
+          </div>`
+        ].join("")
+      },
+      {
+        id: "environment",
+        title: "Environment Matrix",
+        body: table(
+          ["Variable", "Status", "Purpose", "Value"],
+          pack.environmentMatrix.map((item) => [
+            item.name,
+            item.status,
+            item.purpose,
+            item.valuePreview
+          ])
+        )
+      },
+      {
+        id: "targets",
+        title: "Deployment Targets",
+        body: `<div class="record-grid">${pack.deploymentTargets
+          .map((target) =>
+            recordCard({
+              label: target.name,
+              meta: target.bestFor,
+              status: target.status,
+              text: target.notes.join(" ")
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "caveats",
+        title: "Production Caveats",
+        body: `<div class="record-grid">${pack.caveats
+          .map((caveat) =>
+            recordCard({
+              label: caveat.label,
+              meta: caveat.owner,
+              status: caveat.status,
+              text: caveat.note
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "verification",
+        title: "Verification Steps",
+        body: list(pack.verificationSteps)
+      },
+      {
+        id: "readiness",
+        title: "Current Deployment Checks",
+        body: `<div class="record-grid">${pack.readiness.checks
+          .map((check) =>
+            recordCard({
+              label: check.label,
+              meta: "Deployment readiness",
+              status: check.status,
+              text: check.message
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "trust",
+        title: "Trust Boundary",
+        body: callout(
+          "Controlled pilot only",
+          "This pack is not a production security approval, production privacy assessment, or final Moodle/LTI authentication design.",
+          "watch"
+        )
+      }
+    ]
+  });
 }
 
 function buildEnvironmentMatrix({

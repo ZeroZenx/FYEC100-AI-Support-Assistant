@@ -7,6 +7,12 @@ import { getMoodleBlockPluginStatus } from "@/lib/moodleBlockPlugin";
 import { getMoodleIntegrationDecision } from "@/lib/moodleIntegrationDecision";
 import { buildPilotReport } from "@/lib/pilotReport";
 import { readPilotFeedbackSummary } from "@/lib/pilotFeedback";
+import {
+  callout,
+  metric,
+  recordCard,
+  renderHtmlReport
+} from "@/lib/htmlReport";
 
 export type PilotEvidenceStatus = "ready" | "watch" | "blocked";
 export type PilotGoNoGoStatus = "go" | "hold";
@@ -221,6 +227,65 @@ export function renderPilotEvidenceMarkdown(report: PilotEvidenceDashboard) {
     report.privacyNotice,
     ""
   ].join("\n");
+}
+
+export function renderPilotEvidenceHtml(report: PilotEvidenceDashboard) {
+  return renderHtmlReport({
+    generatedAt: report.generatedAt,
+    lede:
+      "A sponsor-friendly evidence dashboard for controlled FYEC100 Moodle pilot readiness, go/no-go discussion, and follow-up ownership.",
+    title: "FYEC100 Pilot Evidence Dashboard",
+    sections: [
+      {
+        id: "decision",
+        title: "Go / No-Go",
+        body: [
+          callout(report.goNoGo.label, report.goNoGo.message, report.goNoGo.status),
+          `<div class="metric-grid">
+            ${metric("Ready", report.summary.ready, "signals")}
+            ${metric("Watch", report.summary.watch, "signals")}
+            ${metric("Blocked", report.summary.blocked, "signals")}
+            ${metric("Feedback", report.metrics.feedbackTotal, "pilot records")}
+            ${metric("Helpful Rate", `${report.metrics.helpfulRate}%`, "student feedback")}
+            ${metric("Moodle Launches", report.metrics.launchAuditTotal, "audit records")}
+          </div>`
+        ].join("")
+      },
+      {
+        id: "signals",
+        title: "Evidence Signals",
+        body: `<div class="record-grid">${report.signals
+          .map((signal) =>
+            recordCard({
+              label: signal.label,
+              meta: signal.owner,
+              status: signal.status,
+              text: signal.message
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "actions",
+        title: "Recommended Actions",
+        body: `<div class="record-grid">${report.recommendedActions
+          .map((action) =>
+            recordCard({
+              label: action.owner,
+              meta: "Recommended owner",
+              status: "watch",
+              text: action.text
+            })
+          )
+          .join("")}</div>`
+      },
+      {
+        id: "privacy",
+        title: "Privacy Notice",
+        body: callout("Internal governance snapshot", report.privacyNotice, "watch")
+      }
+    ]
+  });
 }
 
 function countSignals(signals: PilotEvidenceSignal[]) {
