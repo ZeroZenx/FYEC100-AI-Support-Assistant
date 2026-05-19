@@ -27,6 +27,42 @@ const reportGroups: Array<{ description: string; reports: ReportItem[]; title: s
       {
         category: "Staff Workspaces",
         description:
+          "PowerShell starter assets, service guidance, and Windows VM preflight checks for IT handoff.",
+        htmlPath: "/windows-automation",
+        markdownPath: "/api/admin/windows-automation-pack.html",
+        owner: "System Administrator / Technical Lead",
+        title: "Windows VM Deployment Automation Pack"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Moodle placement guide, student checklist, lecturer/LMS testing scripts, and launch communications.",
+        htmlPath: "/moodle-launch-pack",
+        markdownPath: "/api/admin/moodle-launch-pack.html",
+        owner: "LMS Administrator / Project Lead",
+        title: "Moodle Pilot Launch Pack"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Monitoring signals, incident levels, response workflow, and stop-pilot triggers for controlled pilot operations.",
+        htmlPath: "/monitoring-incident-pack",
+        markdownPath: "/api/admin/monitoring-incident-pack.html",
+        owner: "Project Lead / Pilot Review Team",
+        title: "Monitoring and Incident Response Pack"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Enterprise LTI 1.3 implementation stages, platform values, endpoint list, and launch validation checklist.",
+        htmlPath: "/enterprise-lti-pack",
+        markdownPath: "/api/admin/enterprise-lti-pack.html",
+        owner: "Technical Lead / LMS Administrator",
+        title: "Enterprise LTI 1.3 Implementation Pack"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
           "Windows VM oriented environment variable guide for hosted Moodle iframe pilot deployment.",
         htmlPath: "/deployment-wizard",
         markdownPath: "/api/admin/hosted-deployment-pack.md",

@@ -298,6 +298,10 @@ http://localhost:4100/deployment-wizard
 http://localhost:4100/moodle-copy-center
 http://localhost:4100/pilot-export-center
 http://localhost:4100/hosting-runbook
+http://localhost:4100/windows-automation
+http://localhost:4100/moodle-launch-pack
+http://localhost:4100/monitoring-incident-pack
+http://localhost:4100/enterprise-lti-pack
 ```
 
 The decision packet can also be opened as a standalone HTML report:
@@ -310,6 +314,16 @@ The hosted pilot handoff is designed with a future Windows VM environment in
 mind. The deployment wizard and Windows VM runbook cover environment variables,
 Node.js build/start commands, IIS or reverse proxy expectations, secrets, logs,
 backup/retention, and rollback.
+
+The Windows VM automation starter scripts are under:
+
+```text
+scripts/windows/
+```
+
+They include an environment template, install/build helper, service control
+helper, and preflight checker for Node, Git, environment variables, port 4100,
+and the health endpoint.
 
 ## Pilot Rate Limiting
 
@@ -438,6 +452,10 @@ http://localhost:4100/api/admin/pilot-export-bundle.html
 http://localhost:4100/api/admin/pilot-export-bundle.md
 http://localhost:4100/api/admin/pilot-decision-packet.html
 http://localhost:4100/api/admin/windows-hosting-runbook.html
+http://localhost:4100/api/admin/windows-automation-pack.html
+http://localhost:4100/api/admin/moodle-launch-pack.html
+http://localhost:4100/api/admin/monitoring-incident-pack.html
+http://localhost:4100/api/admin/enterprise-lti-pack.html
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.html

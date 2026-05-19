@@ -22,6 +22,10 @@ await runCheck("Deployment environment wizard", `${baseUrl}/deployment-wizard`);
 await runCheck("Moodle admin copy center", `${baseUrl}/moodle-copy-center`);
 await runCheck("Pilot data export center", `${baseUrl}/pilot-export-center`);
 await runCheck("Windows VM hosting runbook page", `${baseUrl}/hosting-runbook`);
+await runCheck("Windows automation pack page", `${baseUrl}/windows-automation`);
+await runCheck("Moodle launch pack page", `${baseUrl}/moodle-launch-pack`);
+await runCheck("Monitoring incident pack page", `${baseUrl}/monitoring-incident-pack`);
+await runCheck("Enterprise LTI pack page", `${baseUrl}/enterprise-lti-pack`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -158,6 +162,26 @@ await runCheck(
 await runCheck(
   "Windows VM hosting runbook HTML",
   `${baseUrl}/api/admin/windows-hosting-runbook.html`,
+  { admin: true }
+);
+await runCheck(
+  "Windows automation pack HTML",
+  `${baseUrl}/api/admin/windows-automation-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Moodle launch pack HTML",
+  `${baseUrl}/api/admin/moodle-launch-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Monitoring incident pack HTML",
+  `${baseUrl}/api/admin/monitoring-incident-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Enterprise LTI pack HTML",
+  `${baseUrl}/api/admin/enterprise-lti-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

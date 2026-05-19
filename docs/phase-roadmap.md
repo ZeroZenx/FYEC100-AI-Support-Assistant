@@ -20,6 +20,10 @@ Current Phase 2 pilot workspaces include:
 - Moodle pilot session console for dry runs, controlled student pilot checks, and post-session review.
 - Production hardening checklist dashboard for hosting, frame security, admin protection, provider secrets, and support readiness.
 - Hosted pilot deployment pack for Windows VM handoff, including environment wizard, Moodle copy center, export center, and HTML hosting runbook.
+- Windows VM deployment automation pack with PowerShell starter scripts, service guidance, and preflight checks.
+- Moodle pilot launch pack with placement guide, student checklist, testing scripts, and launch communications.
+- Pilot monitoring and incident response pack with support signals, incident levels, response workflow, and stop-pilot triggers.
+- Enterprise LTI 1.3 implementation pack with Moodle platform values, implementation stages, endpoint list, and launch validation checklist.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 
