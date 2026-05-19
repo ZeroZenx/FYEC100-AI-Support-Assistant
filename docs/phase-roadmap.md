@@ -19,6 +19,7 @@ Current Phase 2 pilot workspaces include:
 - Pilot decision packet generator with a sponsor-ready HTML export.
 - Moodle pilot session console for dry runs, controlled student pilot checks, and post-session review.
 - Production hardening checklist dashboard for hosting, frame security, admin protection, provider secrets, and support readiness.
+- Hosted pilot deployment pack for Windows VM handoff, including environment wizard, Moodle copy center, export center, and HTML hosting runbook.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

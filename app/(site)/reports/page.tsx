@@ -27,6 +27,42 @@ const reportGroups: Array<{ description: string; reports: ReportItem[]; title: s
       {
         category: "Staff Workspaces",
         description:
+          "Windows VM oriented environment variable guide for hosted Moodle iframe pilot deployment.",
+        htmlPath: "/deployment-wizard",
+        markdownPath: "/api/admin/hosted-deployment-pack.md",
+        owner: "Technical Lead / System Administrator",
+        title: "Deployment Environment Wizard"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Copy-ready Moodle iframe snippets, HTML block content, fallback links, and role/context launch URLs.",
+        htmlPath: "/moodle-copy-center",
+        markdownPath: "/api/admin/moodle-pilot-config.md",
+        owner: "LMS Administrator",
+        title: "Moodle Admin Copy Center"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Central export page for decision, evidence, support, Moodle, deployment, cleanup, and Windows VM handoff artifacts.",
+        htmlPath: "/pilot-export-center",
+        markdownPath: "/api/admin/pilot-export-bundle.md",
+        owner: "Project Lead / Technical Lead",
+        title: "Pilot Data Export Center"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
+          "Windows VM hosting runbook covering install, build/start commands, HTTPS proxy, secrets, logs, backups, and rollback.",
+        htmlPath: "/hosting-runbook",
+        markdownPath: "/api/admin/windows-hosting-runbook.html",
+        owner: "System Administrator / Technical Lead",
+        title: "Windows VM Hosting Runbook"
+      },
+      {
+        category: "Staff Workspaces",
+        description:
           "Focused views for sponsor, project lead, LMS administrator, developer, and system administrator responsibilities.",
         htmlPath: "/role-views",
         markdownPath: "/api/admin/actions.md",

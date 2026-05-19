@@ -18,6 +18,10 @@ await runCheck("Role-based admin views", `${baseUrl}/role-views`);
 await runCheck("Pilot decision packet page", `${baseUrl}/decision-packet`);
 await runCheck("Pilot session console", `${baseUrl}/pilot-sessions`);
 await runCheck("Production hardening dashboard", `${baseUrl}/production-hardening`);
+await runCheck("Deployment environment wizard", `${baseUrl}/deployment-wizard`);
+await runCheck("Moodle admin copy center", `${baseUrl}/moodle-copy-center`);
+await runCheck("Pilot data export center", `${baseUrl}/pilot-export-center`);
+await runCheck("Windows VM hosting runbook page", `${baseUrl}/hosting-runbook`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -149,6 +153,11 @@ await runCheck(
 await runCheck(
   "Hosted deployment readiness HTML",
   `${baseUrl}/api/admin/hosted-deployment-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Windows VM hosting runbook HTML",
+  `${baseUrl}/api/admin/windows-hosting-runbook.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

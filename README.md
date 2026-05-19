@@ -294,6 +294,10 @@ http://localhost:4100/role-views
 http://localhost:4100/decision-packet
 http://localhost:4100/pilot-sessions
 http://localhost:4100/production-hardening
+http://localhost:4100/deployment-wizard
+http://localhost:4100/moodle-copy-center
+http://localhost:4100/pilot-export-center
+http://localhost:4100/hosting-runbook
 ```
 
 The decision packet can also be opened as a standalone HTML report:
@@ -301,6 +305,11 @@ The decision packet can also be opened as a standalone HTML report:
 ```text
 http://localhost:4100/api/admin/pilot-decision-packet.html
 ```
+
+The hosted pilot handoff is designed with a future Windows VM environment in
+mind. The deployment wizard and Windows VM runbook cover environment variables,
+Node.js build/start commands, IIS or reverse proxy expectations, secrets, logs,
+backup/retention, and rollback.
 
 ## Pilot Rate Limiting
 
@@ -428,6 +437,7 @@ Protected admin endpoints:
 http://localhost:4100/api/admin/pilot-export-bundle.html
 http://localhost:4100/api/admin/pilot-export-bundle.md
 http://localhost:4100/api/admin/pilot-decision-packet.html
+http://localhost:4100/api/admin/windows-hosting-runbook.html
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.html
