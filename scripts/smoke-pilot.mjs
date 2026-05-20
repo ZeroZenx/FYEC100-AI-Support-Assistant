@@ -84,6 +84,48 @@ await runCheck("Student helpfulness follow-up page", `${baseUrl}/student-helpful
 await runCheck("Learning support themes page", `${baseUrl}/learning-support-themes`);
 await runCheck("Intervention recommendations page", `${baseUrl}/intervention-recommendations`);
 await runCheck("Student experience report page", `${baseUrl}/student-experience-report`);
+await runCheck("Operational health page", `${baseUrl}/operational-health`);
+await runCheck("Incident capture page", `${baseUrl}/incident-capture`);
+await runCheck("Alerts plan page", `${baseUrl}/alerts-plan`);
+await runCheck("Runbook action center page", `${baseUrl}/runbook-action-center`);
+await runCheck("Windows VM operations page", `${baseUrl}/windows-vm-operations`);
+await runCheck("Operations handoff page", `${baseUrl}/operations-handoff`);
+await runCheck("Sponsor dashboard page", `${baseUrl}/sponsor-dashboard`);
+await runCheck("Decision log page", `${baseUrl}/decision-log`);
+await runCheck("Benefits realization page", `${baseUrl}/benefits-realization`);
+await runCheck("Risk issue heatmap page", `${baseUrl}/risk-issue-heatmap`);
+await runCheck("Milestone timeline page", `${baseUrl}/milestone-timeline`);
+await runCheck("Sponsor review pack page", `${baseUrl}/sponsor-review-pack`);
+await runCheck("Moodle placement planner page", `${baseUrl}/moodle-placement-planner`);
+await runCheck("Student journey preview page", `${baseUrl}/student-journey-preview`);
+await runCheck("Lecturer course support page", `${baseUrl}/lecturer-course-support`);
+await runCheck("Moodle assets v2 page", `${baseUrl}/moodle-assets-v2`);
+await runCheck("Course experience QA page", `${baseUrl}/course-experience-qa`);
+await runCheck("Moodle course experience pack page", `${baseUrl}/moodle-course-experience-pack`);
+await runCheck("Migration readiness page", `${baseUrl}/migration-readiness`);
+await runCheck("Environment promotion page", `${baseUrl}/environment-promotion`);
+await runCheck("Production config blueprint page", `${baseUrl}/production-config-blueprint`);
+await runCheck("Data migration plan page", `${baseUrl}/data-migration-plan`);
+await runCheck("Cutover rollback page", `${baseUrl}/cutover-rollback`);
+await runCheck("Production handover pack page", `${baseUrl}/production-handover-pack`);
+await runCheck("Evaluation question set page", `${baseUrl}/evaluation-question-set`);
+await runCheck("Response quality rubric page", `${baseUrl}/response-quality-rubric`);
+await runCheck("Manual evaluation workspace page", `${baseUrl}/manual-evaluation-workspace`);
+await runCheck("Provider comparison page", `${baseUrl}/provider-comparison`);
+await runCheck("Safety regression page", `${baseUrl}/safety-regression`);
+await runCheck("AI quality review pack page", `${baseUrl}/ai-quality-review-pack`);
+await runCheck("Course config model page", `${baseUrl}/course-config-model`);
+await runCheck("Course selector admin page", `${baseUrl}/course-selector-admin`);
+await runCheck("Per-course KB routing page", `${baseUrl}/per-course-kb-routing`);
+await runCheck("Per-course guardrails page", `${baseUrl}/per-course-guardrails`);
+await runCheck("Course-level analytics page", `${baseUrl}/course-level-analytics`);
+await runCheck("Scaling governance pack page", `${baseUrl}/scaling-governance-pack`);
+await runCheck("Provider registry page", `${baseUrl}/provider-registry`);
+await runCheck("Provider policy matrix page", `${baseUrl}/provider-policy-matrix`);
+await runCheck("Provider health cost page", `${baseUrl}/provider-health-cost`);
+await runCheck("Provider safety comparison page", `${baseUrl}/provider-safety-comparison`);
+await runCheck("Provider fallback plan page", `${baseUrl}/provider-fallback-plan`);
+await runCheck("AI provider governance pack page", `${baseUrl}/ai-provider-governance-pack`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -197,6 +239,9 @@ await runJsonCheck("Audit events endpoint", `${baseUrl}/api/admin/audit-events`,
   admin: true
 });
 await runJsonCheck("Service desk cases endpoint", `${baseUrl}/api/admin/service-desk/cases`, {
+  admin: true
+});
+await runJsonCheck("Operations health endpoint", `${baseUrl}/api/admin/operations-health`, {
   admin: true
 });
 await runJsonCheck(
@@ -326,6 +371,41 @@ await runCheck(
 await runCheck(
   "Student experience HTML",
   `${baseUrl}/api/admin/student-experience-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Operations handoff HTML",
+  `${baseUrl}/api/admin/operations-handoff.html`,
+  { admin: true }
+);
+await runCheck(
+  "Sponsor review HTML",
+  `${baseUrl}/api/admin/sponsor-review-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Moodle course experience HTML",
+  `${baseUrl}/api/admin/moodle-course-experience-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Production handover HTML",
+  `${baseUrl}/api/admin/production-handover-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "AI quality review HTML",
+  `${baseUrl}/api/admin/ai-quality-review-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Scaling governance HTML",
+  `${baseUrl}/api/admin/scaling-governance-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Provider governance HTML",
+  `${baseUrl}/api/admin/provider-governance-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

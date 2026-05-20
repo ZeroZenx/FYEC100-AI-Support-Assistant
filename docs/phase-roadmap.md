@@ -37,6 +37,13 @@ Current Phase 2 pilot workspaces include:
 - Production support and service desk layer with intake, lifecycle statuses, SLA rules, assignment board, resolution notes, and weekly export pack.
 - Knowledge base publishing pipeline with draft-to-publish workflow, preview, diff viewer, publish gate, rollback planning, and release pack.
 - Student experience and learning effectiveness layer with prompt starters, outcome tags, helpfulness follow-up, learning support themes, intervention recommendations, and sponsor report.
+- Production observability and operations layer with health dashboard, incident capture, alerts plan, runbook action center, Windows VM operations, and IT handoff pack.
+- Institutional reporting and sponsor review layer with executive dashboard, decision log, benefits tracker, risk heatmap, milestone timeline, and sponsor export.
+- Moodle course experience layer with placement planner, student journey, lecturer support view, Moodle assets v2, QA checklist, and course experience pack.
+- Pilot-to-production migration layer with readiness dashboard, environment promotion, configuration blueprint, data migration, cutover/rollback, and handover pack.
+- AI quality, safety, and evaluation layer with test questions, response rubric, manual review, provider comparison, safety regression, and quality export.
+- Multi-course scaling layer with course configuration, selector workspace, KB routing, course-specific guardrails, course analytics, and scaling governance.
+- Enterprise AI provider governance layer with provider registry, policy matrix, health/cost signals, safety comparison, fallback plan, and provider governance export.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 
