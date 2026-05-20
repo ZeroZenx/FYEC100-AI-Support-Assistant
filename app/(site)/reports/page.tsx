@@ -20,6 +20,148 @@ const featuredReport = {
 
 const reportGroups: Array<{ description: string; reports: ReportItem[]; title: string }> = [
   {
+    title: "Production, Governance, Student, and LTI Layers",
+    description:
+      "The next institutional readiness layers: Windows production validation, governance approval, student readiness, and enterprise LTI technical planning.",
+    reports: [
+      {
+        category: "Windows Production",
+        description:
+          "JSON-backed readiness page for expected app path, port, scripts, env variables, commands, warnings, and next actions.",
+        htmlPath: "/windows-vm-readiness",
+        markdownPath: "/api/admin/windows-vm-readiness",
+        owner: "System Administrator / Technical Lead",
+        title: "Windows VM Readiness API"
+      },
+      {
+        category: "Windows Production",
+        description:
+          "IIS ARR / URL Rewrite assumptions, proxy target, HTTPS termination, headers, Moodle iframe checks, and rollback behavior.",
+        htmlPath: "/iis-reverse-proxy",
+        markdownPath: "/api/admin/iis-reverse-proxy-pack.html",
+        owner: "System Administrator",
+        title: "IIS Reverse Proxy Pack"
+      },
+      {
+        category: "Windows Production",
+        description:
+          "NSSM, PM2, service account, log path, restart policy, and manual start/stop command guidance.",
+        htmlPath: "/windows-service-config",
+        markdownPath: "/api/admin/windows-service-pack.html",
+        owner: "System Administrator",
+        title: "Windows Service Configuration Pack"
+      },
+      {
+        category: "Windows Production",
+        description:
+          "IT and LMS deployment acceptance checklist for health, HTTPS, Moodle origin, iframe, admin token, provider, smoke, rollback, and exports.",
+        htmlPath: "/deployment-acceptance",
+        markdownPath: "/api/admin/deployment-acceptance.html",
+        owner: "IT / LMS Administrator",
+        title: "Deployment Acceptance Checklist"
+      },
+      {
+        category: "Governance",
+        description:
+          "Approval status by sponsor, project lead, lecturer/content owner, LMS, system administrator, developer, and governance/privacy reviewer.",
+        htmlPath: "/pilot-approval",
+        markdownPath: "/api/admin/governance-pack.html",
+        owner: "Project Sponsor / Project Lead",
+        title: "Pilot Approval Workflow"
+      },
+      {
+        category: "Governance",
+        description:
+          "Structured pilot risk register covering technical, Moodle, academic integrity, and support risks.",
+        htmlPath: "/risk-register",
+        markdownPath: "/api/admin/governance-pack.html",
+        owner: "Project Lead",
+        title: "Risk Register"
+      },
+      {
+        category: "Governance",
+        description:
+          "Privacy and data handling guidance for captured data, excluded data, storage, access, retention, export, and cleanup.",
+        htmlPath: "/privacy-data-handling",
+        markdownPath: "/api/admin/governance-pack.html",
+        owner: "Governance / Project Sponsor",
+        title: "Privacy and Data Handling Pack"
+      },
+      {
+        category: "Governance",
+        description:
+          "Change-control guidance for knowledge base, app, Moodle placement, environment, approval, and release-note changes.",
+        htmlPath: "/change-control",
+        markdownPath: "/api/admin/governance-pack.html",
+        owner: "Project Lead / Developer",
+        title: "Pilot Change Control Log"
+      },
+      {
+        category: "Student Readiness",
+        description:
+          "Student-facing welcome page explaining assistant purpose, boundaries, privacy-light pilot notice, and human support.",
+        htmlPath: "/student-pilot-welcome",
+        markdownPath: "/api/admin/student-readiness-pack.html",
+        owner: "Lecturer / Project Lead",
+        title: "Student Pilot Welcome Page"
+      },
+      {
+        category: "Student Readiness",
+        description:
+          "FYEC100-friendly responsible AI guidance, acceptable use, assignment boundaries, and lecturer reminders.",
+        htmlPath: "/student-ai-guide",
+        markdownPath: "/api/admin/student-readiness-pack.html",
+        owner: "Lecturer",
+        title: "Student Responsible AI Guide"
+      },
+      {
+        category: "Student Readiness",
+        description:
+          "Non-admin page explaining how pilot feedback is reviewed and routed.",
+        htmlPath: "/student-feedback-follow-up",
+        markdownPath: "/api/admin/student-readiness-pack.html",
+        owner: "Pilot Review Team",
+        title: "Student Feedback Follow-Up Page"
+      },
+      {
+        category: "Student Readiness",
+        description:
+          "Student-facing accessibility and usability test checklist for keyboard, readability, contrast, iframe sizing, mobile, and help discovery.",
+        htmlPath: "/accessibility-test",
+        markdownPath: "/api/admin/student-readiness-pack.html",
+        owner: "Developer / LMS Administrator",
+        title: "Accessibility and Usability Test Page"
+      },
+      {
+        category: "LTI Technical",
+        description:
+          "OIDC login flow, launch validation, trusted Moodle context mapping, and technical implementation steps.",
+        htmlPath: "/lti-technical",
+        markdownPath: "/api/admin/lti-technical-pack.html",
+        owner: "Technical Lead / Developer",
+        title: "LTI OIDC and Launch Validation"
+      },
+      {
+        category: "LTI Technical",
+        description:
+          "LTI tool URLs, redirect URLs, JWKS URL, and required Moodle platform values.",
+        htmlPath: "/lti-admin-config",
+        markdownPath: "/api/admin/lti-technical-pack.html",
+        owner: "LMS Administrator / Technical Lead",
+        title: "LTI Admin Configuration Page"
+      },
+      {
+        category: "LTI Technical",
+        description:
+          "LTI launch audit, validation failure, replay protection, trust-boundary, and key rotation planning.",
+        htmlPath: "/lti-security-audit",
+        markdownPath: "/api/admin/lti-technical-pack.html",
+        owner: "Technical Lead / Governance",
+        title: "LTI Security and Audit Pack"
+      }
+    ]
+  },
+  {
     title: "Staff Workspaces",
     description:
       "Interactive pages for people running the pilot, reviewing content, and rehearsing Moodle launch behavior.",

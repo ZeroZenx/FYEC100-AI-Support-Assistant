@@ -26,12 +26,32 @@ await runCheck("Windows automation pack page", `${baseUrl}/windows-automation`);
 await runCheck("Moodle launch pack page", `${baseUrl}/moodle-launch-pack`);
 await runCheck("Monitoring incident pack page", `${baseUrl}/monitoring-incident-pack`);
 await runCheck("Enterprise LTI pack page", `${baseUrl}/enterprise-lti-pack`);
+await runCheck("Windows VM readiness page", `${baseUrl}/windows-vm-readiness`);
+await runCheck("IIS reverse proxy page", `${baseUrl}/iis-reverse-proxy`);
+await runCheck("Windows service config page", `${baseUrl}/windows-service-config`);
+await runCheck("Deployment acceptance page", `${baseUrl}/deployment-acceptance`);
+await runCheck("Pilot approval page", `${baseUrl}/pilot-approval`);
+await runCheck("Risk register page", `${baseUrl}/risk-register`);
+await runCheck("Privacy data handling page", `${baseUrl}/privacy-data-handling`);
+await runCheck("Change control page", `${baseUrl}/change-control`);
+await runCheck("Student pilot welcome page", `${baseUrl}/student-pilot-welcome`);
+await runCheck("Student AI guide page", `${baseUrl}/student-ai-guide`);
+await runCheck("Student feedback follow-up page", `${baseUrl}/student-feedback-follow-up`);
+await runCheck("Accessibility test page", `${baseUrl}/accessibility-test`);
+await runCheck("LTI technical page", `${baseUrl}/lti-technical`);
+await runCheck("LTI admin config page", `${baseUrl}/lti-admin-config`);
+await runCheck("LTI security audit page", `${baseUrl}/lti-security-audit`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
 await runJsonCheck(
   "Deployment readiness endpoint",
   `${baseUrl}/api/admin/deployment-readiness`,
+  { admin: true }
+);
+await runJsonCheck(
+  "Windows VM readiness endpoint",
+  `${baseUrl}/api/admin/windows-vm-readiness`,
   { admin: true }
 );
 await runJsonCheck(
@@ -182,6 +202,36 @@ await runCheck(
 await runCheck(
   "Enterprise LTI pack HTML",
   `${baseUrl}/api/admin/enterprise-lti-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "IIS reverse proxy HTML",
+  `${baseUrl}/api/admin/iis-reverse-proxy-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Windows service HTML",
+  `${baseUrl}/api/admin/windows-service-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Deployment acceptance HTML",
+  `${baseUrl}/api/admin/deployment-acceptance.html`,
+  { admin: true }
+);
+await runCheck(
+  "Governance pack HTML",
+  `${baseUrl}/api/admin/governance-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Student readiness HTML",
+  `${baseUrl}/api/admin/student-readiness-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "LTI technical HTML",
+  `${baseUrl}/api/admin/lti-technical-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

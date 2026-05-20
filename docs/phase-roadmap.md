@@ -24,6 +24,10 @@ Current Phase 2 pilot workspaces include:
 - Moodle pilot launch pack with placement guide, student checklist, testing scripts, and launch communications.
 - Pilot monitoring and incident response pack with support signals, incident levels, response workflow, and stop-pilot triggers.
 - Enterprise LTI 1.3 implementation pack with Moodle platform values, implementation stages, endpoint list, and launch validation checklist.
+- Windows VM production readiness layer with readiness API, IIS reverse proxy pack, Windows service configuration pack, and deployment acceptance checklist.
+- Pilot governance and approval layer with approval workflow, risk register, privacy/data handling pack, and change-control log.
+- Student-facing pilot readiness layer with welcome page, responsible AI guide, feedback follow-up, and accessibility/usability test surface.
+- LTI technical implementation layer with OIDC/launch validation plan, admin configuration, and security/audit pack.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

@@ -302,6 +302,21 @@ http://localhost:4100/windows-automation
 http://localhost:4100/moodle-launch-pack
 http://localhost:4100/monitoring-incident-pack
 http://localhost:4100/enterprise-lti-pack
+http://localhost:4100/windows-vm-readiness
+http://localhost:4100/iis-reverse-proxy
+http://localhost:4100/windows-service-config
+http://localhost:4100/deployment-acceptance
+http://localhost:4100/pilot-approval
+http://localhost:4100/risk-register
+http://localhost:4100/privacy-data-handling
+http://localhost:4100/change-control
+http://localhost:4100/student-pilot-welcome
+http://localhost:4100/student-ai-guide
+http://localhost:4100/student-feedback-follow-up
+http://localhost:4100/accessibility-test
+http://localhost:4100/lti-technical
+http://localhost:4100/lti-admin-config
+http://localhost:4100/lti-security-audit
 ```
 
 The decision packet can also be opened as a standalone HTML report:
@@ -456,6 +471,13 @@ http://localhost:4100/api/admin/windows-automation-pack.html
 http://localhost:4100/api/admin/moodle-launch-pack.html
 http://localhost:4100/api/admin/monitoring-incident-pack.html
 http://localhost:4100/api/admin/enterprise-lti-pack.html
+http://localhost:4100/api/admin/windows-vm-readiness
+http://localhost:4100/api/admin/iis-reverse-proxy-pack.html
+http://localhost:4100/api/admin/windows-service-pack.html
+http://localhost:4100/api/admin/deployment-acceptance.html
+http://localhost:4100/api/admin/governance-pack.html
+http://localhost:4100/api/admin/student-readiness-pack.html
+http://localhost:4100/api/admin/lti-technical-pack.html
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.html
