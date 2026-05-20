@@ -317,6 +317,22 @@ http://localhost:4100/accessibility-test
 http://localhost:4100/lti-technical
 http://localhost:4100/lti-admin-config
 http://localhost:4100/lti-security-audit
+http://localhost:4100/pilot-outcomes
+http://localhost:4100/content-gap-analysis
+http://localhost:4100/student-success-insights
+http://localhost:4100/pilot-closeout
+http://localhost:4100/content-authoring
+http://localhost:4100/kb-version-comparison
+http://localhost:4100/content-release-flow
+http://localhost:4100/kb-quality-checks
+http://localhost:4100/support-case-queue
+http://localhost:4100/support-response-templates
+http://localhost:4100/support-sla
+http://localhost:4100/post-pilot-support-review
+http://localhost:4100/production-auth-plan
+http://localhost:4100/data-retention-storage
+http://localhost:4100/audit-monitoring-plan
+http://localhost:4100/production-readiness-gate
 ```
 
 The decision packet can also be opened as a standalone HTML report:
@@ -478,6 +494,10 @@ http://localhost:4100/api/admin/deployment-acceptance.html
 http://localhost:4100/api/admin/governance-pack.html
 http://localhost:4100/api/admin/student-readiness-pack.html
 http://localhost:4100/api/admin/lti-technical-pack.html
+http://localhost:4100/api/admin/pilot-outcomes-pack.html
+http://localhost:4100/api/admin/kb-content-ops-pack.html
+http://localhost:4100/api/admin/support-operations-pack.html
+http://localhost:4100/api/admin/enterprise-hardening-pack.html
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.html

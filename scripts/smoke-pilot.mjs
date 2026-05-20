@@ -41,6 +41,22 @@ await runCheck("Accessibility test page", `${baseUrl}/accessibility-test`);
 await runCheck("LTI technical page", `${baseUrl}/lti-technical`);
 await runCheck("LTI admin config page", `${baseUrl}/lti-admin-config`);
 await runCheck("LTI security audit page", `${baseUrl}/lti-security-audit`);
+await runCheck("Pilot outcomes dashboard page", `${baseUrl}/pilot-outcomes`);
+await runCheck("Content gap analysis page", `${baseUrl}/content-gap-analysis`);
+await runCheck("Student success insights page", `${baseUrl}/student-success-insights`);
+await runCheck("Pilot closeout page", `${baseUrl}/pilot-closeout`);
+await runCheck("Content authoring page", `${baseUrl}/content-authoring`);
+await runCheck("KB version comparison page", `${baseUrl}/kb-version-comparison`);
+await runCheck("Content release flow page", `${baseUrl}/content-release-flow`);
+await runCheck("KB quality checks page", `${baseUrl}/kb-quality-checks`);
+await runCheck("Support case queue page", `${baseUrl}/support-case-queue`);
+await runCheck("Support response templates page", `${baseUrl}/support-response-templates`);
+await runCheck("Support SLA page", `${baseUrl}/support-sla`);
+await runCheck("Post-pilot support review page", `${baseUrl}/post-pilot-support-review`);
+await runCheck("Production auth plan page", `${baseUrl}/production-auth-plan`);
+await runCheck("Data retention storage page", `${baseUrl}/data-retention-storage`);
+await runCheck("Audit monitoring plan page", `${baseUrl}/audit-monitoring-plan`);
+await runCheck("Production readiness gate page", `${baseUrl}/production-readiness-gate`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -232,6 +248,26 @@ await runCheck(
 await runCheck(
   "LTI technical HTML",
   `${baseUrl}/api/admin/lti-technical-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Pilot outcomes HTML",
+  `${baseUrl}/api/admin/pilot-outcomes-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "KB content operations HTML",
+  `${baseUrl}/api/admin/kb-content-ops-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Support operations HTML",
+  `${baseUrl}/api/admin/support-operations-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Enterprise hardening HTML",
+  `${baseUrl}/api/admin/enterprise-hardening-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

@@ -28,6 +28,10 @@ Current Phase 2 pilot workspaces include:
 - Pilot governance and approval layer with approval workflow, risk register, privacy/data handling pack, and change-control log.
 - Student-facing pilot readiness layer with welcome page, responsible AI guide, feedback follow-up, and accessibility/usability test surface.
 - LTI technical implementation layer with OIDC/launch validation plan, admin configuration, and security/audit pack.
+- Pilot analytics and outcomes layer with outcomes dashboard, content gap analysis, student success insights, and pilot closeout report.
+- Knowledge base content operations layer with authoring queue, version comparison, approval release flow, and quality checks.
+- Student support operations layer with support case queue, response templates, SLA dashboard, and post-pilot support review.
+- Enterprise integration hardening layer with production authentication planning, data retention/storage decisions, audit monitoring, and production readiness gate.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

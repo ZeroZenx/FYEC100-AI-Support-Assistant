@@ -20,6 +20,157 @@ const featuredReport = {
 
 const reportGroups: Array<{ description: string; reports: ReportItem[]; title: string }> = [
   {
+    title: "Outcomes, Content, Support, and Enterprise Hardening",
+    description:
+      "The next four build layers: pilot evidence, FYEC100 content operations, student support operations, and production-grade enterprise hardening.",
+    reports: [
+      {
+        category: "Pilot Analytics",
+        description:
+          "Usefulness signals, support demand, Moodle launch activity, knowledge base gaps, integrity boundary events, and readiness to scale.",
+        htmlPath: "/pilot-outcomes",
+        markdownPath: "/api/admin/pilot-outcomes-pack.html",
+        owner: "Project Sponsor / Project Lead",
+        title: "Pilot Outcomes Dashboard"
+      },
+      {
+        category: "Pilot Analytics",
+        description:
+          "Missing FYEC100 topics, repeated unanswered questions, missing course information feedback, proposed updates, and lecturer review queue.",
+        htmlPath: "/content-gap-analysis",
+        markdownPath: "/api/admin/pilot-outcomes-pack.html",
+        owner: "Lecturer / Content Owner",
+        title: "Content Gap Analysis Workspace"
+      },
+      {
+        category: "Pilot Analytics",
+        description:
+          "Common student needs, study support themes, LMS navigation pain points, responsible AI guidance needs, and recommended interventions.",
+        htmlPath: "/student-success-insights",
+        markdownPath: "/api/admin/pilot-outcomes-pack.html",
+        owner: "Project Lead / Lecturer",
+        title: "Student Success Insights Pack"
+      },
+      {
+        category: "Pilot Analytics",
+        description:
+          "Closeout report covering what was tested, what worked, improvement areas, risks, decision recommendation, and next-phase recommendation.",
+        htmlPath: "/pilot-closeout",
+        markdownPath: "/api/admin/pilot-outcomes-pack.html",
+        owner: "Project Sponsor / Project Lead",
+        title: "Pilot Closeout Report"
+      },
+      {
+        category: "Knowledge Base Operations",
+        description:
+          "Authoring queue for FYEC100 content updates with section mapping, source labels, reviewers, and priority.",
+        htmlPath: "/content-authoring",
+        markdownPath: "/api/admin/kb-content-ops-pack.html",
+        owner: "Lecturer / Developer",
+        title: "Content Authoring Workspace"
+      },
+      {
+        category: "Knowledge Base Operations",
+        description:
+          "Current knowledge base versus proposed changes, section coverage, draft counts, and release-note status.",
+        htmlPath: "/kb-version-comparison",
+        markdownPath: "/api/admin/kb-content-ops-pack.html",
+        owner: "Lecturer / Content Owner",
+        title: "Knowledge Base Version Comparison"
+      },
+      {
+        category: "Knowledge Base Operations",
+        description:
+          "Approval flow for draft changes, apply checklist, release notes, reviewer sign-off, and publish-ready status.",
+        htmlPath: "/content-release-flow",
+        markdownPath: "/api/admin/kb-content-ops-pack.html",
+        owner: "Developer / Lecturer",
+        title: "Content Approval Release Flow"
+      },
+      {
+        category: "Knowledge Base Operations",
+        description:
+          "Quality checks for outdated content, academic integrity guidance, assignment clarity, unsupported claims, and fallback coverage.",
+        htmlPath: "/kb-quality-checks",
+        markdownPath: "/api/admin/kb-content-ops-pack.html",
+        owner: "Lecturer / Governance Reviewer",
+        title: "Knowledge Base Quality Checks"
+      },
+      {
+        category: "Student Support Operations",
+        description:
+          "Support queue grouped by LMS issue, lecturer follow-up, content gap, technical issue, and academic integrity concern.",
+        htmlPath: "/support-case-queue",
+        markdownPath: "/api/admin/support-operations-pack.html",
+        owner: "Pilot Review Team",
+        title: "Support Case Queue"
+      },
+      {
+        category: "Student Support Operations",
+        description:
+          "Support response templates for LMS, lecturer follow-up, integrity reminders, technical issues, missing knowledge base answers, and escalation.",
+        htmlPath: "/support-response-templates",
+        markdownPath: "/api/admin/support-operations-pack.html",
+        owner: "Project Lead / Support Owners",
+        title: "Support Response Templates"
+      },
+      {
+        category: "Student Support Operations",
+        description:
+          "SLA view for open issues by owner, high-priority count, unresolved age, support readiness, and escalation load.",
+        htmlPath: "/support-sla",
+        markdownPath: "/api/admin/support-operations-pack.html",
+        owner: "Project Lead",
+        title: "Support SLA Dashboard"
+      },
+      {
+        category: "Student Support Operations",
+        description:
+          "Post-pilot review prompts for student needs, common categories, scale fixes, knowledge base candidates, and human-led support.",
+        htmlPath: "/post-pilot-support-review",
+        markdownPath: "/api/admin/support-operations-pack.html",
+        owner: "Pilot Review Team",
+        title: "Post-Pilot Support Review"
+      },
+      {
+        category: "Enterprise Hardening",
+        description:
+          "Production authentication planning for trusted Moodle/LTI launch, admin auth, role authorization, sessions, and key rotation.",
+        htmlPath: "/production-auth-plan",
+        markdownPath: "/api/admin/enterprise-hardening-pack.html",
+        owner: "Technical Lead / LMS Administrator",
+        title: "Production Authentication Plan"
+      },
+      {
+        category: "Enterprise Hardening",
+        description:
+          "Data retention and storage decisions for file-based records, approved storage, retention, export, deletion, and access controls.",
+        htmlPath: "/data-retention-storage",
+        markdownPath: "/api/admin/enterprise-hardening-pack.html",
+        owner: "Governance / Project Sponsor",
+        title: "Data Retention and Storage Decision Pack"
+      },
+      {
+        category: "Enterprise Hardening",
+        description:
+          "Audit logging and monitoring plan for admin actions, launch events, support routing, provider errors, and security events.",
+        htmlPath: "/audit-monitoring-plan",
+        markdownPath: "/api/admin/enterprise-hardening-pack.html",
+        owner: "Technical Lead / System Administrator",
+        title: "Audit Logging and Monitoring Plan"
+      },
+      {
+        category: "Enterprise Hardening",
+        description:
+          "Production readiness gate for authentication, storage, privacy, monitoring, support model, rollback, and Moodle/LTI validation.",
+        htmlPath: "/production-readiness-gate",
+        markdownPath: "/api/admin/enterprise-hardening-pack.html",
+        owner: "Project Sponsor / Technical Lead",
+        title: "Production Readiness Gate"
+      }
+    ]
+  },
+  {
     title: "Production, Governance, Student, and LTI Layers",
     description:
       "The next institutional readiness layers: Windows production validation, governance approval, student readiness, and enterprise LTI technical planning.",
