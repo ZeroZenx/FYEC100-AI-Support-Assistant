@@ -333,6 +333,33 @@ http://localhost:4100/production-auth-plan
 http://localhost:4100/data-retention-storage
 http://localhost:4100/audit-monitoring-plan
 http://localhost:4100/production-readiness-gate
+http://localhost:4100/lti-state-store
+http://localhost:4100/lti-launch-flow
+http://localhost:4100/lti-validation
+http://localhost:4100/trusted-moodle-context
+http://localhost:4100/lti-test-harness
+http://localhost:4100/audit-viewer
+http://localhost:4100/storage-adapter
+http://localhost:4100/retention-controls
+http://localhost:4100/governance-export
+http://localhost:4100/service-desk-intake
+http://localhost:4100/support-case-lifecycle
+http://localhost:4100/support-sla-rules
+http://localhost:4100/support-assignment-board
+http://localhost:4100/case-resolution-notes
+http://localhost:4100/service-desk-export
+http://localhost:4100/kb-publish-workflow
+http://localhost:4100/kb-preview
+http://localhost:4100/kb-diff-viewer
+http://localhost:4100/kb-publish-gate
+http://localhost:4100/kb-rollback-snapshot
+http://localhost:4100/kb-release-pack
+http://localhost:4100/student-prompt-starters
+http://localhost:4100/conversation-outcomes
+http://localhost:4100/student-helpfulness-followup
+http://localhost:4100/learning-support-themes
+http://localhost:4100/intervention-recommendations
+http://localhost:4100/student-experience-report
 ```
 
 The decision packet can also be opened as a standalone HTML report:
@@ -498,6 +525,13 @@ http://localhost:4100/api/admin/pilot-outcomes-pack.html
 http://localhost:4100/api/admin/kb-content-ops-pack.html
 http://localhost:4100/api/admin/support-operations-pack.html
 http://localhost:4100/api/admin/enterprise-hardening-pack.html
+http://localhost:4100/api/admin/lti-technical-build.html
+http://localhost:4100/api/admin/governance-audit-pack.html
+http://localhost:4100/api/admin/service-desk-pack.html
+http://localhost:4100/api/admin/kb-publishing-pack.html
+http://localhost:4100/api/admin/student-experience-pack.html
+http://localhost:4100/api/admin/audit-events
+http://localhost:4100/api/admin/service-desk/cases
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.html

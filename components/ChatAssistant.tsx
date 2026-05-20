@@ -46,10 +46,10 @@ const feedbackOptions: Array<{
 ];
 
 const defaultStarterPrompts = [
-  "What is FYEC100 about?",
-  "How should I approach the reflection assignment?",
-  "Can you help me make a weekly study plan?",
-  "Where should I look in the LMS for course materials?"
+  "Help me understand what FYEC100 expects from first-year students.",
+  "Help me plan my week for FYEC100 without doing the assignment for me.",
+  "Where should I look in Moodle for FYEC100 course materials?",
+  "How can I use AI responsibly for brainstorming and studying?"
 ];
 
 type ChatAssistantProps = {

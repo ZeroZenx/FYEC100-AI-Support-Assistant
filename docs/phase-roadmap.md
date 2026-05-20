@@ -32,6 +32,11 @@ Current Phase 2 pilot workspaces include:
 - Knowledge base content operations layer with authoring queue, version comparison, approval release flow, and quality checks.
 - Student support operations layer with support case queue, response templates, SLA dashboard, and post-pilot support review.
 - Enterprise integration hardening layer with production authentication planning, data retention/storage decisions, audit monitoring, and production readiness gate.
+- Real Moodle/LTI technical build with launch state store, upgraded OIDC login, local launch validation, trusted context mapping, and test harness.
+- Production data and audit layer with audit event store, audit viewer, storage adapter planning, retention controls, and governance export pack.
+- Production support and service desk layer with intake, lifecycle statuses, SLA rules, assignment board, resolution notes, and weekly export pack.
+- Knowledge base publishing pipeline with draft-to-publish workflow, preview, diff viewer, publish gate, rollback planning, and release pack.
+- Student experience and learning effectiveness layer with prompt starters, outcome tags, helpfulness follow-up, learning support themes, intervention recommendations, and sponsor report.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

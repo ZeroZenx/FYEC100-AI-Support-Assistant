@@ -12,3 +12,6 @@ yarn-error.log*
 coverage
 data/pilot-feedback.jsonl
 data/moodle-launch-audit.jsonl
+data/lti-launch-states.jsonl
+data/audit-events.jsonl
+data/service-desk-cases.jsonl

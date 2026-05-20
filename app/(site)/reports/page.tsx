@@ -20,6 +20,229 @@ const featuredReport = {
 
 const reportGroups: Array<{ description: string; reports: ReportItem[]; title: string }> = [
   {
+    title: "LTI, Audit, Service Desk, Publishing, and Student Experience",
+    description:
+      "The next production-oriented layers: testable LTI launches, audit evidence, service desk operations, knowledge base publishing, and student learning effectiveness.",
+    reports: [
+      {
+        category: "Real Moodle/LTI",
+        description:
+          "Local state and nonce storage for OIDC launches, including issuer, client ID, deployment ID, return URL, and expiration.",
+        htmlPath: "/lti-state-store",
+        markdownPath: "/api/admin/lti-technical-build.html",
+        owner: "Developer / LMS Administrator",
+        title: "LTI Launch State Store"
+      },
+      {
+        category: "Real Moodle/LTI",
+        description:
+          "OIDC login endpoint that creates state/nonce records and redirects to Moodle when platform values are configured.",
+        htmlPath: "/lti-launch-flow",
+        markdownPath: "/api/admin/lti-technical-build.html",
+        owner: "Technical Lead",
+        title: "OIDC Login Endpoint Upgrade"
+      },
+      {
+        category: "Real Moodle/LTI",
+        description:
+          "Launch validation endpoint for state, token shape, issuer, audience, deployment ID, nonce, message type, and expiration checks.",
+        htmlPath: "/lti-validation",
+        markdownPath: "/api/admin/lti-technical-build.html",
+        owner: "Developer",
+        title: "LTI Launch Validation Endpoint"
+      },
+      {
+        category: "Real Moodle/LTI",
+        description:
+          "Validated Moodle claim mapping into trusted course, role, and LTI launch context for the assistant.",
+        htmlPath: "/trusted-moodle-context",
+        markdownPath: "/api/admin/lti-technical-build.html",
+        owner: "Developer / Governance",
+        title: "Trusted Moodle Context Mapping"
+      },
+      {
+        category: "Real Moodle/LTI",
+        description:
+          "Local test harness guidance for valid and invalid LTI launch validation before Moodle test-site configuration.",
+        htmlPath: "/lti-test-harness",
+        markdownPath: "/api/admin/lti-technical-build.html",
+        owner: "Technical Lead / LMS Administrator",
+        title: "LTI Test Harness Page"
+      },
+      {
+        category: "Production Data and Audit",
+        description:
+          "Audit event viewer for admin actions, provider tests, LTI launches, validation failures, support routing, KB releases, and configuration checks.",
+        htmlPath: "/audit-viewer",
+        markdownPath: "/api/admin/governance-audit-pack.html",
+        owner: "Governance / Technical Lead",
+        title: "Audit Viewer"
+      },
+      {
+        category: "Production Data and Audit",
+        description:
+          "Local file adapter now, with production path for PostgreSQL, SQL Server, SharePoint, or another approved institutional store.",
+        htmlPath: "/storage-adapter",
+        markdownPath: "/api/admin/governance-audit-pack.html",
+        owner: "Technical Lead / System Administrator",
+        title: "Production Storage Adapter"
+      },
+      {
+        category: "Production Data and Audit",
+        description:
+          "Export, cleanup preview, deletion procedure, retention status, and visibility into records before removal.",
+        htmlPath: "/retention-controls",
+        markdownPath: "/api/admin/governance-audit-pack.html",
+        owner: "Governance Reviewer",
+        title: "Data Retention Controls"
+      },
+      {
+        category: "Production Data and Audit",
+        description:
+          "Human-readable governance export pack combining audit, retention, support, KB release, and pilot decision evidence.",
+        htmlPath: "/governance-export",
+        markdownPath: "/api/admin/governance-audit-pack.html",
+        owner: "Project Sponsor / Governance",
+        title: "Governance Export Pack"
+      },
+      {
+        category: "Production Service Desk",
+        description:
+          "Convert feedback and escalations into structured support cases with owner, priority, category, status, source, and due date planning.",
+        htmlPath: "/service-desk-intake",
+        markdownPath: "/api/admin/service-desk-pack.html",
+        owner: "Project Lead",
+        title: "Service Desk Intake API"
+      },
+      {
+        category: "Production Service Desk",
+        description:
+          "Case statuses for new, assigned, in-progress, waiting on lecturer, waiting on LMS admin, resolved, and closed.",
+        htmlPath: "/support-case-lifecycle",
+        markdownPath: "/api/admin/service-desk-pack.html",
+        owner: "Support Owners",
+        title: "Support Case Lifecycle"
+      },
+      {
+        category: "Production Service Desk",
+        description:
+          "Expected response windows by category and priority with aging and overdue review guidance.",
+        htmlPath: "/support-sla-rules",
+        markdownPath: "/api/admin/service-desk-pack.html",
+        owner: "Project Lead",
+        title: "SLA Rules"
+      },
+      {
+        category: "Production Service Desk",
+        description:
+          "Assignment board for Project Lead, Lecturer, LMS Administrator, Developer, and System Administrator support ownership.",
+        htmlPath: "/support-assignment-board",
+        markdownPath: "/api/admin/service-desk-pack.html",
+        owner: "Project Lead",
+        title: "Support Assignment Board"
+      },
+      {
+        category: "Production Service Desk",
+        description:
+          "Resolution notes for KB update recommendations, Moodle fixes, technical fixes, and human-led support decisions.",
+        htmlPath: "/case-resolution-notes",
+        markdownPath: "/api/admin/service-desk-pack.html",
+        owner: "Support Owners",
+        title: "Case Resolution Notes"
+      },
+      {
+        category: "Knowledge Base Publishing",
+        description:
+          "Draft-to-publish workflow for approved content updates, checklist evidence, release notes, and publish confirmation.",
+        htmlPath: "/kb-publish-workflow",
+        markdownPath: "/api/admin/kb-publishing-pack.html",
+        owner: "Lecturer / Developer",
+        title: "Draft-to-Publish Workflow"
+      },
+      {
+        category: "Knowledge Base Publishing",
+        description:
+          "Preview of the future FYEC100 knowledge base before replacing the live Markdown file.",
+        htmlPath: "/kb-preview",
+        markdownPath: "/api/admin/kb-publishing-pack.html",
+        owner: "Lecturer / Content Owner",
+        title: "Knowledge Base Preview Page"
+      },
+      {
+        category: "Knowledge Base Publishing",
+        description:
+          "Human-readable comparison of current content and proposed content changes.",
+        htmlPath: "/kb-diff-viewer",
+        markdownPath: "/api/admin/kb-publishing-pack.html",
+        owner: "Developer / Lecturer",
+        title: "Diff Viewer"
+      },
+      {
+        category: "Knowledge Base Publishing",
+        description:
+          "Publish gate requiring reviewer, release note, guardrail check, fallback check, and smoke test evidence.",
+        htmlPath: "/kb-publish-gate",
+        markdownPath: "/api/admin/kb-publishing-pack.html",
+        owner: "Project Lead / Lecturer",
+        title: "Publish Gate"
+      },
+      {
+        category: "Knowledge Base Publishing",
+        description:
+          "Rollback snapshot planning before live FYEC100 knowledge base content is replaced.",
+        htmlPath: "/kb-rollback-snapshot",
+        markdownPath: "/api/admin/kb-publishing-pack.html",
+        owner: "Developer",
+        title: "Rollback Snapshot"
+      },
+      {
+        category: "Student Experience",
+        description:
+          "FYEC100-specific prompt starters for assignments, study planning, LMS navigation, reflection, and responsible AI use.",
+        htmlPath: "/student-prompt-starters",
+        markdownPath: "/api/admin/student-experience-pack.html",
+        owner: "Lecturer / Project Lead",
+        title: "Student Prompt Starters"
+      },
+      {
+        category: "Student Experience",
+        description:
+          "Outcome tags for answered, needs lecturer, needs LMS support, content gap, integrity boundary, and technical issue.",
+        htmlPath: "/conversation-outcomes",
+        markdownPath: "/api/admin/student-experience-pack.html",
+        owner: "Pilot Review Team",
+        title: "Conversation Outcome Tags"
+      },
+      {
+        category: "Student Experience",
+        description:
+          "Simple optional follow-up asking whether the assistant helped the student know what to do next.",
+        htmlPath: "/student-helpfulness-followup",
+        markdownPath: "/api/admin/student-experience-pack.html",
+        owner: "Project Lead",
+        title: "Student Helpfulness Follow-Up"
+      },
+      {
+        category: "Student Experience",
+        description:
+          "Themes dashboard for deadlines, assignment expectations, LMS navigation, study habits, and responsible AI use.",
+        htmlPath: "/learning-support-themes",
+        markdownPath: "/api/admin/student-experience-pack.html",
+        owner: "Lecturer / LMS Administrator",
+        title: "Learning Support Themes"
+      },
+      {
+        category: "Student Experience",
+        description:
+          "Recommended non-automated support interventions such as Moodle announcements, lecturer clarification, workshops, KB updates, and LMS guides.",
+        htmlPath: "/intervention-recommendations",
+        markdownPath: "/api/admin/student-experience-pack.html",
+        owner: "Pilot Review Team",
+        title: "Intervention Recommendations"
+      }
+    ]
+  },
+  {
     title: "Outcomes, Content, Support, and Enterprise Hardening",
     description:
       "The next four build layers: pilot evidence, FYEC100 content operations, student support operations, and production-grade enterprise hardening.",

@@ -57,6 +57,33 @@ await runCheck("Production auth plan page", `${baseUrl}/production-auth-plan`);
 await runCheck("Data retention storage page", `${baseUrl}/data-retention-storage`);
 await runCheck("Audit monitoring plan page", `${baseUrl}/audit-monitoring-plan`);
 await runCheck("Production readiness gate page", `${baseUrl}/production-readiness-gate`);
+await runCheck("LTI state store page", `${baseUrl}/lti-state-store`);
+await runCheck("LTI launch flow page", `${baseUrl}/lti-launch-flow`);
+await runCheck("LTI validation page", `${baseUrl}/lti-validation`);
+await runCheck("Trusted Moodle context page", `${baseUrl}/trusted-moodle-context`);
+await runCheck("LTI test harness page", `${baseUrl}/lti-test-harness`);
+await runCheck("Audit viewer page", `${baseUrl}/audit-viewer`);
+await runCheck("Storage adapter page", `${baseUrl}/storage-adapter`);
+await runCheck("Retention controls page", `${baseUrl}/retention-controls`);
+await runCheck("Governance export page", `${baseUrl}/governance-export`);
+await runCheck("Service desk intake page", `${baseUrl}/service-desk-intake`);
+await runCheck("Support case lifecycle page", `${baseUrl}/support-case-lifecycle`);
+await runCheck("Support SLA rules page", `${baseUrl}/support-sla-rules`);
+await runCheck("Support assignment board page", `${baseUrl}/support-assignment-board`);
+await runCheck("Case resolution notes page", `${baseUrl}/case-resolution-notes`);
+await runCheck("Service desk export page", `${baseUrl}/service-desk-export`);
+await runCheck("KB publish workflow page", `${baseUrl}/kb-publish-workflow`);
+await runCheck("KB preview page", `${baseUrl}/kb-preview`);
+await runCheck("KB diff viewer page", `${baseUrl}/kb-diff-viewer`);
+await runCheck("KB publish gate page", `${baseUrl}/kb-publish-gate`);
+await runCheck("KB rollback snapshot page", `${baseUrl}/kb-rollback-snapshot`);
+await runCheck("KB release pack page", `${baseUrl}/kb-release-pack`);
+await runCheck("Student prompt starters page", `${baseUrl}/student-prompt-starters`);
+await runCheck("Conversation outcomes page", `${baseUrl}/conversation-outcomes`);
+await runCheck("Student helpfulness follow-up page", `${baseUrl}/student-helpfulness-followup`);
+await runCheck("Learning support themes page", `${baseUrl}/learning-support-themes`);
+await runCheck("Intervention recommendations page", `${baseUrl}/intervention-recommendations`);
+await runCheck("Student experience report page", `${baseUrl}/student-experience-report`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -166,6 +193,12 @@ await runJsonCheck("Support playbook endpoint", `${baseUrl}/api/admin/support-pl
 await runJsonCheck("Support triage endpoint", `${baseUrl}/api/admin/support-triage`, {
   admin: true
 });
+await runJsonCheck("Audit events endpoint", `${baseUrl}/api/admin/audit-events`, {
+  admin: true
+});
+await runJsonCheck("Service desk cases endpoint", `${baseUrl}/api/admin/service-desk/cases`, {
+  admin: true
+});
 await runJsonCheck(
   "Pilot data cleanup preview endpoint",
   `${baseUrl}/api/admin/pilot-data-cleanup`,
@@ -268,6 +301,31 @@ await runCheck(
 await runCheck(
   "Enterprise hardening HTML",
   `${baseUrl}/api/admin/enterprise-hardening-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "LTI technical build HTML",
+  `${baseUrl}/api/admin/lti-technical-build.html`,
+  { admin: true }
+);
+await runCheck(
+  "Governance audit HTML",
+  `${baseUrl}/api/admin/governance-audit-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Service desk HTML",
+  `${baseUrl}/api/admin/service-desk-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "KB publishing HTML",
+  `${baseUrl}/api/admin/kb-publishing-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Student experience HTML",
+  `${baseUrl}/api/admin/student-experience-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {
