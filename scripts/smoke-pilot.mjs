@@ -126,6 +126,27 @@ await runCheck("Provider health cost page", `${baseUrl}/provider-health-cost`);
 await runCheck("Provider safety comparison page", `${baseUrl}/provider-safety-comparison`);
 await runCheck("Provider fallback plan page", `${baseUrl}/provider-fallback-plan`);
 await runCheck("AI provider governance pack page", `${baseUrl}/ai-provider-governance-pack`);
+await runCheck("Moodle platform config page", `${baseUrl}/moodle-platform-config`);
+await runCheck("LTI registration checklist page", `${baseUrl}/lti-registration-checklist`);
+await runCheck("Launch diagnostics page", `${baseUrl}/launch-diagnostics`);
+await runCheck("Trusted launch preview page", `${baseUrl}/trusted-launch-preview`);
+await runCheck("Moodle test evidence pack page", `${baseUrl}/moodle-test-evidence-pack`);
+await runCheck("Role authorization matrix page", `${baseUrl}/role-authorization-matrix`);
+await runCheck("Route protection policy page", `${baseUrl}/route-protection-policy`);
+await runCheck("Request context inspector page", `${baseUrl}/request-context-inspector`);
+await runCheck("Admin access upgrade page", `${baseUrl}/admin-access-upgrade`);
+await runCheck("Role based navigation page", `${baseUrl}/role-based-navigation`);
+await runCheck("Auth governance pack page", `${baseUrl}/auth-governance-pack`);
+await runCheck("Storage provider interface page", `${baseUrl}/storage-provider-interface`);
+await runCheck("Local file adapter page", `${baseUrl}/local-file-adapter`);
+await runCheck("Production adapter scaffold page", `${baseUrl}/production-adapter-scaffold`);
+await runCheck("Storage migration readiness page", `${baseUrl}/storage-migration-readiness`);
+await runCheck("Retention policy enforcement page", `${baseUrl}/retention-policy-enforcement`);
+await runCheck("Storage operations pack page", `${baseUrl}/storage-operations-pack`);
+await runCheck("Evaluation runner page", `${baseUrl}/evaluation-runner`);
+await runCheck("Automated guardrail checks page", `${baseUrl}/automated-guardrail-checks`);
+await runCheck("Evaluation results page", `${baseUrl}/evaluation-results`);
+await runCheck("Evaluation evidence pack page", `${baseUrl}/evaluation-evidence-pack`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -242,6 +263,9 @@ await runJsonCheck("Service desk cases endpoint", `${baseUrl}/api/admin/service-
   admin: true
 });
 await runJsonCheck("Operations health endpoint", `${baseUrl}/api/admin/operations-health`, {
+  admin: true
+});
+await runJsonCheck("Evaluation runner endpoint", `${baseUrl}/api/admin/evaluation-runner`, {
   admin: true
 });
 await runJsonCheck(
@@ -406,6 +430,26 @@ await runCheck(
 await runCheck(
   "Provider governance HTML",
   `${baseUrl}/api/admin/provider-governance-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Moodle test evidence HTML",
+  `${baseUrl}/api/admin/moodle-test-evidence-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Auth governance HTML",
+  `${baseUrl}/api/admin/auth-governance-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Storage operations HTML",
+  `${baseUrl}/api/admin/storage-operations-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Evaluation evidence HTML",
+  `${baseUrl}/api/admin/evaluation-evidence-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

@@ -44,6 +44,10 @@ Current Phase 2 pilot workspaces include:
 - AI quality, safety, and evaluation layer with test questions, response rubric, manual review, provider comparison, safety regression, and quality export.
 - Multi-course scaling layer with course configuration, selector workspace, KB routing, course-specific guardrails, course analytics, and scaling governance.
 - Enterprise AI provider governance layer with provider registry, policy matrix, health/cost signals, safety comparison, fallback plan, and provider governance export.
+- Moodle test environment connection layer with platform config, LTI registration checklist, launch diagnostics, trusted session preview, and Moodle test evidence pack.
+- Real authentication and authorization layer with role matrix, route policy, request inspector, admin access upgrade plan, role-based navigation, and auth governance export.
+- Production storage implementation layer with storage provider interface, local file adapter, production adapter scaffold, migration readiness, retention enforcement, and storage operations pack.
+- Evaluation automation layer with local dataset, runner API, automated guardrail checks, result storage, results dashboard, and evaluation evidence pack.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

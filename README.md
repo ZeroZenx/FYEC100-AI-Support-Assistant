@@ -402,6 +402,27 @@ http://localhost:4100/provider-health-cost
 http://localhost:4100/provider-safety-comparison
 http://localhost:4100/provider-fallback-plan
 http://localhost:4100/ai-provider-governance-pack
+http://localhost:4100/moodle-platform-config
+http://localhost:4100/lti-registration-checklist
+http://localhost:4100/launch-diagnostics
+http://localhost:4100/trusted-launch-preview
+http://localhost:4100/moodle-test-evidence-pack
+http://localhost:4100/role-authorization-matrix
+http://localhost:4100/route-protection-policy
+http://localhost:4100/request-context-inspector
+http://localhost:4100/admin-access-upgrade
+http://localhost:4100/role-based-navigation
+http://localhost:4100/auth-governance-pack
+http://localhost:4100/storage-provider-interface
+http://localhost:4100/local-file-adapter
+http://localhost:4100/production-adapter-scaffold
+http://localhost:4100/storage-migration-readiness
+http://localhost:4100/retention-policy-enforcement
+http://localhost:4100/storage-operations-pack
+http://localhost:4100/evaluation-runner
+http://localhost:4100/automated-guardrail-checks
+http://localhost:4100/evaluation-results
+http://localhost:4100/evaluation-evidence-pack
 ```
 
 The decision packet can also be opened as a standalone HTML report:
@@ -582,6 +603,11 @@ http://localhost:4100/api/admin/production-handover-pack.html
 http://localhost:4100/api/admin/ai-quality-review-pack.html
 http://localhost:4100/api/admin/scaling-governance-pack.html
 http://localhost:4100/api/admin/provider-governance-pack.html
+http://localhost:4100/api/admin/moodle-test-evidence-pack.html
+http://localhost:4100/api/admin/auth-governance-pack.html
+http://localhost:4100/api/admin/storage-operations-pack.html
+http://localhost:4100/api/admin/evaluation-runner
+http://localhost:4100/api/admin/evaluation-evidence-pack.html
 http://localhost:4100/api/admin/integration-decision
 http://localhost:4100/api/admin/hosted-deployment-pack
 http://localhost:4100/api/admin/hosted-deployment-pack.html
