@@ -182,6 +182,47 @@ await runCheck("Support content loop page", `${baseUrl}/support-content-loop`);
 await runCheck("Student success pack page", `${baseUrl}/student-success-pack`);
 await runCheck("Scale decision dashboard page", `${baseUrl}/scale-decision-dashboard`);
 await runCheck("Pilot closeout scale pack page", `${baseUrl}/pilot-closeout-scale-pack`);
+await runCheck("Common question clustering page", `${baseUrl}/common-question-clustering`);
+await runCheck("Lecturer clarification queue page", `${baseUrl}/lecturer-clarification-queue`);
+await runCheck("Teaching intervention planner page", `${baseUrl}/teaching-intervention-planner`);
+await runCheck("Content gap severity page", `${baseUrl}/content-gap-severity`);
+await runCheck("Lecturer intelligence pack page", `${baseUrl}/lecturer-intelligence-pack`);
+await runCheck("Release register page", `${baseUrl}/release-register`);
+await runCheck("Release approval gate page", `${baseUrl}/release-approval-gate`);
+await runCheck("Changelog workspace page", `${baseUrl}/changelog-workspace`);
+await runCheck("Rollback evidence register page", `${baseUrl}/rollback-evidence-register`);
+await runCheck("Release calendar page", `${baseUrl}/release-calendar`);
+await runCheck("Enterprise release pack page", `${baseUrl}/enterprise-release-pack`);
+await runCheck("Benchmark run workspace page", `${baseUrl}/benchmark-run-workspace`);
+await runCheck("Quality safety scorecard page", `${baseUrl}/quality-safety-scorecard`);
+await runCheck("Latency reliability tracker page", `${baseUrl}/latency-reliability-tracker`);
+await runCheck("Cost estimate dashboard page", `${baseUrl}/cost-estimate-dashboard`);
+await runCheck("Provider approval recommendation page", `${baseUrl}/provider-approval-recommendation`);
+await runCheck("Benchmark governance pack page", `${baseUrl}/benchmark-governance-pack`);
+await runCheck("Knowledge ownership registry page", `${baseUrl}/knowledge-ownership-registry`);
+await runCheck("Approved source policy page", `${baseUrl}/approved-source-policy`);
+await runCheck("Content currency dashboard page", `${baseUrl}/content-currency-dashboard`);
+await runCheck("Knowledge governance workflow page", `${baseUrl}/knowledge-governance-workflow`);
+await runCheck("Knowledge risk register page", `${baseUrl}/knowledge-risk-register`);
+await runCheck("Knowledge governance pack page", `${baseUrl}/knowledge-governance-pack`);
+await runCheck("Support destination registry page", `${baseUrl}/support-destination-registry`);
+await runCheck("Escalation routing rules page", `${baseUrl}/escalation-routing-rules`);
+await runCheck("Support handoff template builder page", `${baseUrl}/support-handoff-template-builder`);
+await runCheck("Service desk connector scaffold page", `${baseUrl}/service-desk-connector-scaffold`);
+await runCheck("Escalation SLA dashboard page", `${baseUrl}/escalation-sla-dashboard`);
+await runCheck("Support integration pack page", `${baseUrl}/support-integration-pack`);
+await runCheck("UAT test script library page", `${baseUrl}/uat-test-script-library`);
+await runCheck("Role based UAT tracker page", `${baseUrl}/role-based-uat-tracker`);
+await runCheck("UAT issue register page", `${baseUrl}/uat-issue-register`);
+await runCheck("Accessibility mobile UAT page", `${baseUrl}/accessibility-mobile-uat`);
+await runCheck("Launch acceptance gate page", `${baseUrl}/launch-acceptance-gate`);
+await runCheck("UAT evidence pack page", `${baseUrl}/uat-evidence-pack`);
+await runCheck("Launch day command center page", `${baseUrl}/launch-day-command-center`);
+await runCheck("Launch communications workspace page", `${baseUrl}/launch-communications-workspace`);
+await runCheck("Live launch checklist page", `${baseUrl}/live-launch-checklist`);
+await runCheck("Rollback trigger monitor page", `${baseUrl}/rollback-trigger-monitor`);
+await runCheck("Post launch review workspace page", `${baseUrl}/post-launch-review-workspace`);
+await runCheck("Launch control pack page", `${baseUrl}/launch-control-pack`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -526,6 +567,41 @@ await runCheck(
 await runCheck(
   "Pilot closeout scale HTML",
   `${baseUrl}/api/admin/pilot-closeout-scale-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Lecturer intelligence HTML",
+  `${baseUrl}/api/admin/lecturer-intelligence-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Enterprise release HTML",
+  `${baseUrl}/api/admin/enterprise-release-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Benchmark governance HTML",
+  `${baseUrl}/api/admin/benchmark-governance-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Knowledge governance HTML",
+  `${baseUrl}/api/admin/knowledge-governance-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Support integration HTML",
+  `${baseUrl}/api/admin/support-integration-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "UAT evidence HTML",
+  `${baseUrl}/api/admin/uat-evidence-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Launch control HTML",
+  `${baseUrl}/api/admin/launch-control-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

@@ -55,6 +55,13 @@ Current Phase 2 pilot workspaces include:
 - Content publishing and release control layer with KB draft workspace, section diff viewer, approval gate, publish preview, rollback snapshot, and release control pack.
 - Student success and intervention layer with student needs dashboard, intervention workspace, lecturer action brief, support-to-content loop, and student success export.
 - Pilot closeout and scale decision layer with closeout evidence, blockers, readiness signals, and continue/revise/expand/pause recommendation support.
+- Lecturer content intelligence layer with common question clustering, lecturer clarification queue, teaching intervention planner, content gap severity scoring, and lecturer intelligence pack.
+- Enterprise release management layer with release register, approval gate, changelog workspace, rollback evidence register, release calendar, and enterprise release pack.
+- AI model benchmark and cost governance layer with benchmark workspace, quality/safety scorecard, latency/reliability tracking, cost estimates, provider approval recommendations, and governance export.
+- Institutional knowledge governance layer with ownership registry, approved source policy, content currency dashboard, governance workflow, knowledge risk register, and academic governance export.
+- Enterprise student support integration layer with support destinations, escalation rules, handoff templates, connector scaffold, SLA dashboard, and support integration pack.
+- Production user acceptance testing layer with role-based UAT scripts, tracker, issue register, accessibility/mobile checklist, launch acceptance gate, and UAT evidence pack.
+- Production launch control layer with launch-day command center, communications workspace, live checklist, rollback trigger monitor, post-launch review, and launch control pack.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

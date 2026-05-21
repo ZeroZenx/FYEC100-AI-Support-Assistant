@@ -1,0 +1,8 @@
+import { requireAdminAccess } from "@/lib/adminAuth";
+import { renderSupportIntegrationHtml } from "@/lib/extendedPhaseLayers";
+
+export async function GET(request: Request) {
+  const denied = requireAdminAccess(request);
+  if (denied) return denied;
+  return new Response(await renderSupportIntegrationHtml(), { headers: { "content-type": "text/html; charset=utf-8" } });
+}
