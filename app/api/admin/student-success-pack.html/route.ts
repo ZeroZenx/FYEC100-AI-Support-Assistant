@@ -1,0 +1,8 @@
+import { requireAdminAccess } from "@/lib/adminAuth";
+import { renderStudentSuccessPackHtml } from "@/lib/finalPhaseLayers";
+
+export async function GET(request: Request) {
+  const denied = requireAdminAccess(request);
+  if (denied) return denied;
+  return new Response(await renderStudentSuccessPackHtml(), { headers: { "content-type": "text/html; charset=utf-8" } });
+}

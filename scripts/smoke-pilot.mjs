@@ -147,6 +147,41 @@ await runCheck("Evaluation runner page", `${baseUrl}/evaluation-runner`);
 await runCheck("Automated guardrail checks page", `${baseUrl}/automated-guardrail-checks`);
 await runCheck("Evaluation results page", `${baseUrl}/evaluation-results`);
 await runCheck("Evaluation evidence pack page", `${baseUrl}/evaluation-evidence-pack`);
+await runCheck("Admin session access page", `${baseUrl}/admin-session-access`);
+await runCheck("Admin access audit page", `${baseUrl}/admin-access-audit`);
+await runCheck("Security review dashboard page", `${baseUrl}/security-review-dashboard`);
+await runCheck("Admin security pack page", `${baseUrl}/admin-security-pack`);
+await runCheck("Deployment command center page", `${baseUrl}/deployment-command-center`);
+await runCheck("Windows script verification page", `${baseUrl}/windows-script-verification`);
+await runCheck("IIS proxy verification page", `${baseUrl}/iis-proxy-verification`);
+await runCheck("Service restart runbook page", `${baseUrl}/service-restart-runbook`);
+await runCheck("Deployment evidence pack page", `${baseUrl}/deployment-evidence-pack`);
+await runCheck("Operations command dashboard page", `${baseUrl}/operations-command-dashboard`);
+await runCheck("Incident timeline page", `${baseUrl}/incident-timeline`);
+await runCheck("Alert rules workspace page", `${baseUrl}/alert-rules-workspace`);
+await runCheck("Runbook action links page", `${baseUrl}/runbook-action-links`);
+await runCheck("Operations pack page", `${baseUrl}/operations-pack`);
+await runCheck("Role command center page", `${baseUrl}/role-command-center`);
+await runCheck("Sponsor command center page", `${baseUrl}/sponsor-command-center`);
+await runCheck("Project lead command center page", `${baseUrl}/project-lead-command-center`);
+await runCheck("LMS admin command center page", `${baseUrl}/lms-admin-command-center`);
+await runCheck("Lecturer command center page", `${baseUrl}/lecturer-command-center`);
+await runCheck("IT command center page", `${baseUrl}/it-command-center`);
+await runCheck("Governance command center page", `${baseUrl}/governance-command-center`);
+await runCheck("Developer command center page", `${baseUrl}/developer-command-center`);
+await runCheck("KB draft workspace page", `${baseUrl}/kb-draft-workspace`);
+await runCheck("Section diff viewer page", `${baseUrl}/section-diff-viewer`);
+await runCheck("Review approval gate page", `${baseUrl}/review-approval-gate`);
+await runCheck("Publish preview page", `${baseUrl}/publish-preview`);
+await runCheck("Release rollback snapshot page", `${baseUrl}/release-rollback-snapshot`);
+await runCheck("KB release control pack page", `${baseUrl}/kb-release-control-pack`);
+await runCheck("Student needs dashboard page", `${baseUrl}/student-needs-dashboard`);
+await runCheck("Intervention workspace page", `${baseUrl}/intervention-workspace`);
+await runCheck("Lecturer action brief page", `${baseUrl}/lecturer-action-brief`);
+await runCheck("Support content loop page", `${baseUrl}/support-content-loop`);
+await runCheck("Student success pack page", `${baseUrl}/student-success-pack`);
+await runCheck("Scale decision dashboard page", `${baseUrl}/scale-decision-dashboard`);
+await runCheck("Pilot closeout scale pack page", `${baseUrl}/pilot-closeout-scale-pack`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
 await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
@@ -268,6 +303,12 @@ await runJsonCheck("Operations health endpoint", `${baseUrl}/api/admin/operation
 await runJsonCheck("Evaluation runner endpoint", `${baseUrl}/api/admin/evaluation-runner`, {
   admin: true
 });
+await runJsonCheck("Admin session endpoint", `${baseUrl}/api/admin/session`);
+await runJsonCheck(
+  "Windows script verification endpoint",
+  `${baseUrl}/api/admin/windows-script-verification`,
+  { admin: true }
+);
 await runJsonCheck(
   "Pilot data cleanup preview endpoint",
   `${baseUrl}/api/admin/pilot-data-cleanup`,
@@ -450,6 +491,41 @@ await runCheck(
 await runCheck(
   "Evaluation evidence HTML",
   `${baseUrl}/api/admin/evaluation-evidence-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Admin security HTML",
+  `${baseUrl}/api/admin/admin-security-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Deployment evidence HTML",
+  `${baseUrl}/api/admin/deployment-evidence-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Operations pack HTML",
+  `${baseUrl}/api/admin/operations-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Role command center HTML",
+  `${baseUrl}/api/admin/role-command-center-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "KB release control HTML",
+  `${baseUrl}/api/admin/kb-release-control-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Student success HTML",
+  `${baseUrl}/api/admin/student-success-pack.html`,
+  { admin: true }
+);
+await runCheck(
+  "Pilot closeout scale HTML",
+  `${baseUrl}/api/admin/pilot-closeout-scale-pack.html`,
   { admin: true }
 );
 await runJsonCheck("Launch audit endpoint", `${baseUrl}/api/admin/launch-audit`, {

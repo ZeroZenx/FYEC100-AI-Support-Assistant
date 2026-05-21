@@ -48,6 +48,13 @@ Current Phase 2 pilot workspaces include:
 - Real authentication and authorization layer with role matrix, route policy, request inspector, admin access upgrade plan, role-based navigation, and auth governance export.
 - Production storage implementation layer with storage provider interface, local file adapter, production adapter scaffold, migration readiness, retention enforcement, and storage operations pack.
 - Evaluation automation layer with local dataset, runner API, automated guardrail checks, result storage, results dashboard, and evaluation evidence pack.
+- Production admin security layer with local admin sessions, role-aware navigation, access audit events, security review dashboard, and governance export.
+- Production deployment automation layer with deployment command center, Windows script verification API, IIS proxy checklist, service restart runbook, and deployment evidence pack.
+- Operational monitoring and alerting layer with operations command dashboard, incident timeline, alert rules workspace, runbook action links, and operations export.
+- Role-based command center with sponsor, project lead, LMS administrator, lecturer, IT/system administrator, governance, and developer views.
+- Content publishing and release control layer with KB draft workspace, section diff viewer, approval gate, publish preview, rollback snapshot, and release control pack.
+- Student success and intervention layer with student needs dashboard, intervention workspace, lecturer action brief, support-to-content loop, and student success export.
+- Pilot closeout and scale decision layer with closeout evidence, blockers, readiness signals, and continue/revise/expand/pause recommendation support.
 
 ## Phase 3: Advanced AI Learning Ecosystem
 

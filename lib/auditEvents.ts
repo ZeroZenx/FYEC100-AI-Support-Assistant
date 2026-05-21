@@ -12,6 +12,7 @@ const AUDIT_PATH = path.join(process.cwd(), "data", "audit-events.jsonl");
 
 export type AuditEventSeverity = "info" | "warning" | "critical";
 export type AuditEventType =
+  | "admin-access"
   | "admin-action"
   | "configuration-check"
   | "kb-release"
