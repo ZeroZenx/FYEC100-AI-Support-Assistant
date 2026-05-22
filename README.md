@@ -34,6 +34,14 @@ Current Phase 2 real workflow features include:
 - LTI launch hardening status at `http://localhost:4100/lti-launch-hardening`.
 - Support connector integration at `http://localhost:4100/support-connector`.
 - Student consent and privacy notice at `http://localhost:4100/student-consent-privacy`.
+- Scale decision and approval workflow at `http://localhost:4100/scale-decision-approval`.
+- Enterprise rollout blueprint at `http://localhost:4100/enterprise-rollout-blueprint`.
+- Governed production backlog at `http://localhost:4100/governed-production-backlog`.
+- Production readiness review board at `http://localhost:4100/readiness-review-board`.
+- Implementation sprint planner at `http://localhost:4100/implementation-sprint-planner`.
+- Release candidate builder at `http://localhost:4100/release-candidate-builder`.
+- Production deployment run at `http://localhost:4100/production-deployment-run`.
+- Operational maintenance scheduler at `http://localhost:4100/maintenance-scheduler`.
 
 ### Phase 3: Advanced AI learning ecosystem
 

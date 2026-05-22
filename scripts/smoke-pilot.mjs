@@ -25,6 +25,14 @@ await runCheck("Storage adapter implementation page", `${baseUrl}/storage-adapte
 await runCheck("LTI launch hardening page", `${baseUrl}/lti-launch-hardening`);
 await runCheck("Support connector page", `${baseUrl}/support-connector`);
 await runCheck("Student consent privacy page", `${baseUrl}/student-consent-privacy`);
+await runCheck("Scale decision approval page", `${baseUrl}/scale-decision-approval`);
+await runCheck("Enterprise rollout blueprint page", `${baseUrl}/enterprise-rollout-blueprint`);
+await runCheck("Governed production backlog page", `${baseUrl}/governed-production-backlog`);
+await runCheck("Readiness review board page", `${baseUrl}/readiness-review-board`);
+await runCheck("Implementation sprint planner page", `${baseUrl}/implementation-sprint-planner`);
+await runCheck("Release candidate builder page", `${baseUrl}/release-candidate-builder`);
+await runCheck("Production deployment run page", `${baseUrl}/production-deployment-run`);
+await runCheck("Maintenance scheduler page", `${baseUrl}/maintenance-scheduler`);
 await runCheck("Knowledge base review workspace", `${baseUrl}/knowledge-base-review`);
 await runCheck("Pilot feedback inbox", `${baseUrl}/feedback-inbox`);
 await runCheck("Moodle embed preview studio", `${baseUrl}/moodle-preview`);
@@ -371,6 +379,19 @@ await runJsonCheck("Support connector endpoint", `${baseUrl}/api/admin/support-c
 await runJsonCheck("Consent summary endpoint", `${baseUrl}/api/admin/consent-summary`, {
   admin: true
 });
+await runJsonCheck("Production workflows endpoint", `${baseUrl}/api/admin/production-workflows`, {
+  admin: true
+});
+await runJsonCheck(
+  "Scale decision workflow endpoint",
+  `${baseUrl}/api/admin/production-workflows/scale-decision-approval`,
+  { admin: true }
+);
+await runCheck(
+  "Scale decision workflow HTML",
+  `${baseUrl}/api/admin/production-workflow-pack.html?workflow=scale-decision-approval`,
+  { admin: true }
+);
 await runJsonCheck("Operations health endpoint", `${baseUrl}/api/admin/operations-health`, {
   admin: true
 });

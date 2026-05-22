@@ -24,3 +24,4 @@ data/kb-regression-results.jsonl
 data/kb-publish-events.jsonl
 data/kb-snapshots
 data/support-connector-events.jsonl
+data/production-workflows

@@ -25,6 +25,14 @@ Current Phase 2 pilot workspaces include:
 - Production LTI launch hardening for signature, nonce, issuer, client, deployment, and role checks.
 - Production support connector scaffold for email, Teams, Forms, SharePoint List, or local-only routing.
 - Student consent and privacy notice flow before feedback or support escalation.
+- Scale decision and institutional approval workflow for continue, revise, expand, pause, or retire decisions.
+- Enterprise rollout blueprint for managed COSTAATT academic AI support service planning.
+- Governed production platform backlog with priorities, owners, risks, dependencies, and acceptance criteria.
+- Production readiness review board workspace for approving, deferring, rejecting, or requesting evidence.
+- Implementation sprint planner for approved backlog items, owners, reviewers, and verification checks.
+- Release candidate builder with evidence, approvals, rollback notes, and deployment target.
+- Production release deployment run with pre-checks, deploy steps, post-checks, rollback, and sign-off.
+- Operational maintenance scheduler for recurring KB, provider, Moodle, backup, support, accessibility, and governance reviews.
 - Human-readable HTML report set for pilot evidence, support triage, Moodle security hardening, and hosted deployment readiness.
 - Knowledge base review workspace for FYEC100 content sections, proposed updates, approvals, and release notes.
 - Pilot feedback inbox with filters by category, owner, priority, mode, and escalation type.
