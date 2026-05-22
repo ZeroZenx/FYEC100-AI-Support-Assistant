@@ -25,6 +25,8 @@ export type EscalationCategory =
 
 export type PilotFeedbackRecord = {
   assistantResponseExcerpt: string;
+  consentAcknowledged?: boolean;
+  courseCode?: string;
   escalationCategory?: EscalationCategory;
   escalationOwner?: string;
   escalationReason?: string;
@@ -67,6 +69,8 @@ function excerpt(value: string) {
 
 export async function savePilotFeedback(input: {
   assistantResponse: string;
+  consentAcknowledged?: boolean;
+  courseCode?: string;
   feedbackCategory?: FeedbackCategory;
   mode: PilotFeedbackRecord["mode"];
   note?: string;
@@ -79,6 +83,8 @@ export async function savePilotFeedback(input: {
   );
   const review = classifyFeedback({
     assistantResponseExcerpt: excerpt(input.assistantResponse),
+    consentAcknowledged: Boolean(input.consentAcknowledged),
+    courseCode: input.courseCode?.trim().toUpperCase() || "FYEC100",
     feedbackCategory,
     mode: input.mode,
     note: input.note ? excerpt(input.note) : undefined,
@@ -88,6 +94,8 @@ export async function savePilotFeedback(input: {
   });
   const record: PilotFeedbackRecord = {
     assistantResponseExcerpt: excerpt(input.assistantResponse),
+    consentAcknowledged: Boolean(input.consentAcknowledged),
+    courseCode: input.courseCode?.trim().toUpperCase() || "FYEC100",
     escalationCategory: review.escalationCategory,
     escalationOwner: review.escalationOwner,
     escalationReason: review.escalationReason,
@@ -313,6 +321,8 @@ function normalizeRecord(record: PilotFeedbackRecord): PilotFeedbackRecord {
 
   return {
     ...record,
+    consentAcknowledged: Boolean(record.consentAcknowledged),
+    courseCode: record.courseCode || "FYEC100",
     feedbackCategory,
     rating: feedbackCategory
   };

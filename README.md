@@ -26,6 +26,14 @@ Current Phase 2 real workflow features include:
 - Provider testing console at `http://localhost:4100/provider-console`.
 - Moodle embed package generator at `http://localhost:4100/moodle-embed-generator`.
 - Course configuration manager at `http://localhost:4100/course-config-manager`.
+- Support handoff center at `http://localhost:4100/support-handoff-center`.
+- KB updates from feedback at `http://localhost:4100/kb-feedback-updates`.
+- KB regression, publish, and rollback at `http://localhost:4100/kb-regression-publish`.
+- Course lifecycle management at `http://localhost:4100/course-lifecycle`.
+- Storage adapter implementation status at `http://localhost:4100/storage-adapter-implementation`.
+- LTI launch hardening status at `http://localhost:4100/lti-launch-hardening`.
+- Support connector integration at `http://localhost:4100/support-connector`.
+- Student consent and privacy notice at `http://localhost:4100/student-consent-privacy`.
 
 ### Phase 3: Advanced AI learning ecosystem
 

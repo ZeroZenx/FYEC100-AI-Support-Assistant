@@ -1,6 +1,7 @@
 import { appendFile, readFile } from "fs/promises";
 import path from "path";
 import { recordAuditEvent } from "@/lib/auditEvents";
+import { verifyLtiJwtSignature } from "@/lib/ltiJwt";
 import {
   normalizeMoodleLaunchContext,
   type MoodleLaunchContext,
@@ -120,6 +121,10 @@ export async function validateLtiLaunch(input: {
   checks.push(
     check(Object.keys(claims).length > 0, "JWT payload decoded", "ID token payload can be decoded.")
   );
+  const signature = input.idToken
+    ? verifyLtiJwtSignature(input.idToken)
+    : { message: "ID token is missing.", ok: false };
+  checks.push(check(signature.ok, "JWT signature validation", signature.message));
   checks.push(
     checkMatch(claims.iss, stateRecord?.issuer || process.env.LTI_PLATFORM_ISSUER, "Issuer")
   );

@@ -17,6 +17,14 @@ await runCheck("Launch checklist execution page", `${baseUrl}/launch-checklist-e
 await runCheck("Provider console page", `${baseUrl}/provider-console`);
 await runCheck("Moodle embed generator page", `${baseUrl}/moodle-embed-generator`);
 await runCheck("Course config manager page", `${baseUrl}/course-config-manager`);
+await runCheck("Support handoff center page", `${baseUrl}/support-handoff-center`);
+await runCheck("KB feedback updates page", `${baseUrl}/kb-feedback-updates`);
+await runCheck("KB regression publish page", `${baseUrl}/kb-regression-publish`);
+await runCheck("Course lifecycle page", `${baseUrl}/course-lifecycle`);
+await runCheck("Storage adapter implementation page", `${baseUrl}/storage-adapter-implementation`);
+await runCheck("LTI launch hardening page", `${baseUrl}/lti-launch-hardening`);
+await runCheck("Support connector page", `${baseUrl}/support-connector`);
+await runCheck("Student consent privacy page", `${baseUrl}/student-consent-privacy`);
 await runCheck("Knowledge base review workspace", `${baseUrl}/knowledge-base-review`);
 await runCheck("Pilot feedback inbox", `${baseUrl}/feedback-inbox`);
 await runCheck("Moodle embed preview studio", `${baseUrl}/moodle-preview`);
@@ -343,6 +351,24 @@ await runJsonCheck("Audit events endpoint", `${baseUrl}/api/admin/audit-events`,
   admin: true
 });
 await runJsonCheck("Service desk cases endpoint", `${baseUrl}/api/admin/service-desk/cases`, {
+  admin: true
+});
+await runJsonCheck("KB feedback updates endpoint", `${baseUrl}/api/admin/kb-feedback-updates`, {
+  admin: true
+});
+await runJsonCheck("KB regression endpoint", `${baseUrl}/api/admin/kb-regression`, {
+  admin: true
+});
+await runJsonCheck("Storage health endpoint", `${baseUrl}/api/admin/storage-health`, {
+  admin: true
+});
+await runJsonCheck("LTI hardening endpoint", `${baseUrl}/api/admin/lti-hardening`, {
+  admin: true
+});
+await runJsonCheck("Support connector endpoint", `${baseUrl}/api/admin/support-connector`, {
+  admin: true
+});
+await runJsonCheck("Consent summary endpoint", `${baseUrl}/api/admin/consent-summary`, {
   admin: true
 });
 await runJsonCheck("Operations health endpoint", `${baseUrl}/api/admin/operations-health`, {

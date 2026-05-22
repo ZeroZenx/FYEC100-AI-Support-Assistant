@@ -9,8 +9,15 @@ export type CourseConfig = {
   courseCode: string;
   guardrailNotes: string;
   knowledgeBasePath: string;
+  lifecycleStatus: "active" | "approved-for-pilot" | "draft" | "in-review" | "paused" | "retired";
   lecturer: string;
   moodleCourseId: string;
+  pilotEnabled: boolean;
+  signoffs: {
+    lecturer: boolean;
+    lmsAdmin: boolean;
+    projectLead: boolean;
+  };
   supportOwners: string[];
   title: string;
 };
@@ -39,6 +46,27 @@ export async function upsertCourseConfig(input: Partial<CourseConfig>) {
   return saveCourseRegistry(courses.sort((a, b) => a.courseCode.localeCompare(b.courseCode)));
 }
 
+export async function updateCourseLifecycle(input: {
+  courseCode: string;
+  lifecycleStatus?: CourseConfig["lifecycleStatus"];
+  pilotEnabled?: boolean;
+  signoffs?: Partial<CourseConfig["signoffs"]>;
+}) {
+  const registry = await readCourseRegistry();
+  const courses = registry.courses.map((course) =>
+    course.courseCode === input.courseCode.toUpperCase()
+      ? normalizeCourse({
+          ...course,
+          lifecycleStatus: input.lifecycleStatus ?? course.lifecycleStatus,
+          pilotEnabled: input.pilotEnabled ?? course.pilotEnabled,
+          signoffs: { ...course.signoffs, ...input.signoffs }
+        })
+      : course
+  );
+
+  return saveCourseRegistry(courses);
+}
+
 export function getCourseReadiness(course: CourseConfig) {
   const checks = [
     ["Knowledge base path", Boolean(course.knowledgeBasePath)],
@@ -46,7 +74,10 @@ export function getCourseReadiness(course: CourseConfig) {
     ["Moodle course ID", Boolean(course.moodleCourseId)],
     ["Support owners", course.supportOwners.length > 0],
     ["Allowed topics", course.allowedTopics.length > 0],
-    ["Approval status", course.approvalStatus === "approved"]
+    ["Approval status", course.approvalStatus === "approved"],
+    ["Course lifecycle active or pilot-approved", course.lifecycleStatus === "active" || course.lifecycleStatus === "approved-for-pilot"],
+    ["Pilot enabled", course.pilotEnabled],
+    ["Owner sign-off", course.signoffs.lecturer && course.signoffs.lmsAdmin && course.signoffs.projectLead]
   ] as const;
 
   return {
@@ -62,11 +93,33 @@ function normalizeCourse(input: Partial<CourseConfig>): CourseConfig {
     courseCode: input.courseCode?.trim().toUpperCase() || "FYEC100",
     guardrailNotes: input.guardrailNotes?.trim() || "Do not write full assignments, grade work, or replace lecturer guidance.",
     knowledgeBasePath: input.knowledgeBasePath?.trim() || "data/fyec100-knowledge-base.md",
+    lifecycleStatus: normalizeLifecycleStatus(input.lifecycleStatus),
     lecturer: input.lecturer?.trim() || "FYEC100 Lecturer / Content Owner",
     moodleCourseId: input.moodleCourseId?.trim() || "FYEC100",
+    pilotEnabled: input.pilotEnabled ?? true,
+    signoffs: {
+      lecturer: Boolean(input.signoffs?.lecturer ?? true),
+      lmsAdmin: Boolean(input.signoffs?.lmsAdmin ?? true),
+      projectLead: Boolean(input.signoffs?.projectLead ?? true)
+    },
     supportOwners: toList(input.supportOwners, ["Lecturer", "LMS Administrator", "System Administrator"]),
     title: input.title?.trim() || "First Year Experience"
   };
+}
+
+function normalizeLifecycleStatus(value?: string): CourseConfig["lifecycleStatus"] {
+  const statuses: CourseConfig["lifecycleStatus"][] = [
+    "active",
+    "approved-for-pilot",
+    "draft",
+    "in-review",
+    "paused",
+    "retired"
+  ];
+
+  return statuses.includes(value as CourseConfig["lifecycleStatus"])
+    ? (value as CourseConfig["lifecycleStatus"])
+    : "active";
 }
 
 function toList(value: string[] | undefined, fallback: string[]) {

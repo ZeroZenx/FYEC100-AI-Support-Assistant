@@ -17,6 +17,14 @@ Current Phase 2 pilot workspaces include:
 - Real provider testing console for OpenAI, DeepSeek, and Ollama configuration checks.
 - Real Moodle embed package generator with iframe snippet, fallback link, student notice, and lecturer note.
 - Real course configuration manager for FYEC100 and future COSTAATT course assistant pilots.
+- Real human support handoff with structured support cases from student escalation buttons.
+- Knowledge base update suggestions generated from repeated missing-information feedback.
+- Evaluation regression, publish, and rollback controls for approved knowledge base updates.
+- Production-ready course lifecycle management with pilot activation and retirement states.
+- Production storage adapter implementation status for local, PostgreSQL, or SQL Server scaffolds.
+- Production LTI launch hardening for signature, nonce, issuer, client, deployment, and role checks.
+- Production support connector scaffold for email, Teams, Forms, SharePoint List, or local-only routing.
+- Student consent and privacy notice flow before feedback or support escalation.
 - Human-readable HTML report set for pilot evidence, support triage, Moodle security hardening, and hosted deployment readiness.
 - Knowledge base review workspace for FYEC100 content sections, proposed updates, approvals, and release notes.
 - Pilot feedback inbox with filters by category, owner, priority, mode, and escalation type.

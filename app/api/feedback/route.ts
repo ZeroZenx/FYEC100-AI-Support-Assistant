@@ -11,6 +11,7 @@ import {
   getRateLimitConfig,
   rateLimitResponse
 } from "@/lib/rateLimit";
+import { isConsentAcknowledged } from "@/lib/studentConsent";
 
 const ratings: FeedbackRating[] = feedbackCategories;
 
@@ -30,6 +31,8 @@ export async function POST(request: Request) {
 
     const body = (await request.json()) as {
       assistantResponse?: string;
+      consentAcknowledged?: boolean;
+      courseCode?: string;
       feedbackCategory?: FeedbackCategory;
       mode?: "standalone" | "embedded";
       note?: string;
@@ -51,8 +54,17 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!isConsentAcknowledged(body.consentAcknowledged)) {
+      return NextResponse.json(
+        { error: "Please acknowledge the pilot privacy notice before submitting feedback." },
+        { status: 400 }
+      );
+    }
+
     const record = await savePilotFeedback({
       assistantResponse: body.assistantResponse,
+      consentAcknowledged: body.consentAcknowledged,
+      courseCode: body.courseCode,
       feedbackCategory: body.feedbackCategory,
       mode: body.mode,
       note: body.note,

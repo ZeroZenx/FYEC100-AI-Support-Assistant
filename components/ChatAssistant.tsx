@@ -17,6 +17,11 @@ type ChatMessage = {
   content: string;
 };
 
+type SupportEscalationCategory =
+  | "lecturer-help"
+  | "missing-course-info"
+  | "moodle-help";
+
 type FeedbackRating =
   | "academic-integrity-concern"
   | "helpful"
@@ -82,7 +87,9 @@ export function ChatAssistant({
     "FYEC100 assistant ready."
   );
   const [showUseNotice, setShowUseNotice] = useState(true);
+  const [consentAcknowledged, setConsentAcknowledged] = useState(false);
   const [copiedSummary, setCopiedSummary] = useState(false);
+  const [sessionHistory, setSessionHistory] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const canSend = useMemo(() => input.trim().length > 0 && !isLoading, [
@@ -94,6 +101,13 @@ export function ChatAssistant({
     messagesEndRef.current?.scrollIntoView({ block: "end" });
   }, [messages, isLoading]);
 
+  useEffect(() => {
+    queueMicrotask(() => {
+      setConsentAcknowledged(localStorage.getItem("fyec100-consent") === "acknowledged");
+      setSessionHistory(JSON.parse(localStorage.getItem("fyec100-session-history") || "[]") as string[]);
+    });
+  }, []);
+
   async function sendMessage(nextInput?: string) {
     const question = (nextInput ?? input).trim();
     if (!question) return;
@@ -104,6 +118,7 @@ export function ChatAssistant({
     ];
 
     setMessages(nextMessages);
+    rememberQuestion(question);
     setInput("");
     setIsLoading(true);
     setError("");
@@ -168,6 +183,8 @@ export function ChatAssistant({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           assistantResponse: message.content,
+          consentAcknowledged,
+          courseCode: launchContext?.courseShortName || launchContext?.courseId || "FYEC100",
           feedbackCategory: rating,
           launchContext,
           mode: embedded ? "embedded" : "standalone",
@@ -202,6 +219,51 @@ export function ChatAssistant({
       setError(message);
       setStatusMessage(`Feedback error: ${message}`);
     }
+  }
+
+  async function createEscalation(category: SupportEscalationCategory, prompt: string) {
+    if (!consentAcknowledged) {
+      setError("Please acknowledge the pilot privacy notice before requesting human support.");
+      return;
+    }
+
+    setStatusMessage("Creating human support handoff.");
+    const response = await fetch("/api/support-handoff", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        category,
+        consentAcknowledged,
+        courseCode: launchContext?.courseShortName || launchContext?.courseId || "FYEC100",
+        safeSummary: prompt
+      })
+    });
+    const data = (await response.json()) as { case?: { studentFacingConfirmation?: string }; error?: string };
+
+    if (!response.ok) {
+      setError(data.error || "Support handoff could not be created.");
+      return;
+    }
+
+    setStatusMessage(data.case?.studentFacingConfirmation || "Human support handoff created.");
+    await sendMessage(prompt);
+  }
+
+  function acknowledgeConsent() {
+    localStorage.setItem("fyec100-consent", "acknowledged");
+    setConsentAcknowledged(true);
+  }
+
+  function clearSession() {
+    localStorage.removeItem("fyec100-session-history");
+    setSessionHistory([]);
+    setMessages([{ role: "assistant", content: roleGuidance.assistantIntro }]);
+  }
+
+  function rememberQuestion(question: string) {
+    const next = [question, ...sessionHistory.filter((item) => item !== question)].slice(0, 6);
+    setSessionHistory(next);
+    localStorage.setItem("fyec100-session-history", JSON.stringify(next));
   }
 
   function handleInputKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -279,23 +341,39 @@ export function ChatAssistant({
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h3 className="text-sm font-bold text-costaatt-navy">
-                  Responsible use notice
+                  Pilot privacy and responsible use notice
                 </h3>
                 <p className="mt-1 text-sm leading-6 text-slate-700">
                   {roleGuidance.notice} This assistant supports learning and
                   pilot review, but it does not grade work, replace official
                   COSTAATT roles, or write full assignments. Do not enter
+                  passwords, student ID numbers, grades, medical details, or
                   sensitive personal information.
                 </p>
+                <p className="mt-2 text-xs font-semibold text-slate-700">
+                  Feedback and escalation features are enabled only after this
+                  notice is acknowledged.
+                </p>
               </div>
-              <button
-                aria-label="Dismiss responsible use notice"
-                className="w-fit rounded-md border border-costaatt-gold/60 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:bg-white"
-                onClick={() => setShowUseNotice(false)}
-                type="button"
-              >
-                Dismiss
-              </button>
+              <div className="flex flex-wrap gap-2">
+                {!consentAcknowledged ? (
+                  <button
+                    className="w-fit rounded-md bg-costaatt-navy px-3 py-2 text-xs font-semibold text-white hover:bg-costaatt-blue"
+                    onClick={acknowledgeConsent}
+                    type="button"
+                  >
+                    I understand
+                  </button>
+                ) : null}
+                <button
+                  aria-label="Dismiss responsible use notice"
+                  className="w-fit rounded-md border border-costaatt-gold/60 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:bg-white"
+                  onClick={() => setShowUseNotice(false)}
+                  type="button"
+                >
+                  Dismiss
+                </button>
+              </div>
             </div>
           </div>
         ) : null}
@@ -331,7 +409,8 @@ export function ChatAssistant({
                 </div>
                 {message.role === "assistant" && index > 0 ? (
                   <FeedbackPanel
-                    disabled={message.feedbackStatus === "sending"}
+                    consentAcknowledged={consentAcknowledged}
+                    disabled={message.feedbackStatus === "sending" || !consentAcknowledged}
                     id={`feedback-note-${index}`}
                     labelId={`feedback-label-${index}`}
                     category={feedbackCategory}
@@ -402,13 +481,13 @@ export function ChatAssistant({
           </button>
         </form>
         <div className="flex flex-wrap gap-2 border-t border-slate-100 px-4 py-3">
-          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue" onClick={() => void sendMessage("I need lecturer help with this FYEC100 question.")} type="button">
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("lecturer-help", "I need lecturer help with this FYEC100 question.")} type="button">
             I need lecturer help
           </button>
-          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue" onClick={() => void sendMessage("I need Moodle help finding FYEC100 materials.")} type="button">
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("moodle-help", "I need Moodle help finding FYEC100 materials.")} type="button">
             I need Moodle help
           </button>
-          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue" onClick={() => void sendMessage("This answer seems to be missing course information. What should I ask my lecturer?")} type="button">
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("missing-course-info", "This answer seems to be missing course information. What should I ask my lecturer?")} type="button">
             Missing course info
           </button>
           <button className="rounded-md bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200" onClick={() => void copyStudySummary()} type="button">
@@ -442,6 +521,29 @@ export function ChatAssistant({
                 {prompt}
               </button>
             ))}
+          </div>
+        </section>
+        <section
+          className={`rounded-lg border border-slate-200 bg-white shadow-soft ${
+            embedded ? "p-4" : "p-5"
+          }`}
+        >
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="font-bold text-costaatt-navy">This session</h3>
+            <button className="rounded-md border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-600" onClick={clearSession} type="button">
+              Clear
+            </button>
+          </div>
+          <div className="mt-3 grid gap-2 text-sm text-slate-700">
+            {sessionHistory.length ? (
+              sessionHistory.map((item) => (
+                <button className="rounded-md bg-slate-50 px-3 py-2 text-left hover:bg-slate-100" key={item} onClick={() => void sendMessage(item)} type="button">
+                  {item}
+                </button>
+              ))
+            ) : (
+              <p className="text-sm text-slate-600">Recent questions will appear here during this browser session.</p>
+            )}
           </div>
         </section>
         {embedded && launchContext ? (
@@ -491,6 +593,7 @@ function ContextItem({ label, value }: { label: string; value: string }) {
 function FeedbackPanel({
   category,
   disabled,
+  consentAcknowledged,
   id,
   labelId,
   note,
@@ -500,6 +603,7 @@ function FeedbackPanel({
   status
 }: {
   category: FeedbackRating;
+  consentAcknowledged: boolean;
   disabled: boolean;
   id: string;
   labelId: string;
@@ -525,6 +629,11 @@ function FeedbackPanel({
       <p className="text-xs font-semibold text-slate-700" id={labelId}>
         Help us route this pilot feedback
       </p>
+      {!consentAcknowledged ? (
+        <p className="mt-2 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">
+          Acknowledge the pilot privacy notice before submitting feedback.
+        </p>
+      ) : null}
       <label
         className="mt-2 block text-xs font-semibold text-slate-700"
         htmlFor={`${id}-category`}

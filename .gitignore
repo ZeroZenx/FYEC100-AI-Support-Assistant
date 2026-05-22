@@ -19,3 +19,8 @@ data/evaluation-results.jsonl
 data/course-registry.json
 data/launch-checklist.json
 data/pilot-archive-history.jsonl
+data/kb-feedback-suggestions.jsonl
+data/kb-regression-results.jsonl
+data/kb-publish-events.jsonl
+data/kb-snapshots
+data/support-connector-events.jsonl

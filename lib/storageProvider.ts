@@ -89,6 +89,7 @@ export function getLocalFileStorageProvider(): StorageProvider {
 }
 
 export async function getStorageProviderStatus(): Promise<StorageProviderStatus> {
+  const adapter = getConfiguredStorageAdapter();
   const collections = await Promise.all(
     Object.entries(collectionFiles).map(async ([collection, fileName]) => {
       const relativePath = `data/${fileName}`;
@@ -123,7 +124,7 @@ export async function getStorageProviderStatus(): Promise<StorageProviderStatus>
   );
 
   return {
-    adapter: "local-file",
+    adapter,
     collections
   };
 }
@@ -144,4 +145,10 @@ function isProductionTarget(collection: StorageCollection) {
     "launch-states",
     "service-desk-cases"
   ].includes(collection);
+}
+
+function getConfiguredStorageAdapter(): StorageProviderStatus["adapter"] {
+  if (process.env.STORAGE_ADAPTER === "postgres") return "postgresql-scaffold";
+  if (process.env.STORAGE_ADAPTER === "sqlserver") return "sql-server-scaffold";
+  return "local-file";
 }
