@@ -15,25 +15,25 @@ export default async function MoodleEmbedPage({
   const launchContext = parseMoodleLaunchContext((await searchParams) ?? {});
 
   return (
-    <main className="min-h-screen bg-slate-50 p-2 sm:p-3">
+    <main className="min-h-screen bg-slate-50 p-1 sm:p-2">
       <MoodleLaunchAuditBeacon launchContext={launchContext} />
       <section className="mx-auto max-w-5xl">
-        <div className="mb-3 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-soft">
+        <div className="mb-2 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-soft">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
               <Image
                 alt="COSTAATT logo"
-                className="h-10 w-auto"
+                className="h-8 w-auto"
                 height={53}
                 src="/costaatt-logo.png"
                 width={120}
               />
               <div>
-                <h1 className="text-lg font-bold text-costaatt-navy">
+                <h1 className="text-base font-bold text-costaatt-navy">
                   FYEC100 AI Academic Support
                 </h1>
                 <p className="text-xs leading-5 text-slate-600">
-                  Embedded Moodle pilot view
+                  Moodle pilot view · Academic support only
                 </p>
               </div>
             </div>

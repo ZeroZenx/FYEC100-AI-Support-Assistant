@@ -20,6 +20,21 @@ const featuredReport = {
 
 const reportGroups: Array<{ description: string; reports: ReportItem[]; title: string }> = [
   {
+    title: "Real Phase 2 Workflow Tools",
+    description:
+      "Hands-on operational features for students, staff login, pilot archiving, launch execution, provider testing, Moodle embedding, and course configuration.",
+    reports: [
+      { category: "Student Chat", description: "Student-facing chat upgrades with better prompt starters, helpfulness feedback, escalation shortcuts, integrity boundary cards, and study-summary copy support.", htmlPath: "/chat", markdownPath: "/api/admin/student-experience-pack.html", owner: "Students / Lecturer", title: "Student Chat Experience" },
+      { category: "Admin Access", description: "Local role-aware staff login using the Phase 2 admin token and signed session cookie.", htmlPath: "/admin-login", markdownPath: "/api/admin/auth-governance-pack.html", owner: "Project Lead / IT", title: "Admin Login" },
+      { category: "Admin Access", description: "Role-aware admin landing page with quick links to active workflow tools.", htmlPath: "/admin-home", markdownPath: "/api/admin/auth-governance-pack.html", owner: "Project Lead", title: "Admin Home" },
+      { category: "Pilot Evidence", description: "Generate a local JSON pilot evidence archive with redaction, manifest, record counts, warnings, and checksums.", htmlPath: "/pilot-archive-builder", markdownPath: "/api/admin/pilot-export-bundle.html", owner: "Governance / Project Lead", title: "Pilot Archive Builder" },
+      { category: "Launch Workflow", description: "Execute launch checklist items, record statuses, capture decisions, and preserve a local launch timeline.", htmlPath: "/launch-checklist-execution", markdownPath: "/api/admin/launch-control-pack.html", owner: "Project Lead / IT", title: "Launch Checklist Execution" },
+      { category: "AI Provider", description: "Check selected AI provider status, run a safe test prompt, and review OpenAI, DeepSeek, and Ollama switch notes.", htmlPath: "/provider-console", markdownPath: "/api/admin/provider-governance-pack.html", owner: "Technical Lead / IT", title: "Provider Testing Console" },
+      { category: "Moodle Placement", description: "Generate copy-ready iframe snippets, fallback links, student notices, and lecturer notes for Moodle test placement.", htmlPath: "/moodle-embed-generator", markdownPath: "/api/admin/moodle-course-experience-pack.html", owner: "LMS Administrator", title: "Moodle Embed Generator" },
+      { category: "Course Configuration", description: "Manage course code, Moodle ID, knowledge base path, lecturer owner, guardrails, and readiness for future courses.", htmlPath: "/course-config-manager", markdownPath: "/api/admin/scaling-governance-pack.html", owner: "Project Lead / Developer", title: "Course Configuration Manager" }
+    ]
+  },
+  {
     title: "Lecturer Intelligence, Release, Benchmark, Governance, Support, UAT, and Launch Control",
     description:
       "The newest institutional launch-readiness bundle: lecturer insight, release management, model benchmarking, knowledge governance, support integration, UAT, and launch-day control.",

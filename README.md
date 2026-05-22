@@ -16,6 +16,17 @@ Built in this repository. Includes a local Next.js app, TypeScript, Tailwind CSS
 
 Started. Includes initial Moodle embed route planning, configurable AI provider support, and enterprise deployment documentation. Later work may include institutional hosting, authentication, Moodle plugin or LTI integration, Banner-aware support pathways, governance, monitoring, privacy review, and production operations.
 
+Current Phase 2 real workflow features include:
+
+- Student chat experience upgrades with FYEC100 prompt starters, escalation shortcuts, academic integrity boundary cards, and study-summary copy support.
+- Local role-aware admin login at `http://localhost:4100/admin-login`.
+- Role-aware admin home at `http://localhost:4100/admin-home`.
+- Pilot archive builder at `http://localhost:4100/pilot-archive-builder`.
+- Launch checklist execution at `http://localhost:4100/launch-checklist-execution`.
+- Provider testing console at `http://localhost:4100/provider-console`.
+- Moodle embed package generator at `http://localhost:4100/moodle-embed-generator`.
+- Course configuration manager at `http://localhost:4100/course-config-manager`.
+
 ### Phase 3: Advanced AI learning ecosystem
 
 Future phase. May include personalized learning support, proactive nudges, multilingual guidance, richer analytics, and broader student success integrations.

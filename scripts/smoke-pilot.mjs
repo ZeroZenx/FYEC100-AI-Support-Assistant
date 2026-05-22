@@ -10,6 +10,13 @@ const checks = [];
 
 await runCheck("Home page", `${baseUrl}/`);
 await runCheck("Reports library page", `${baseUrl}/reports`);
+await runCheck("Admin login page", `${baseUrl}/admin-login`);
+await runCheck("Admin home page", `${baseUrl}/admin-home`);
+await runCheck("Pilot archive builder page", `${baseUrl}/pilot-archive-builder`);
+await runCheck("Launch checklist execution page", `${baseUrl}/launch-checklist-execution`);
+await runCheck("Provider console page", `${baseUrl}/provider-console`);
+await runCheck("Moodle embed generator page", `${baseUrl}/moodle-embed-generator`);
+await runCheck("Course config manager page", `${baseUrl}/course-config-manager`);
 await runCheck("Knowledge base review workspace", `${baseUrl}/knowledge-base-review`);
 await runCheck("Pilot feedback inbox", `${baseUrl}/feedback-inbox`);
 await runCheck("Moodle embed preview studio", `${baseUrl}/moodle-preview`);

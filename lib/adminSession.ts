@@ -5,18 +5,29 @@ const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 
 export type AdminSessionStatus = {
   active: boolean;
+  actor?: string;
   cookieName: string;
   expiresAt?: string;
   reason: string;
+  role?: AdminRole;
 };
+
+export type AdminRole =
+  | "developer"
+  | "governance"
+  | "it-system-admin"
+  | "lecturer"
+  | "lms-admin"
+  | "project-lead"
+  | "sponsor";
 
 export function getAdminSessionCookieName() {
   return SESSION_COOKIE;
 }
 
-export function createAdminSessionToken(actor = "pilot-admin") {
+export function createAdminSessionToken(actor = "pilot-admin", role: AdminRole = "project-lead") {
   const expiresAt = Date.now() + SESSION_TTL_MS;
-  const payload = Buffer.from(JSON.stringify({ actor, expiresAt }), "utf8").toString("base64url");
+  const payload = Buffer.from(JSON.stringify({ actor, expiresAt, role }), "utf8").toString("base64url");
   const signature = sign(payload);
 
   return {
@@ -48,7 +59,9 @@ export function inspectAdminSessionToken(token?: string | null): AdminSessionSta
 
   try {
     const decoded = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as {
+      actor?: string;
       expiresAt?: number;
+      role?: AdminRole;
     };
 
     if (!decoded.expiresAt || decoded.expiresAt <= Date.now()) {
@@ -62,9 +75,11 @@ export function inspectAdminSessionToken(token?: string | null): AdminSessionSta
 
     return {
       active: true,
+      actor: decoded.actor || "pilot-admin",
       cookieName: SESSION_COOKIE,
       expiresAt: new Date(decoded.expiresAt).toISOString(),
-      reason: "A valid local admin session is active."
+      reason: "A valid local admin session is active.",
+      role: decoded.role || "project-lead"
     };
   } catch {
     return {

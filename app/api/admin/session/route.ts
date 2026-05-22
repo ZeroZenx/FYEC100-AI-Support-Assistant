@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createAdminSessionToken, getAdminSessionCookieName, inspectAdminSessionToken } from "@/lib/adminSession";
+import { createAdminSessionToken, getAdminSessionCookieName, inspectAdminSessionToken, type AdminRole } from "@/lib/adminSession";
 import { getAdminTokenFromRequest, isAdminAccessAllowed } from "@/lib/adminAuth";
 import { recordAuditEvent } from "@/lib/auditEvents";
 
@@ -16,6 +16,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const token = getAdminTokenFromRequest(request);
+  const body = await safeJson(request);
 
   if (!isAdminAccessAllowed(token)) {
     await recordAuditEvent({
@@ -30,7 +31,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Admin token is required." }, { status: 401 });
   }
 
-  const session = createAdminSessionToken("pilot-admin");
+  const session = createAdminSessionToken("pilot-admin", normalizeRole(body?.role));
   await recordAuditEvent({
     actor: "pilot-admin",
     area: "admin-session",
@@ -54,4 +55,26 @@ export async function POST(request: Request) {
   });
 
   return response;
+}
+
+async function safeJson(request: Request) {
+  try {
+    return (await request.json()) as { role?: string };
+  } catch {
+    return null;
+  }
+}
+
+function normalizeRole(role?: string): AdminRole {
+  const roles: AdminRole[] = [
+    "developer",
+    "governance",
+    "it-system-admin",
+    "lecturer",
+    "lms-admin",
+    "project-lead",
+    "sponsor"
+  ];
+
+  return roles.includes(role as AdminRole) ? (role as AdminRole) : "project-lead";
 }

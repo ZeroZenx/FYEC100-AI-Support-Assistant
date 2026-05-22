@@ -10,6 +10,13 @@ Started. Prepare for institutional deployment with Moodle embedding, configurabl
 
 Current Phase 2 pilot workspaces include:
 
+- Real student chat experience upgrades with FYEC100 prompt starters, escalation shortcuts, academic integrity boundary cards, and study-summary copy support.
+- Real admin role login and local session access for staff pilot workflows.
+- Real pilot archive builder with redaction, manifest, record counts, checksums, and export history.
+- Real launch checklist execution with owner/status updates, launch decisions, and local timeline capture.
+- Real provider testing console for OpenAI, DeepSeek, and Ollama configuration checks.
+- Real Moodle embed package generator with iframe snippet, fallback link, student notice, and lecturer note.
+- Real course configuration manager for FYEC100 and future COSTAATT course assistant pilots.
 - Human-readable HTML report set for pilot evidence, support triage, Moodle security hardening, and hosted deployment readiness.
 - Knowledge base review workspace for FYEC100 content sections, proposed updates, approvals, and release notes.
 - Pilot feedback inbox with filters by category, owner, priority, mode, and escalation type.

@@ -16,3 +16,6 @@ data/lti-launch-states.jsonl
 data/audit-events.jsonl
 data/service-desk-cases.jsonl
 data/evaluation-results.jsonl
+data/course-registry.json
+data/launch-checklist.json
+data/pilot-archive-history.jsonl

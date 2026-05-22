@@ -46,9 +46,10 @@ const feedbackOptions: Array<{
 ];
 
 const defaultStarterPrompts = [
+  "Help me plan my week for FYEC100.",
+  "Explain academic integrity in simple terms.",
+  "Where do I find FYEC100 resources in Moodle?",
   "Help me understand what FYEC100 expects from first-year students.",
-  "Help me plan my week for FYEC100 without doing the assignment for me.",
-  "Where should I look in Moodle for FYEC100 course materials?",
   "How can I use AI responsibly for brainstorming and studying?"
 ];
 
@@ -81,6 +82,7 @@ export function ChatAssistant({
     "FYEC100 assistant ready."
   );
   const [showUseNotice, setShowUseNotice] = useState(true);
+  const [copiedSummary, setCopiedSummary] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const canSend = useMemo(() => input.trim().length > 0 && !isLoading, [
@@ -211,6 +213,25 @@ export function ChatAssistant({
     }
   }
 
+  const boundaryVisible = messages.some((message) =>
+    /full assignment|write (the )?assignment|cannot grade|does not grade|academic integrity/i.test(
+      message.content
+    )
+  );
+
+  const studySummary = messages
+    .map((message) => `${message.role === "student" ? "Student" : "FYEC100 Assistant"}: ${message.content}`)
+    .join("\n\n")
+    .concat(
+      "\n\nReminder: This is study guidance only. It is not an assignment submission, grade, or replacement for lecturer instructions."
+    );
+
+  async function copyStudySummary() {
+    await navigator.clipboard.writeText(studySummary);
+    setCopiedSummary(true);
+    setTimeout(() => setCopiedSummary(false), 1800);
+  }
+
   return (
     <div className={embedded ? "grid gap-3" : "grid gap-6 lg:grid-cols-[1fr_320px]"}>
       <section
@@ -335,6 +356,12 @@ export function ChatAssistant({
           ) : null}
           <div ref={messagesEndRef} />
         </div>
+        {boundaryVisible ? (
+          <div className="border-t border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
+            <strong className="block text-costaatt-navy">Academic integrity boundary</strong>
+            I can help you understand instructions, plan your work, brainstorm responsibly, and prepare questions for your lecturer. I cannot write a full assignment, invent policy, or grade your work.
+          </div>
+        ) : null}
         <p className="sr-only" role="status">
           {statusMessage}
         </p>
@@ -374,6 +401,20 @@ export function ChatAssistant({
             Send
           </button>
         </form>
+        <div className="flex flex-wrap gap-2 border-t border-slate-100 px-4 py-3">
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue" onClick={() => void sendMessage("I need lecturer help with this FYEC100 question.")} type="button">
+            I need lecturer help
+          </button>
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue" onClick={() => void sendMessage("I need Moodle help finding FYEC100 materials.")} type="button">
+            I need Moodle help
+          </button>
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue" onClick={() => void sendMessage("This answer seems to be missing course information. What should I ask my lecturer?")} type="button">
+            Missing course info
+          </button>
+          <button className="rounded-md bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200" onClick={() => void copyStudySummary()} type="button">
+            {copiedSummary ? "Summary copied" : "Copy study summary"}
+          </button>
+        </div>
         <p
           className="border-t border-slate-100 px-4 pb-4 text-xs text-slate-500"
           id="chat-input-help"

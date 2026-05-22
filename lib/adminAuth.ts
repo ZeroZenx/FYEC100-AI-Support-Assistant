@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getAdminSessionCookieName, inspectAdminSessionToken } from "@/lib/adminSession";
 
 const ADMIN_TOKEN_PARAM = "adminToken";
 const ADMIN_TOKEN_HEADER = "x-admin-token";
@@ -37,6 +38,11 @@ export function requireAdminAccess(request: Request) {
     return null;
   }
 
+  const session = inspectAdminSessionToken(getCookieValue(request, getAdminSessionCookieName()));
+  if (session.active) {
+    return null;
+  }
+
   return NextResponse.json(
     {
       error:
@@ -44,4 +50,13 @@ export function requireAdminAccess(request: Request) {
     },
     { status: 401 }
   );
+}
+
+function getCookieValue(request: Request, name: string) {
+  return request.headers
+    .get("cookie")
+    ?.split(";")
+    .map((entry) => entry.trim())
+    .find((entry) => entry.startsWith(`${name}=`))
+    ?.slice(name.length + 1);
 }
