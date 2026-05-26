@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { PageShell } from "@/components/PageShell";
+import { ActionPanel, MetricTile, PrimaryAction } from "@/components/ui/System";
 import { getAdminSessionCookieName, inspectAdminSessionToken } from "@/lib/adminSession";
 
 const roleTargets: Record<string, { href: string; label: string }> = {
@@ -14,11 +15,14 @@ const roleTargets: Record<string, { href: string; label: string }> = {
 };
 
 const workflowLinks = [
+  { href: "/phase-2-command-center", label: "Phase 2 command center" },
+  { href: "/phase-2-gate-wizard", label: "Phase 2 gate wizard" },
   { href: "/pilot-archive-builder", label: "Pilot archive builder" },
   { href: "/launch-checklist-execution", label: "Launch checklist execution" },
   { href: "/provider-console", label: "Provider testing console" },
   { href: "/moodle-embed-generator", label: "Moodle embed generator" },
-  { href: "/course-config-manager", label: "Course configuration manager" }
+  { href: "/course-config-manager", label: "Course configuration manager" },
+  { href: "/course-routing-test", label: "Course routing test" }
 ];
 
 export default async function AdminHomePage() {
@@ -30,13 +34,14 @@ export default async function AdminHomePage() {
     <PageShell
       eyebrow="Role-Aware Admin"
       title="Admin home"
-      description="A practical starting point for signed-in pilot staff, with quick access to real workflow tools."
+      description="A task-first starting point for pilot staff. Use the command center first, then open focused tools when work needs to be done."
+      actions={<PrimaryAction href="/phase-2-command-center">Open Phase 2 command center</PrimaryAction>}
     >
       <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
         <div className="grid gap-4 md:grid-cols-3">
-          <Metric label="Session" value={session.active ? "Active" : "Not active"} />
-          <Metric label="Role" value={session.role || "Not set"} />
-          <Metric label="Expires" value={session.expiresAt ? new Date(session.expiresAt).toLocaleString() : "N/A"} />
+          <MetricTile label="Session" value={session.active ? "Active" : "Not active"} />
+          <MetricTile label="Role" value={session.role || "Not set"} />
+          <MetricTile label="Expires" value={session.expiresAt ? new Date(session.expiresAt).toLocaleString() : "N/A"} />
         </div>
         {!session.active ? (
           <Link className="mt-5 inline-flex rounded-md bg-costaatt-navy px-4 py-2 text-sm font-bold text-white" href="/admin-login">
@@ -51,20 +56,15 @@ export default async function AdminHomePage() {
 
       <section className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {workflowLinks.map((link) => (
-          <Link className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft hover:border-costaatt-blue" href={link.href} key={link.href}>
-            <span className="font-bold text-costaatt-navy">{link.label}</span>
-          </Link>
+          <ActionPanel
+            actionHref={link.href}
+            actionLabel="Open"
+            description="Focused Phase 2 workflow area."
+            key={link.href}
+            title={link.label}
+          />
         ))}
       </section>
     </PageShell>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg bg-slate-50 p-4">
-      <p className="text-xs font-bold uppercase text-slate-500">{label}</p>
-      <p className="mt-2 font-bold text-costaatt-navy">{value}</p>
-    </div>
   );
 }

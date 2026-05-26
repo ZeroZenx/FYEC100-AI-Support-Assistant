@@ -13,6 +13,25 @@ export async function readKnowledgeBase() {
   return readFile(KNOWLEDGE_BASE_PATH, "utf8");
 }
 
+export async function readKnowledgeBaseByPath(knowledgeBasePath: string) {
+  return readFile(resolveKnowledgeBasePath(knowledgeBasePath), "utf8");
+}
+
+export function resolveKnowledgeBasePath(knowledgeBasePath: string) {
+  const dataRoot = path.resolve(process.cwd(), "data");
+  const requestedPath = path.resolve(process.cwd(), knowledgeBasePath);
+
+  if (!requestedPath.startsWith(`${dataRoot}${path.sep}`)) {
+    throw new Error("Knowledge base paths must stay inside the data folder.");
+  }
+
+  if (path.extname(requestedPath) !== ".md") {
+    throw new Error("Knowledge base paths must point to Markdown files.");
+  }
+
+  return requestedPath;
+}
+
 export async function getKnowledgeBaseMetadata() {
   const [content, stats] = await Promise.all([
     readKnowledgeBase(),

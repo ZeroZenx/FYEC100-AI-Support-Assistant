@@ -29,11 +29,14 @@ Current Phase 2 real workflow features include:
 - Support handoff center at `http://localhost:4100/support-handoff-center`.
 - KB updates from feedback at `http://localhost:4100/kb-feedback-updates`.
 - KB regression, publish, and rollback at `http://localhost:4100/kb-regression-publish`.
+- FYEC100 curated RAG source map at `docs/fyec100-rag-source-map.md`.
 - Course lifecycle management at `http://localhost:4100/course-lifecycle`.
 - Storage adapter implementation status at `http://localhost:4100/storage-adapter-implementation`.
 - LTI launch hardening status at `http://localhost:4100/lti-launch-hardening`.
 - Support connector integration at `http://localhost:4100/support-connector`.
 - Student consent and privacy notice at `http://localhost:4100/student-consent-privacy`.
+- Phase 2 command center and acceptance gate at `http://localhost:4100/phase-2-command-center`.
+- Phase 2 gate execution wizard at `http://localhost:4100/phase-2-gate-wizard`.
 - Scale decision and approval workflow at `http://localhost:4100/scale-decision-approval`.
 - Enterprise rollout blueprint at `http://localhost:4100/enterprise-rollout-blueprint`.
 - Governed production backlog at `http://localhost:4100/governed-production-backlog`.

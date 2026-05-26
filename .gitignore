@@ -23,5 +23,6 @@ data/kb-feedback-suggestions.jsonl
 data/kb-regression-results.jsonl
 data/kb-publish-events.jsonl
 data/kb-snapshots
+data/phase-2-gate-overrides.json
 data/support-connector-events.jsonl
 data/production-workflows

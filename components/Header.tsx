@@ -2,21 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/chat", label: "Chat" },
-  { href: "/admin", label: "Admin" },
-  { href: "/reports", label: "Reports" },
-  { href: "/go-live", label: "Go Live" },
-  { href: "/role-views", label: "Roles" },
-  { href: "/deployment-wizard", label: "Deploy" },
-  { href: "/about", label: "About" },
-  { href: "/roadmap", label: "Roadmap" }
+  { href: "/chat", label: "Student" },
+  { href: "/moodle-embed-generator", label: "Moodle/LMS" },
+  { href: "/support-handoff-center", label: "Support" },
+  { href: "/knowledge-base-review", label: "Knowledge Base" },
+  { href: "/provider-console", label: "AI Providers" },
+  { href: "/phase-2-command-center", label: "Governance" },
+  { href: "/deployment-wizard", label: "Deployment" },
+  { href: "/reports", label: "Reports" }
 ];
 
 export function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
         <Link href="/" className="flex items-center gap-3">
           <Image
             alt="COSTAATT logo"
@@ -32,7 +31,7 @@ export function Header() {
             </p>
           </div>
         </Link>
-        <nav className="flex flex-wrap gap-2 text-sm font-medium text-slate-700">
+        <nav className="flex flex-wrap gap-1 text-sm font-semibold text-slate-700">
           {navItems.map((item) => (
             <Link
               className="rounded-md px-3 py-2 hover:bg-slate-100 hover:text-costaatt-blue"

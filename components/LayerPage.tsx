@@ -1,6 +1,6 @@
 import { PageShell } from "@/components/PageShell";
+import { SecondaryAction } from "@/components/ui/System";
 import {
-  ReadinessLink,
   ReadinessList,
   ReadinessMetric,
   ReadinessRecord
@@ -45,7 +45,7 @@ export function LayerPage({
           )}
           {exportHref && (
             <div className={metrics ? "mt-4" : ""}>
-              <ReadinessLink href={exportHref} label={exportLabel ?? "Open HTML Pack"} />
+              <SecondaryAction href={exportHref}>{exportLabel ?? "Open HTML Pack"}</SecondaryAction>
             </div>
           )}
         </section>

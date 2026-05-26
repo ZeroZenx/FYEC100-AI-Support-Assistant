@@ -1,14 +1,17 @@
 import { ChatAssistant } from "@/components/ChatAssistant";
 import { PageShell } from "@/components/PageShell";
+import { resolveCourseForChat } from "@/lib/courseResolver";
 
-export default function ChatPage() {
+export default async function ChatPage() {
+  const courseResolution = await resolveCourseForChat();
+
   return (
     <PageShell
       eyebrow="Chat Assistant"
-      title="Ask an FYEC100 question"
+      title={`Ask a ${courseResolution.uiContext.courseCode} question`}
       description="Use the assistant for course expectations, assignment clarification, study planning, LMS navigation, and academic integrity guidance."
     >
-      <ChatAssistant />
+      <ChatAssistant courseContext={courseResolution.uiContext} />
     </PageShell>
   );
 }

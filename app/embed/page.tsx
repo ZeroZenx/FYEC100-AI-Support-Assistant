@@ -1,5 +1,6 @@
 import { ChatAssistant } from "@/components/ChatAssistant";
 import { MoodleLaunchAuditBeacon } from "@/components/MoodleLaunchAuditBeacon";
+import { resolveCourseForChat } from "@/lib/courseResolver";
 import { parseMoodleLaunchContext } from "@/lib/moodleContext";
 import Image from "next/image";
 
@@ -13,6 +14,7 @@ export default async function MoodleEmbedPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const launchContext = parseMoodleLaunchContext((await searchParams) ?? {});
+  const courseResolution = await resolveCourseForChat({ launchContext });
 
   return (
     <main className="min-h-screen bg-slate-50 p-1 sm:p-2">
@@ -42,7 +44,11 @@ export default async function MoodleEmbedPage({
             </div>
           </div>
         </div>
-        <ChatAssistant embedded launchContext={launchContext} />
+        <ChatAssistant
+          courseContext={courseResolution.uiContext}
+          embedded
+          launchContext={launchContext}
+        />
       </section>
     </main>
   );

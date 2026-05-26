@@ -17,8 +17,11 @@ Current Phase 2 pilot workspaces include:
 - Real provider testing console for OpenAI, DeepSeek, and Ollama configuration checks.
 - Real Moodle embed package generator with iframe snippet, fallback link, student notice, and lecturer note.
 - Real course configuration manager for FYEC100 and future COSTAATT course assistant pilots.
+- Real course-specific chat routing and Phase 2 command center acceptance gate for moving from tool sprawl to controlled pilot completion.
+- Phase 2 gate execution wizard for running the remaining evidence tasks before Phase 3 planning.
 - Real human support handoff with structured support cases from student escalation buttons.
 - Knowledge base update suggestions generated from repeated missing-information feedback.
+- Curated FYEC100 RAG source-of-truth knowledge base with source mapping for the course outline, AI statement, reflective writing guide, e-portfolio guide, and historical schedule notice.
 - Evaluation regression, publish, and rollback controls for approved knowledge base updates.
 - Production-ready course lifecycle management with pilot activation and retirement states.
 - Production storage adapter implementation status for local, PostgreSQL, or SQL Server scaffolds.

@@ -4,7 +4,11 @@ import {
   getMissingProviderConfigMessage
 } from "@/lib/aiProvider";
 import { buildAssistantSystemPrompt, getLocalGuardrailResponse } from "@/lib/guardrails";
-import { readKnowledgeBase } from "@/lib/knowledgeBase";
+import {
+  getCourseChatBlockMessage,
+  readResolvedCourseKnowledgeBase,
+  resolveCourseForChat
+} from "@/lib/courseResolver";
 import {
   normalizeMoodleLaunchContext,
   type MoodleLaunchContext
@@ -32,11 +36,16 @@ export async function POST(request: Request) {
     }
 
     const body = (await request.json()) as {
+      courseCode?: string;
       launchContext?: Partial<MoodleLaunchContext>;
       messages?: ClientMessage[];
     };
     const messages = body.messages ?? [];
     const launchContext = normalizeMoodleLaunchContext(body.launchContext);
+    const courseResolution = await resolveCourseForChat({
+      courseCode: body.courseCode,
+      launchContext: body.launchContext ? launchContext : undefined
+    });
     const latestStudentMessage = [...messages]
       .reverse()
       .find((message) => message.role === "student");
@@ -53,18 +62,42 @@ export async function POST(request: Request) {
     );
 
     if (localGuardrailResponse) {
-      return NextResponse.json({ answer: localGuardrailResponse });
+      return NextResponse.json({
+        answer: localGuardrailResponse,
+        course: courseResolution.uiContext
+      });
     }
 
-    const knowledgeBase = await readKnowledgeBase();
+    const blockMessage = getCourseChatBlockMessage(courseResolution.uiContext);
+
+    if (blockMessage || !courseResolution.course) {
+      return NextResponse.json(
+        {
+          answer: blockMessage,
+          course: courseResolution.uiContext,
+          error: blockMessage
+        },
+        { status: 409 }
+      );
+    }
+
+    const knowledgeBase = await readResolvedCourseKnowledgeBase(
+      courseResolution.course
+    );
     const answer = await generateAssistantAnswer({
       fallbackAnswer,
       knowledgeBase,
       messages,
-      systemPrompt: buildAssistantSystemPrompt(launchContext)
+      systemPrompt: buildAssistantSystemPrompt(
+        launchContext,
+        courseResolution.uiContext
+      )
     });
 
-    return NextResponse.json({ answer: answer || getMissingProviderConfigMessage() });
+    return NextResponse.json({
+      answer: answer || getMissingProviderConfigMessage(),
+      course: courseResolution.uiContext
+    });
   } catch (error) {
     console.error("Chat route error", error);
     return NextResponse.json(

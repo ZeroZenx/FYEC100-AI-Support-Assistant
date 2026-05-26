@@ -5,11 +5,14 @@ const baseUrl = normalizeBaseUrl(
 );
 const adminToken = process.env.ADMIN_ACCESS_TOKEN;
 const moodleOrigin = process.env.MOODLE_ORIGIN;
+const requestTimeoutMs = Number(process.env.SMOKE_REQUEST_TIMEOUT_MS || 15000);
 
 const checks = [];
 
 await runCheck("Home page", `${baseUrl}/`);
 await runCheck("Reports library page", `${baseUrl}/reports`);
+await runCheck("Phase 2 command center page", `${baseUrl}/phase-2-command-center`);
+await runCheck("Phase 2 gate wizard page", `${baseUrl}/phase-2-gate-wizard`);
 await runCheck("Admin login page", `${baseUrl}/admin-login`);
 await runCheck("Admin home page", `${baseUrl}/admin-home`);
 await runCheck("Pilot archive builder page", `${baseUrl}/pilot-archive-builder`);
@@ -17,6 +20,7 @@ await runCheck("Launch checklist execution page", `${baseUrl}/launch-checklist-e
 await runCheck("Provider console page", `${baseUrl}/provider-console`);
 await runCheck("Moodle embed generator page", `${baseUrl}/moodle-embed-generator`);
 await runCheck("Course config manager page", `${baseUrl}/course-config-manager`);
+await runCheck("Course routing test page", `${baseUrl}/course-routing-test`);
 await runCheck("Support handoff center page", `${baseUrl}/support-handoff-center`);
 await runCheck("KB feedback updates page", `${baseUrl}/kb-feedback-updates`);
 await runCheck("KB regression publish page", `${baseUrl}/kb-regression-publish`);
@@ -379,6 +383,13 @@ await runJsonCheck("Support connector endpoint", `${baseUrl}/api/admin/support-c
 await runJsonCheck("Consent summary endpoint", `${baseUrl}/api/admin/consent-summary`, {
   admin: true
 });
+await runJsonCheck("Course routing test endpoint", `${baseUrl}/api/admin/course-routing-test`, {
+  admin: true
+});
+await runJsonCheck("Phase 2 gate endpoint", `${baseUrl}/api/admin/phase-2-gate`, {
+  admin: true
+});
+await runPhase2GateExecuteCheck();
 await runJsonCheck("Production workflows endpoint", `${baseUrl}/api/admin/production-workflows`, {
   admin: true
 });
@@ -685,10 +696,11 @@ process.exitCode = failed ? 1 : 0;
 
 async function runCheck(label, url, options = {}) {
   try {
-    const response = await fetch(url, {
+    const response = await fetchWithTimeout(url, {
       headers: requestHeaders(Boolean(options.admin)),
       redirect: "manual"
     });
+    await response.body?.cancel();
 
     checks.push({
       label,
@@ -706,7 +718,7 @@ async function runCheck(label, url, options = {}) {
 
 async function runJsonCheck(label, url, options = {}) {
   try {
-    const response = await fetch(url, {
+    const response = await fetchWithTimeout(url, {
       headers: requestHeaders(Boolean(options.admin))
     });
     const contentType = response.headers.get("content-type") ?? "";
@@ -753,7 +765,7 @@ async function runJsonCheck(label, url, options = {}) {
 
 async function runRoleContextChatCheck() {
   try {
-    const response = await fetch(`${baseUrl}/api/chat`, {
+    const response = await fetchWithTimeout(`${baseUrl}/api/chat`, {
       method: "POST",
       headers: {
         ...requestHeaders(false),
@@ -805,10 +817,46 @@ async function runRoleContextChatCheck() {
   }
 }
 
+async function runPhase2GateExecuteCheck() {
+  try {
+    const response = await fetchWithTimeout(`${baseUrl}/api/admin/phase-2-gate/execute`, {
+      method: "POST",
+      headers: {
+        ...requestHeaders(true),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ action: "refresh-gate" })
+    });
+
+    if (!response.ok) {
+      checks.push({
+        label: "Phase 2 gate execute endpoint",
+        message: `${response.status} ${response.statusText}`,
+        status: "fail"
+      });
+      return;
+    }
+
+    const data = await response.json();
+    checks.push({
+      label: "Phase 2 gate execute endpoint",
+      message: data?.gate?.metrics ? "OK." : "Expected gate metrics.",
+      status: data?.gate?.metrics ? "pass" : "fail"
+    });
+  } catch (error) {
+    checks.push({
+      label: "Phase 2 gate execute endpoint",
+      message: getErrorMessage(error),
+      status: "fail"
+    });
+  }
+}
+
 async function runHeaderCheck(label, url, headerName, expectedValue) {
   try {
-    const response = await fetch(url, { headers: requestHeaders(false) });
+    const response = await fetchWithTimeout(url, { headers: requestHeaders(false) });
     const headerValue = response.headers.get(headerName);
+    await response.body?.cancel();
 
     checks.push({
       label,
@@ -834,6 +882,20 @@ function requestHeaders(includeAdminToken) {
   return {
     "x-admin-token": adminToken
   };
+}
+
+async function fetchWithTimeout(url, options = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), requestTimeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function normalizeBaseUrl(value) {

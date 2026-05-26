@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MetricTile, StatusBadge } from "@/components/ui/System";
 
 export type ReadinessCardItem = {
   detail: string;
@@ -14,14 +15,7 @@ export function ReadinessMetric({
   label: string;
   value: number | string;
 }) {
-  return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4 text-center shadow-soft">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-        {label}
-      </p>
-      <p className="mt-2 text-3xl font-bold text-costaatt-navy">{value}</p>
-    </div>
-  );
+  return <MetricTile label={label} value={value} />;
 }
 
 export function ReadinessRecord({
@@ -34,9 +28,7 @@ export function ReadinessRecord({
     <article className="rounded-lg border border-slate-200 bg-slate-50 p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="font-bold text-costaatt-navy">{label}</h3>
-        <span className={`rounded-full px-2 py-1 text-xs font-bold ${toneClass(status)}`}>
-          {status}
-        </span>
+        <StatusBadge status={status} />
       </div>
       <p className="mt-2 text-sm font-semibold text-slate-500">{owner}</p>
       <p className="mt-2 text-sm leading-6 text-slate-700">{detail}</p>
@@ -95,16 +87,4 @@ export function ReadinessLink({
       {label}
     </Link>
   );
-}
-
-function toneClass(status: string) {
-  if (/(ready|pass|approved|configured|go)/i.test(status)) {
-    return "bg-emerald-100 text-emerald-800";
-  }
-
-  if (/(blocked|fail|missing|hold)/i.test(status)) {
-    return "bg-red-100 text-red-800";
-  }
-
-  return "bg-amber-100 text-amber-800";
 }

@@ -10,6 +10,8 @@ import {
 } from "react";
 import type { MoodleLaunchContext } from "@/lib/moodleContext";
 import { getRoleGuidance } from "@/lib/moodleRoleGuidance";
+import type { CourseChatContext } from "@/lib/courseResolver";
+import { FormattedAssistantMessage } from "@/components/FormattedAssistantMessage";
 
 type ChatMessage = {
   feedbackStatus?: "idle" | "sending" | "sent";
@@ -59,22 +61,33 @@ const defaultStarterPrompts = [
 ];
 
 type ChatAssistantProps = {
+  courseContext?: CourseChatContext;
   embedded?: boolean;
   launchContext?: MoodleLaunchContext;
 };
 
 export function ChatAssistant({
+  courseContext,
   embedded = false,
   launchContext
 }: ChatAssistantProps) {
   const roleGuidance = getRoleGuidance(launchContext?.role);
+  const [activeCourse, setActiveCourse] = useState<CourseChatContext | undefined>(
+    courseContext
+  );
+  const courseLabel = activeCourse?.courseCode ?? launchContext?.courseShortName ?? "FYEC100";
+  const courseTitle = activeCourse?.title ?? "First Year Experience";
   const starterPrompts = launchContext
-    ? roleGuidance.starterPrompts
-    : defaultStarterPrompts;
+    ? roleGuidance.starterPrompts.map((prompt) =>
+        prompt.replaceAll("FYEC100", courseLabel)
+      )
+    : defaultStarterPrompts.map((prompt) =>
+        prompt.replaceAll("FYEC100", courseLabel)
+      );
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content: roleGuidance.assistantIntro
+      content: roleGuidance.assistantIntro.replaceAll("FYEC100", courseLabel)
     }
   ]);
   const [input, setInput] = useState("");
@@ -84,7 +97,7 @@ export function ChatAssistant({
     useState<FeedbackRating>("helpful");
   const [feedbackNote, setFeedbackNote] = useState("");
   const [statusMessage, setStatusMessage] = useState(
-    "FYEC100 assistant ready."
+    `${courseLabel} assistant ready.`
   );
   const [showUseNotice, setShowUseNotice] = useState(true);
   const [consentAcknowledged, setConsentAcknowledged] = useState(false);
@@ -128,12 +141,37 @@ export function ChatAssistant({
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ launchContext, messages: nextMessages })
+        body: JSON.stringify({
+          courseCode: activeCourse?.courseCode ?? launchContext?.courseShortName,
+          launchContext,
+          messages: nextMessages
+        })
       });
 
-      const data = (await response.json()) as { answer?: string; error?: string };
+      const data = (await response.json()) as {
+        answer?: string;
+        course?: CourseChatContext;
+        error?: string;
+      };
+
+      if (data.course) {
+        setActiveCourse(data.course);
+      }
 
       if (!response.ok) {
+        if (data.answer) {
+          setMessages((current) => [
+            ...current,
+            {
+              role: "assistant",
+              content: data.answer ?? "This course context is not available for chat.",
+              feedbackStatus: "idle"
+            }
+          ]);
+          setStatusMessage("Course routing stopped the chat request.");
+          return;
+        }
+
         throw new Error(data.error ?? "The assistant could not respond.");
       }
 
@@ -184,7 +222,7 @@ export function ChatAssistant({
         body: JSON.stringify({
           assistantResponse: message.content,
           consentAcknowledged,
-          courseCode: launchContext?.courseShortName || launchContext?.courseId || "FYEC100",
+          courseCode: activeCourse?.courseCode || launchContext?.courseShortName || launchContext?.courseId || "FYEC100",
           feedbackCategory: rating,
           launchContext,
           mode: embedded ? "embedded" : "standalone",
@@ -234,7 +272,7 @@ export function ChatAssistant({
       body: JSON.stringify({
         category,
         consentAcknowledged,
-        courseCode: launchContext?.courseShortName || launchContext?.courseId || "FYEC100",
+        courseCode: activeCourse?.courseCode || launchContext?.courseShortName || launchContext?.courseId || "FYEC100",
         safeSummary: prompt
       })
     });
@@ -257,7 +295,7 @@ export function ChatAssistant({
   function clearSession() {
     localStorage.removeItem("fyec100-session-history");
     setSessionHistory([]);
-    setMessages([{ role: "assistant", content: roleGuidance.assistantIntro }]);
+    setMessages([{ role: "assistant", content: roleGuidance.assistantIntro.replaceAll("FYEC100", courseLabel) }]);
   }
 
   function rememberQuestion(question: string) {
@@ -282,7 +320,7 @@ export function ChatAssistant({
   );
 
   const studySummary = messages
-    .map((message) => `${message.role === "student" ? "Student" : "FYEC100 Assistant"}: ${message.content}`)
+    .map((message) => `${message.role === "student" ? "Student" : `${courseLabel} Assistant`}: ${message.content}`)
     .join("\n\n")
     .concat(
       "\n\nReminder: This is study guidance only. It is not an assignment submission, grade, or replacement for lecturer instructions."
@@ -306,12 +344,19 @@ export function ChatAssistant({
           }`}
         >
           <h2 className="font-bold text-costaatt-navy" id="fyec-chat-title">
-            FYEC100 Assistant
+            {courseLabel} Assistant
           </h2>
           {!embedded ? (
             <p className="text-sm text-slate-600">
-              Responses are grounded in the local Phase 1 knowledge base.
+              Responses are grounded in the active local course knowledge base.
             </p>
+          ) : null}
+          {activeCourse ? (
+            <div className="mt-3 grid gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600 sm:grid-cols-3">
+              <ContextItem label="Course" value={`${activeCourse.courseCode}: ${courseTitle}`} />
+              <ContextItem label="KB" value={activeCourse.knowledgeBasePath || "Not configured"} />
+              <ContextItem label="Status" value={`${activeCourse.status} · ${activeCourse.lifecycleStatus}`} />
+            </div>
           ) : null}
           {embedded && launchContext ? (
             <div className="mt-3 grid gap-3">
@@ -402,10 +447,14 @@ export function ChatAssistant({
                   className={`rounded-lg px-4 py-3 text-sm leading-6 ${
                     message.role === "student"
                       ? "bg-costaatt-blue text-white"
-                      : "border border-slate-200 bg-slate-50 text-slate-800"
+                      : "border border-slate-200 bg-slate-50 text-slate-800 shadow-sm"
                   }`}
                 >
-                  {message.content}
+                  {message.role === "assistant" ? (
+                    <FormattedAssistantMessage content={message.content} />
+                  ) : (
+                    <span className="whitespace-pre-wrap">{message.content}</span>
+                  )}
                 </div>
                 {message.role === "assistant" && index > 0 ? (
                   <FeedbackPanel
@@ -430,7 +479,7 @@ export function ChatAssistant({
               className="max-w-[84%] rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600"
               role="status"
             >
-              Thinking through the FYEC100 knowledge base...
+              Thinking through the {courseLabel} knowledge base...
             </div>
           ) : null}
           <div ref={messagesEndRef} />
@@ -459,7 +508,7 @@ export function ChatAssistant({
           onSubmit={handleSubmit}
         >
           <label className="sr-only" htmlFor="chat-input">
-            Ask an FYEC100 question
+            Ask a course question
           </label>
           <textarea
             className="min-h-12 flex-1 resize-none rounded-md border border-slate-300 px-4 py-3 text-sm leading-6 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20"
@@ -472,7 +521,7 @@ export function ChatAssistant({
             aria-describedby="chat-input-help"
           />
           <button
-            aria-label="Send FYEC100 question"
+            aria-label={`Send ${courseLabel} question`}
             className="rounded-md bg-costaatt-navy px-5 py-3 text-sm font-semibold text-white hover:bg-costaatt-blue disabled:cursor-not-allowed disabled:bg-slate-300"
             disabled={!canSend}
             type="submit"
@@ -481,10 +530,10 @@ export function ChatAssistant({
           </button>
         </form>
         <div className="flex flex-wrap gap-2 border-t border-slate-100 px-4 py-3">
-          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("lecturer-help", "I need lecturer help with this FYEC100 question.")} type="button">
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("lecturer-help", `I need lecturer help with this ${courseLabel} question.`)} type="button">
             I need lecturer help
           </button>
-          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("moodle-help", "I need Moodle help finding FYEC100 materials.")} type="button">
+          <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("moodle-help", `I need Moodle help finding ${courseLabel} materials.`)} type="button">
             I need Moodle help
           </button>
           <button className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-costaatt-navy hover:border-costaatt-blue disabled:opacity-50" disabled={!consentAcknowledged} onClick={() => void createEscalation("missing-course-info", "This answer seems to be missing course information. What should I ask my lecturer?")} type="button">
@@ -507,7 +556,12 @@ export function ChatAssistant({
             embedded ? "p-4" : "p-5"
           }`}
         >
-          <h3 className="font-bold text-costaatt-navy">Try a prompt</h3>
+            <h3 className="font-bold text-costaatt-navy">Try a prompt</h3>
+          {activeCourse?.allowedTopics.length ? (
+            <p className="mt-2 text-xs leading-5 text-slate-600">
+              Active topics: {activeCourse.allowedTopics.join(", ")}
+            </p>
+          ) : null}
           <div className="mt-4 space-y-2">
             {starterPrompts.map((prompt) => (
               <button
@@ -573,6 +627,11 @@ export function ChatAssistant({
             output as your own work. Ask your lecturer when assignment
             requirements are unclear.
           </p>
+          {activeCourse?.guardrailNotes ? (
+            <p className="mt-2 text-xs font-semibold text-costaatt-navy">
+              {activeCourse.guardrailNotes}
+            </p>
+          ) : null}
         </section>
       </aside>
     </div>

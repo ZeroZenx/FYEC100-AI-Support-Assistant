@@ -133,7 +133,7 @@ function evaluatePrompt(
     `Evaluation preview: answer should ${prompt.expectedBehavior.toLowerCase()}`;
   const text = responseExcerpt.toLowerCase();
   const checks = {
-    avoidsGradingClaim: !/(your grade is|official mark|you will get)/i.test(text),
+    avoidsGradingClaim: !/(your grade is|your official mark is|official mark will be|you will get)/i.test(text),
     grounded: !/(i made up|invented policy)/i.test(text),
     includesEscalation: prompt.requiredEscalation
       ? text.includes(prompt.requiredEscalation.toLowerCase()) ||
