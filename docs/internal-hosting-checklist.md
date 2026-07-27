@@ -1,97 +1,108 @@
 # Internal Hosting Checklist
 
-## Purpose
+## Target Architecture
 
-Use this checklist when moving the FYEC100 AI Support Assistant from a local Mac
-prototype to a controlled hosted pilot URL.
+```text
+Student browser
+  -> Public Moodle over HTTPS
+  -> Public FYEC100 assistant hostname over HTTPS
+  -> IIS ARR / URL Rewrite on the Windows VM
+  -> Next.js on 127.0.0.1:4100
+  -> Selected AI provider or internal Ollama service
+```
 
-## Hosting Requirements
+The iframe URL must be reachable from student devices. Moodle being public does
+not make a private assistant URL reachable through the iframe.
 
+## VM Prerequisites
+
+- Supported Windows Server release with current patches
 - Node.js 20.9 or later
-- npm
-- HTTPS-capable web hosting
-- Approved environment secret storage
-- Persistent writable storage if local JSONL pilot feedback remains enabled
-- Outbound access to OpenAI if using `AI_PROVIDER=openai`
-- Outbound access to DeepSeek if using `AI_PROVIDER=deepseek`
-- Network access to the Ollama host if using `AI_PROVIDER=ollama`
-- Platform access controls around `/admin` and `/api/admin/*`
-- `ADMIN_ACCESS_TOKEN` configured before hosted testing
-- `MOODLE_ORIGIN` configured to the approved Moodle origin
+- Git for Windows
+- IIS with approved ARR and URL Rewrite configuration
+- Public DNS record and trusted TLS certificate
+- Persistent writable `data/` location with backup coverage
+- Approved outbound provider connectivity
+- Service account with minimum filesystem and service permissions
 
-## Required Environment Settings
+## Required Environment
 
-Set:
+Use `scripts/windows/fyec100-env.example.ps1` as the template. At minimum:
 
-```bash
-NEXT_PUBLIC_APP_BASE_URL=https://fyec100-assistant.example.edu
-AI_PROVIDER=openai
-PILOT_MODE=pilot
+```powershell
+$env:NEXT_PUBLIC_APP_BASE_URL = "https://fyec100-assistant.example.edu"
+$env:MOODLE_ORIGIN = "https://moodle.costaatt.edu.tt"
+$env:MOODLE_INTEGRATION_MODE = "iframe"
+$env:PILOT_MODE = "pilot"
+$env:PROTECT_ADMIN_ROUTES = "true"
+$env:ADMIN_ACCESS_TOKEN = "random_value_at_least_32_characters"
+$env:ADMIN_SESSION_SECRET = "different_random_value_at_least_32_characters"
+$env:TRUST_PROXY_HEADERS = "true"
 ```
 
-For OpenAI:
+Add the selected provider secret through COSTAATT's approved secret process. Do
+not place production secrets in Git, screenshots, HTML packs, or support cases.
 
-```bash
-OPENAI_API_KEY=replace_with_secure_secret
-OPENAI_MODEL=gpt-4o-mini
+## Build and Service
+
+```powershell
+cd C:\Apps\FYEC100-AI-Support-Assistant
+npm ci
+npm run lint
+npm run build
+npm run start:pilot
 ```
 
-For Ollama:
+Configure NSSM, PM2, or approved Windows service tooling with:
 
-```bash
-OLLAMA_BASE_URL=http://ollama.internal:11434
-OLLAMA_MODEL=llama3.1
+- Working directory: `C:\Apps\FYEC100-AI-Support-Assistant`
+- Command: `npm run start:pilot`
+- Host: `127.0.0.1`
+- Port: `4100`
+- Automatic restart after failure with a bounded restart policy
+- Stdout/stderr directed to an approved rotating log location
+
+## IIS and Moodle Checks
+
+1. Terminate HTTPS at IIS.
+2. Reverse proxy only to `http://127.0.0.1:4100`.
+3. Preserve the original host and forwarded protocol.
+4. Confirm `/embed` returns a `Content-Security-Policy` containing the exact
+   configured Moodle origin.
+5. Do not add a global `X-Frame-Options: DENY`; `/embed` must be frameable by
+   the approved Moodle origin.
+6. Test the iframe from a student device outside the server network.
+7. Confirm fallback navigation opens the same public HTTPS hostname.
+
+## Acceptance Commands
+
+```powershell
+Invoke-WebRequest https://fyec100-assistant.example.edu/api/health
+Invoke-WebRequest https://fyec100-assistant.example.edu/api/ready
+$env:PILOT_BASE_URL = "https://fyec100-assistant.example.edu"
+npm run smoke:pilot
 ```
 
-For DeepSeek:
+Expected:
 
-```bash
-DEEPSEEK_API_KEY=replace_with_secure_secret
-DEEPSEEK_MODEL=deepseek-chat
-DEEPSEEK_BASE_URL=https://api.deepseek.com
-```
+- `/api/health` returns `200`.
+- `/api/ready` returns `200` with no failed checks.
+- `npm run smoke:pilot` reports zero failures.
+- A provider test succeeds.
+- Student chat, feedback, support handoff, admin login, archive export, KB
+  workflow, and Moodle iframe are manually accepted.
 
-Set pilot rate limits:
+## Backup and Rollback
 
-```bash
-CHAT_RATE_LIMIT_PER_MINUTE=12
-FEEDBACK_RATE_LIMIT_PER_MINUTE=30
-PROVIDER_TEST_RATE_LIMIT_PER_MINUTE=6
-```
+- Back up `.env` through approved secret management, not source control.
+- Back up `data/` before every release and KB publish.
+- Keep the previous application release available.
+- Record the previous commit and KB snapshot.
+- Verify the rollback command and post-rollback smoke test before launch.
 
-Set pilot admin protection:
+## Scaling Boundary
 
-```bash
-ADMIN_ACCESS_TOKEN=replace_with_secure_random_value
-```
-
-Set Moodle iframe origin:
-
-```bash
-MOODLE_ORIGIN=https://moodle.costaatt.edu.tt
-```
-
-## Verification
-
-After deployment:
-
-1. Run `PILOT_BASE_URL=<hosted-url> npm run smoke:pilot`.
-2. Open `/api/health`.
-3. Open `/api/admin/deployment-readiness`.
-4. Open `/api/admin/hosted-deployment-pack.md`.
-5. Confirm there are no `fail` checks.
-6. Review warnings with the project lead and technical lead.
-7. Run `POST /api/admin/provider-test`.
-8. Open `/embed`.
-9. Confirm Moodle can iframe the hosted `/embed` URL.
-10. Confirm `/admin` requires `?adminToken=...` or platform controls.
-11. Confirm `/api/admin/*` requires `x-admin-token` or platform controls.
-12. Confirm the `Content-Security-Policy` frame-ancestors header includes the Moodle origin.
-13. Rebuild the app after changing `MOODLE_ORIGIN`; header configuration is applied at build time.
-
-## Notes
-
-The current `/admin` page is not an authenticated production console. Do not
-expose it openly on the internet. For a hosted pilot, protect it through hosting
-platform controls, VPN, reverse proxy authentication, or another approved access
-control.
+Local JSON/JSONL storage and in-process rate limiting support one controlled app
+instance. Do not deploy multiple active instances behind a load balancer until
+shared storage, session, nonce, audit, and rate-limit implementations are
+approved and tested.

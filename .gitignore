@@ -9,6 +9,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
+Start FYEC100 Assistant.command
 coverage
 data/pilot-feedback.jsonl
 data/moodle-launch-audit.jsonl

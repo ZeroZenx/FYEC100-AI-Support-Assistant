@@ -21,9 +21,16 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!body.safeSummary) {
+  if (!body.safeSummary?.trim()) {
     return NextResponse.json(
       { error: "Support handoff requires a short safe summary." },
+      { status: 400 }
+    );
+  }
+
+  if (body.safeSummary.length > 2000 || (body.courseCode?.length ?? 0) > 24) {
+    return NextResponse.json(
+      { error: "The support handoff exceeds the allowed size." },
       { status: 400 }
     );
   }

@@ -46,8 +46,7 @@ http://localhost:4100/api/admin/knowledge-base/change-requests
 http://localhost:4100/api/admin/knowledge-base/change-requests.md
 ```
 
-If `ADMIN_ACCESS_TOKEN` is configured, pass it with `?adminToken=...` in the
-browser or the `x-admin-token` header for API calls.
+If `ADMIN_ACCESS_TOKEN` is configured, sign in at `/admin-login` for browser access or use the `x-admin-token` header for API calls. Production does not accept admin secrets in URLs.
 
 ## Governance Rule
 

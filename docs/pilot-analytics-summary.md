@@ -16,7 +16,7 @@ review. It uses local files only and does not require a database.
 /api/admin/pilot-analytics.md
 ```
 
-Use `x-admin-token` or `?adminToken=...` when `ADMIN_ACCESS_TOKEN` is configured.
+Use the `x-admin-token` header when `ADMIN_ACCESS_TOKEN` is configured.
 
 ## What It Shows
 

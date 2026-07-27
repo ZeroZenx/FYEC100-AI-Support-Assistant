@@ -31,7 +31,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Admin token is required." }, { status: 401 });
   }
 
-  const session = createAdminSessionToken("pilot-admin", normalizeRole(body?.role));
+  let session;
+  try {
+    session = createAdminSessionToken("pilot-admin", normalizeRole(body?.role));
+  } catch {
+    return NextResponse.json(
+      { error: "Admin session signing is not configured for this environment." },
+      { status: 503 }
+    );
+  }
   await recordAuditEvent({
     actor: "pilot-admin",
     area: "admin-session",

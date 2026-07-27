@@ -27,6 +27,12 @@ type ClientMessage = {
 const fallbackAnswer =
   "I could not find that information in the Phase 1 FYEC100 knowledge base. Please check the LMS course shell, the course outline, or contact your lecturer. For LMS access or navigation issues, contact the LMS administrator.";
 
+const MAX_MESSAGES = 12;
+const MAX_MESSAGE_LENGTH = 4000;
+const MAX_QUESTION_LENGTH = 2000;
+
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   try {
     const rateLimit = checkRateLimit(request, getRateLimitConfig().chat);
@@ -35,12 +41,33 @@ export async function POST(request: Request) {
       return rateLimitResponse(rateLimit);
     }
 
-    const body = (await request.json()) as {
+    const body = (await request.json().catch(() => null)) as {
       courseCode?: string;
       launchContext?: Partial<MoodleLaunchContext>;
       messages?: ClientMessage[];
-    };
-    const messages = body.messages ?? [];
+    } | null;
+
+    if (!body || !Array.isArray(body.messages)) {
+      return NextResponse.json({ error: "A valid chat request is required." }, { status: 400 });
+    }
+
+    const messages = body.messages;
+    if (
+      messages.length === 0 ||
+      messages.length > MAX_MESSAGES ||
+      messages.some(
+        (message) =>
+          !message ||
+          !["student", "assistant"].includes(message.role) ||
+          typeof message.content !== "string" ||
+          message.content.length > MAX_MESSAGE_LENGTH
+      )
+    ) {
+      return NextResponse.json(
+        { error: "The conversation is too large or contains invalid messages." },
+        { status: 400 }
+      );
+    }
     const launchContext = normalizeMoodleLaunchContext(body.launchContext);
     const courseResolution = await resolveCourseForChat({
       courseCode: body.courseCode,
@@ -57,6 +84,13 @@ export async function POST(request: Request) {
       );
     }
 
+    if (latestStudentMessage.content.trim().length > MAX_QUESTION_LENGTH) {
+      return NextResponse.json(
+        { error: "Please shorten the question to 2,000 characters or fewer." },
+        { status: 400 }
+      );
+    }
+
     const localGuardrailResponse = getLocalGuardrailResponse(
       latestStudentMessage.content
     );
@@ -65,7 +99,7 @@ export async function POST(request: Request) {
       return NextResponse.json({
         answer: localGuardrailResponse,
         course: courseResolution.uiContext
-      });
+      }, { headers: { "Cache-Control": "no-store" } });
     }
 
     const blockMessage = getCourseChatBlockMessage(courseResolution.uiContext);
@@ -94,10 +128,13 @@ export async function POST(request: Request) {
       )
     });
 
-    return NextResponse.json({
-      answer: answer || getMissingProviderConfigMessage(),
-      course: courseResolution.uiContext
-    });
+    return NextResponse.json(
+      {
+        answer: answer || getMissingProviderConfigMessage(),
+        course: courseResolution.uiContext
+      },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
     console.error("Chat route error", error);
     return NextResponse.json(
@@ -105,7 +142,7 @@ export async function POST(request: Request) {
         error:
           "The assistant could not complete the request. Check the server logs, API key, and local setup."
       },
-      { status: 500 }
+      { status: 503 }
     );
   }
 }

@@ -12,13 +12,17 @@ import {
   rateLimitResponse
 } from "@/lib/rateLimit";
 import { isConsentAcknowledged } from "@/lib/studentConsent";
+import { requireAdminAccess } from "@/lib/adminAuth";
 
 const ratings: FeedbackRating[] = feedbackCategories;
 
-export async function GET() {
+export async function GET(request: Request) {
+  const unauthorized = requireAdminAccess(request);
+  if (unauthorized) return unauthorized;
+
   const summary = await readPilotFeedbackSummary();
 
-  return NextResponse.json(summary);
+  return NextResponse.json(summary, { headers: { "Cache-Control": "no-store" } });
 }
 
 export async function POST(request: Request) {
@@ -29,7 +33,7 @@ export async function POST(request: Request) {
       return rateLimitResponse(rateLimit);
     }
 
-    const body = (await request.json()) as {
+    const body = (await request.json().catch(() => null)) as {
       assistantResponse?: string;
       consentAcknowledged?: boolean;
       courseCode?: string;
@@ -38,7 +42,11 @@ export async function POST(request: Request) {
       note?: string;
       rating?: FeedbackRating;
       studentQuestion?: string;
-    };
+    } | null;
+
+    if (!body) {
+      return NextResponse.json({ error: "A valid feedback request is required." }, { status: 400 });
+    }
 
     if (!body.rating || !ratings.includes(body.rating)) {
       return NextResponse.json(
@@ -50,6 +58,18 @@ export async function POST(request: Request) {
     if (!body.studentQuestion || !body.assistantResponse || !body.mode) {
       return NextResponse.json(
         { error: "Feedback requires a question, response, and mode." },
+        { status: 400 }
+      );
+    }
+
+    if (
+      body.studentQuestion.length > 2000 ||
+      body.assistantResponse.length > 8000 ||
+      (body.note?.length ?? 0) > 1000 ||
+      (body.courseCode?.length ?? 0) > 24
+    ) {
+      return NextResponse.json(
+        { error: "The feedback record exceeds the allowed size." },
         { status: 400 }
       );
     }

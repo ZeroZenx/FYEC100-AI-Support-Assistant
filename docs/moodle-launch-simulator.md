@@ -21,7 +21,7 @@ course short name, Moodle role, and launch source.
 /api/admin/moodle-launch-simulator.md
 ```
 
-Use `x-admin-token` or `?adminToken=...` when `ADMIN_ACCESS_TOKEN` is configured.
+Use the `x-admin-token` header when `ADMIN_ACCESS_TOKEN` is configured.
 
 ## Trust Boundary
 

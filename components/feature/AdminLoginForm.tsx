@@ -21,9 +21,12 @@ export function AdminLoginForm() {
   async function login() {
     setLoading(true);
     setError("");
-    const response = await fetch(`/api/admin/session?adminToken=${encodeURIComponent(token)}`, {
+    const response = await fetch("/api/admin/session", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-admin-token": token
+      },
       body: JSON.stringify({ role })
     });
     if (!response.ok) {

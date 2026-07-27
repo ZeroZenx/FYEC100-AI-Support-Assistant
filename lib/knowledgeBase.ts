@@ -19,7 +19,13 @@ export async function readKnowledgeBaseByPath(knowledgeBasePath: string) {
 
 export function resolveKnowledgeBasePath(knowledgeBasePath: string) {
   const dataRoot = path.resolve(process.cwd(), "data");
-  const requestedPath = path.resolve(process.cwd(), knowledgeBasePath);
+  const normalized = knowledgeBasePath.replaceAll("\\", "/");
+
+  if (!normalized.startsWith("data/") || path.isAbsolute(normalized)) {
+    throw new Error("Knowledge base paths must stay inside the data folder.");
+  }
+
+  const requestedPath = path.resolve(dataRoot, normalized.slice("data/".length));
 
   if (!requestedPath.startsWith(`${dataRoot}${path.sep}`)) {
     throw new Error("Knowledge base paths must stay inside the data folder.");

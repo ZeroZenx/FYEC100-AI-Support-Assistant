@@ -26,9 +26,14 @@ export function getAdminSessionCookieName() {
 }
 
 export function createAdminSessionToken(actor = "pilot-admin", role: AdminRole = "project-lead") {
+  const secret = getSessionSecret();
+  if (!secret) {
+    throw new Error("Admin session signing is not configured.");
+  }
+
   const expiresAt = Date.now() + SESSION_TTL_MS;
   const payload = Buffer.from(JSON.stringify({ actor, expiresAt, role }), "utf8").toString("base64url");
-  const signature = sign(payload);
+  const signature = sign(payload, secret);
 
   return {
     cookieName: SESSION_COOKIE,
@@ -39,6 +44,15 @@ export function createAdminSessionToken(actor = "pilot-admin", role: AdminRole =
 }
 
 export function inspectAdminSessionToken(token?: string | null): AdminSessionStatus {
+  const secret = getSessionSecret();
+  if (!secret) {
+    return {
+      active: false,
+      cookieName: SESSION_COOKIE,
+      reason: "Admin session signing is not configured."
+    };
+  }
+
   if (!token) {
     return {
       active: false,
@@ -49,7 +63,7 @@ export function inspectAdminSessionToken(token?: string | null): AdminSessionSta
 
   const [payload, signature] = token.split(".");
 
-  if (!payload || !signature || !safeCompare(signature, sign(payload))) {
+  if (!payload || !signature || !safeCompare(signature, sign(payload, secret))) {
     return {
       active: false,
       cookieName: SESSION_COOKIE,
@@ -90,8 +104,16 @@ export function inspectAdminSessionToken(token?: string | null): AdminSessionSta
   }
 }
 
-function sign(payload: string) {
-  const secret = process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_ACCESS_TOKEN || "local-fyec100-session-secret";
+function getSessionSecret() {
+  if (process.env.ADMIN_SESSION_SECRET) return process.env.ADMIN_SESSION_SECRET;
+  if (process.env.NODE_ENV !== "production" && process.env.PROTECT_ADMIN_ROUTES !== "true") {
+    return process.env.ADMIN_ACCESS_TOKEN || "local-fyec100-session-secret";
+  }
+
+  return null;
+}
+
+function sign(payload: string, secret: string) {
   return createHmac("sha256", secret).update(payload).digest("base64url");
 }
 

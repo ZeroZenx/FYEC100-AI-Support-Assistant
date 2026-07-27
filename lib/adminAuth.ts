@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "crypto";
 import { NextResponse } from "next/server";
 import { getAdminSessionCookieName, inspectAdminSessionToken } from "@/lib/adminSession";
 
@@ -8,27 +9,32 @@ export function getAdminAuthStatus() {
   return {
     configured: Boolean(process.env.ADMIN_ACCESS_TOKEN),
     headerName: ADMIN_TOKEN_HEADER,
-    queryParam: ADMIN_TOKEN_PARAM
+    protectionRequired: isAdminProtectionRequired(),
+    queryParam: ADMIN_TOKEN_PARAM,
+    sessionSecretConfigured: Boolean(process.env.ADMIN_SESSION_SECRET)
   };
+}
+
+export function isAdminProtectionRequired() {
+  return process.env.NODE_ENV === "production" || process.env.PROTECT_ADMIN_ROUTES === "true";
 }
 
 export function isAdminAccessAllowed(token?: string | null) {
   const expectedToken = process.env.ADMIN_ACCESS_TOKEN;
 
   if (!expectedToken) {
-    return true;
+    return !isAdminProtectionRequired();
   }
 
-  return token === expectedToken;
+  return safeCompare(token || "", expectedToken);
 }
 
 export function getAdminTokenFromRequest(request: Request) {
   const url = new URL(request.url);
+  const queryToken =
+    process.env.NODE_ENV === "production" ? null : url.searchParams.get(ADMIN_TOKEN_PARAM);
 
-  return (
-    request.headers.get(ADMIN_TOKEN_HEADER) ||
-    url.searchParams.get(ADMIN_TOKEN_PARAM)
-  );
+  return request.headers.get(ADMIN_TOKEN_HEADER) || queryToken;
 }
 
 export function requireAdminAccess(request: Request) {
@@ -44,10 +50,7 @@ export function requireAdminAccess(request: Request) {
   }
 
   return NextResponse.json(
-    {
-      error:
-        "Admin access required. Provide the pilot admin token using x-admin-token or adminToken."
-    },
+    { error: "Admin access required. Sign in or provide the admin access header." },
     { status: 401 }
   );
 }
@@ -59,4 +62,12 @@ function getCookieValue(request: Request, name: string) {
     .map((entry) => entry.trim())
     .find((entry) => entry.startsWith(`${name}=`))
     ?.slice(name.length + 1);
+}
+
+function safeCompare(a: string, b: string) {
+  const left = Buffer.from(a);
+  const right = Buffer.from(b);
+
+  if (left.length !== right.length) return false;
+  return timingSafeEqual(left, right);
 }

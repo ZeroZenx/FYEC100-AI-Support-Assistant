@@ -4,8 +4,12 @@
 
 $env:NEXT_PUBLIC_APP_BASE_URL = "https://fyec100-assistant.example.edu"
 $env:MOODLE_ORIGIN = "https://moodle.costaatt.edu.tt"
-$env:ADMIN_ACCESS_TOKEN = "replace_with_secure_random_value"
+$env:MOODLE_INTEGRATION_MODE = "iframe"
+$env:PROTECT_ADMIN_ROUTES = "true"
+$env:ADMIN_ACCESS_TOKEN = "replace_with_random_value_at_least_32_characters"
+$env:ADMIN_SESSION_SECRET = "replace_with_a_different_random_value_32_characters"
 $env:PILOT_MODE = "pilot"
+$env:STORAGE_ADAPTER = "local"
 
 # Choose one provider: openai, deepseek, or ollama.
 $env:AI_PROVIDER = "deepseek"
@@ -22,4 +26,9 @@ $env:CHAT_RATE_LIMIT_PER_MINUTE = "12"
 $env:FEEDBACK_RATE_LIMIT_PER_MINUTE = "30"
 $env:LAUNCH_AUDIT_RATE_LIMIT_PER_MINUTE = "60"
 $env:PROVIDER_TEST_RATE_LIMIT_PER_MINUTE = "6"
+$env:PROVIDER_TIMEOUT_MS = "30000"
+$env:PROVIDER_MAX_OUTPUT_TOKENS = "900"
+$env:HEALTH_DETAILS_PUBLIC = "false"
+$env:TRUST_PROXY_HEADERS = "true"
+$env:HOST = "127.0.0.1"
 $env:PORT = "4100"

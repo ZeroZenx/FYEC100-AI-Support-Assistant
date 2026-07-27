@@ -126,6 +126,10 @@ function buildResult(
 }
 
 function getClientIdentifier(request: Request) {
+  if (process.env.TRUST_PROXY_HEADERS !== "true") {
+    return "shared-client";
+  }
+
   const forwardedFor = request.headers.get("x-forwarded-for");
   const realIp = request.headers.get("x-real-ip");
 

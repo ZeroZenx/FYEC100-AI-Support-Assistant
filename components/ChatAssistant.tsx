@@ -144,7 +144,7 @@ export function ChatAssistant({
         body: JSON.stringify({
           courseCode: activeCourse?.courseCode ?? launchContext?.courseShortName,
           launchContext,
-          messages: nextMessages
+          messages: nextMessages.slice(-12)
         })
       });
 
@@ -353,9 +353,17 @@ export function ChatAssistant({
           ) : null}
           {activeCourse ? (
             <div className="mt-3 grid gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600 sm:grid-cols-3">
-              <ContextItem label="Course" value={`${activeCourse.courseCode}: ${courseTitle}`} />
-              <ContextItem label="KB" value={activeCourse.knowledgeBasePath || "Not configured"} />
-              <ContextItem label="Status" value={`${activeCourse.status} · ${activeCourse.lifecycleStatus}`} />
+              <div className="sm:hidden">
+                <ContextItem
+                  label="Active course"
+                  value={`${activeCourse.courseCode}: ${courseTitle} · ${activeCourse.status}`}
+                />
+              </div>
+              <div className="hidden sm:contents">
+                <ContextItem label="Course" value={`${activeCourse.courseCode}: ${courseTitle}`} />
+                <ContextItem label="KB" value={activeCourse.knowledgeBasePath || "Not configured"} />
+                <ContextItem label="Status" value={`${activeCourse.status} · ${activeCourse.lifecycleStatus}`} />
+              </div>
             </div>
           ) : null}
           {embedded && launchContext ? (
@@ -389,11 +397,18 @@ export function ChatAssistant({
                   Pilot privacy and responsible use notice
                 </h3>
                 <p className="mt-1 text-sm leading-6 text-slate-700">
-                  {roleGuidance.notice} This assistant supports learning and
-                  pilot review, but it does not grade work, replace official
-                  COSTAATT roles, or write full assignments. Do not enter
-                  passwords, student ID numbers, grades, medical details, or
-                  sensitive personal information.
+                  <span className="sm:hidden">
+                    Use this assistant for guidance, not grades or completed
+                    assignments. Do not enter passwords, student IDs, grades, or
+                    sensitive personal information.
+                  </span>
+                  <span className="hidden sm:inline">
+                    {roleGuidance.notice} This assistant supports learning and
+                    pilot review, but it does not grade work, replace official
+                    COSTAATT roles, or write full assignments. Do not enter
+                    passwords, student ID numbers, grades, medical details, or
+                    sensitive personal information.
+                  </span>
                 </p>
                 <p className="mt-2 text-xs font-semibold text-slate-700">
                   Feedback and escalation features are enabled only after this
@@ -426,7 +441,9 @@ export function ChatAssistant({
           aria-label="FYEC100 chat messages"
           aria-live="polite"
           className={`space-y-4 overflow-y-auto ${
-            embedded ? "h-[430px] px-4 py-4" : "h-[520px] px-5 py-5"
+            embedded
+              ? "h-[300px] px-4 py-4 sm:h-[430px]"
+              : "h-[300px] px-5 py-5 sm:h-[420px] lg:h-[520px]"
           }`}
           role="log"
         >
@@ -513,6 +530,7 @@ export function ChatAssistant({
           <textarea
             className="min-h-12 flex-1 resize-none rounded-md border border-slate-300 px-4 py-3 text-sm leading-6 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20"
             id="chat-input"
+            maxLength={2000}
             onKeyDown={handleInputKeyDown}
             onChange={(event) => setInput(event.target.value)}
             placeholder="Ask about course expectations, assignments, study tips, or LMS navigation..."
@@ -724,6 +742,7 @@ function FeedbackPanel({
           id={id}
           className="mt-1 min-h-16 w-full resize-none rounded-md border border-slate-300 px-3 py-2 text-xs leading-5 outline-none focus:border-costaatt-blue focus:ring-2 focus:ring-costaatt-blue/20"
           disabled={disabled}
+          maxLength={1000}
           onChange={(event) => onNoteChange(event.target.value)}
           placeholder="Optional: what should the pilot team know? Do not enter names, IDs, grades, or private information."
           value={note}

@@ -20,6 +20,25 @@ type OllamaChatMessage = {
 
 type ProviderName = "openai" | "ollama" | "deepseek";
 
+function getProviderTimeoutMs() {
+  const configured = Number(process.env.PROVIDER_TIMEOUT_MS ?? 30000);
+  return Number.isFinite(configured) && configured >= 1000 ? configured : 30000;
+}
+
+function getMaxOutputTokens() {
+  const configured = Number(process.env.PROVIDER_MAX_OUTPUT_TOKENS ?? 900);
+  return Number.isFinite(configured) && configured >= 200 ? configured : 900;
+}
+
+function createOpenAIClient(apiKey: string | undefined, baseURL?: string) {
+  return new OpenAI({
+    apiKey,
+    baseURL,
+    maxRetries: 1,
+    timeout: getProviderTimeoutMs()
+  });
+}
+
 function toModelRole(role: ClientMessage["role"]): "user" | "assistant" {
   return role === "student" ? "user" : "assistant";
 }
@@ -154,8 +173,9 @@ export async function testSelectedProvider() {
 }
 
 async function testOpenAIProvider() {
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const openai = createOpenAIClient(process.env.OPENAI_API_KEY);
   const completion = await openai.chat.completions.create({
+    max_tokens: 120,
     model: process.env.OPENAI_MODEL ?? "gpt-4o-mini",
     temperature: 0,
     messages: [
@@ -191,7 +211,8 @@ async function testOllamaProvider() {
       options: {
         temperature: 0
       }
-    })
+    }),
+    signal: AbortSignal.timeout(getProviderTimeoutMs())
   });
 
   if (!response.ok) {
@@ -206,11 +227,12 @@ async function testOllamaProvider() {
 }
 
 async function testDeepSeekProvider() {
-  const deepseek = new OpenAI({
-    apiKey: process.env.DEEPSEEK_API_KEY,
-    baseURL: process.env.DEEPSEEK_BASE_URL ?? "https://api.deepseek.com"
-  });
+  const deepseek = createOpenAIClient(
+    process.env.DEEPSEEK_API_KEY,
+    process.env.DEEPSEEK_BASE_URL ?? "https://api.deepseek.com"
+  );
   const completion = await deepseek.chat.completions.create({
+    max_tokens: 120,
     model: process.env.DEEPSEEK_MODEL ?? "deepseek-chat",
     temperature: 0,
     messages: [
@@ -238,7 +260,7 @@ async function generateWithOpenAI({
     return getMissingProviderConfigMessage();
   }
 
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const openai = createOpenAIClient(process.env.OPENAI_API_KEY);
   const model = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
 
   const conversationMessages: ChatCompletionMessageParam[] = messages
@@ -249,6 +271,7 @@ async function generateWithOpenAI({
     }));
 
   const completion = await openai.chat.completions.create({
+    max_tokens: getMaxOutputTokens(),
     model,
     temperature: 0.2,
     messages: [
@@ -295,7 +318,8 @@ async function generateWithOllama({
       options: {
         temperature: 0.2
       }
-    })
+    }),
+    signal: AbortSignal.timeout(getProviderTimeoutMs())
   });
 
   if (!response.ok) {
@@ -319,10 +343,10 @@ async function generateWithDeepSeek({
     return getMissingProviderConfigMessage();
   }
 
-  const deepseek = new OpenAI({
-    apiKey: process.env.DEEPSEEK_API_KEY,
-    baseURL: process.env.DEEPSEEK_BASE_URL ?? "https://api.deepseek.com"
-  });
+  const deepseek = createOpenAIClient(
+    process.env.DEEPSEEK_API_KEY,
+    process.env.DEEPSEEK_BASE_URL ?? "https://api.deepseek.com"
+  );
   const model = process.env.DEEPSEEK_MODEL ?? "deepseek-chat";
 
   const conversationMessages: ChatCompletionMessageParam[] = messages
@@ -333,6 +357,7 @@ async function generateWithDeepSeek({
     }));
 
   const completion = await deepseek.chat.completions.create({
+    max_tokens: getMaxOutputTokens(),
     model,
     temperature: 0.2,
     messages: [

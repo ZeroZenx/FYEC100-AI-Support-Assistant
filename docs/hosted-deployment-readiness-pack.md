@@ -11,7 +11,7 @@ pilot URL.
 /api/admin/hosted-deployment-pack.md
 ```
 
-Use `x-admin-token` or `?adminToken=...` when `ADMIN_ACCESS_TOKEN` is configured.
+Use the `x-admin-token` header when `ADMIN_ACCESS_TOKEN` is configured.
 
 ## What It Includes
 

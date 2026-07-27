@@ -252,7 +252,9 @@ await runCheck("Post launch review workspace page", `${baseUrl}/post-launch-revi
 await runCheck("Launch control pack page", `${baseUrl}/launch-control-pack`);
 await runCheck("Moodle embed page", `${baseUrl}/embed`);
 await runJsonCheck("Health endpoint", `${baseUrl}/api/health`);
-await runJsonCheck("Pilot feedback intake endpoint", `${baseUrl}/api/feedback`);
+await runJsonCheck("Pilot feedback summary endpoint", `${baseUrl}/api/feedback`, {
+  admin: true
+});
 await runJsonCheck(
   "Deployment readiness endpoint",
   `${baseUrl}/api/admin/deployment-readiness`,
@@ -697,7 +699,7 @@ process.exitCode = failed ? 1 : 0;
 async function runCheck(label, url, options = {}) {
   try {
     const response = await fetchWithTimeout(url, {
-      headers: requestHeaders(Boolean(options.admin)),
+      headers: requestHeaders(Boolean(options.admin) || isProtectedPage(url)),
       redirect: "manual"
     });
     await response.body?.cancel();
@@ -714,6 +716,26 @@ async function runCheck(label, url, options = {}) {
       status: "fail"
     });
   }
+}
+
+function isProtectedPage(url) {
+  const pathname = new URL(url).pathname;
+  const publicPages = new Set([
+    "/",
+    "/about",
+    "/access-denied",
+    "/accessibility-test",
+    "/admin-login",
+    "/chat",
+    "/embed",
+    "/roadmap",
+    "/student-ai-guide",
+    "/student-consent-privacy",
+    "/student-feedback-follow-up",
+    "/student-pilot-welcome"
+  ]);
+
+  return !pathname.startsWith("/api/") && !publicPages.has(pathname);
 }
 
 async function runJsonCheck(label, url, options = {}) {

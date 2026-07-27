@@ -27,7 +27,7 @@ if (Test-Path $EnvFile) {
 }
 
 Push-Location $AppPath
-npm install
+npm ci
 npm run build
 Pop-Location
 

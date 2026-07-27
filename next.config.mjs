@@ -1,21 +1,28 @@
-const moodleOrigin = process.env.MOODLE_ORIGIN;
+function configuredMoodleOrigin() {
+  if (!process.env.MOODLE_ORIGIN) return null;
 
-function securityHeaders() {
+  try {
+    return new URL(process.env.MOODLE_ORIGIN).origin;
+  } catch {
+    return null;
+  }
+}
+
+function globalSecurityHeaders() {
   const headers = [
+    { key: "X-Content-Type-Options", value: "nosniff" },
+    { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
     {
-      key: "X-Content-Type-Options",
-      value: "nosniff"
+      key: "Permissions-Policy",
+      value: "camera=(), geolocation=(), microphone=(), payment=(), usb=()"
     },
-    {
-      key: "Referrer-Policy",
-      value: "strict-origin-when-cross-origin"
-    }
+    { key: "X-DNS-Prefetch-Control", value: "off" }
   ];
 
-  if (moodleOrigin) {
+  if (process.env.NODE_ENV === "production") {
     headers.push({
-      key: "Content-Security-Policy",
-      value: `frame-ancestors 'self' ${moodleOrigin};`
+      key: "Strict-Transport-Security",
+      value: "max-age=31536000; includeSubDomains"
     });
   }
 
@@ -24,15 +31,32 @@ function securityHeaders() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   async headers() {
+    const moodleOrigin = configuredMoodleOrigin();
+    const frameAncestors = moodleOrigin
+      ? `'self' ${moodleOrigin}`
+      : process.env.NODE_ENV === "production"
+        ? "'none'"
+        : "'self'";
+
     return [
       {
+        source: "/:path*",
+        headers: globalSecurityHeaders()
+      },
+      {
         source: "/embed",
-        headers: securityHeaders()
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: `frame-ancestors ${frameAncestors};`
+          }
+        ]
       },
       {
         source: "/api/:path*",
-        headers: securityHeaders()
+        headers: [{ key: "Cache-Control", value: "no-store" }]
       }
     ];
   }

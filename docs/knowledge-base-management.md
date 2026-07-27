@@ -31,7 +31,7 @@ The same metadata is available through the protected endpoint:
 /api/admin/knowledge-base
 ```
 
-Use `x-admin-token` or `?adminToken=...` when `ADMIN_ACCESS_TOKEN` is configured.
+Use the `x-admin-token` header when `ADMIN_ACCESS_TOKEN` is configured.
 
 ## Review Record
 
