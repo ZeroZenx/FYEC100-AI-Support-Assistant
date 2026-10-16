@@ -2,6 +2,7 @@ import { access, appendFile, mkdir } from "fs/promises";
 import path from "path";
 import { getProviderStatus } from "@/lib/aiProvider";
 import { getPilotModeStatus } from "@/lib/pilotMode";
+import { getRagCorpusStatus } from "@/lib/ragCorpus";
 import { getRateLimitSummary } from "@/lib/rateLimit";
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -38,6 +39,7 @@ export async function getHealthStatus() {
       status: providerStatus.configured ? "ok" : "warning"
     },
     await checkKnowledgeBase(),
+    await checkRagCorpus(),
     checkRateLimiting(),
     await checkFeedbackStorage(),
     await checkLaunchAuditStorage()
@@ -49,6 +51,32 @@ export async function getHealthStatus() {
     pilotMode: pilotMode.mode,
     provider: providerStatus.provider,
     timestamp: new Date().toISOString()
+  };
+}
+
+async function checkRagCorpus(): Promise<HealthCheck> {
+  const rag = await getRagCorpusStatus();
+
+  if (!rag.configured) {
+    return {
+      label: "External RAG corpus",
+      message: "External RAG folder is not configured; the local Markdown knowledge base remains active.",
+      status: "warning"
+    };
+  }
+
+  if (!rag.ready) {
+    return {
+      label: "External RAG corpus",
+      message: "External RAG folder is configured, but its local index is not ready.",
+      status: "warning"
+    };
+  }
+
+  return {
+    label: "External RAG corpus",
+    message: `${rag.indexedFiles} source files are indexed into ${rag.chunkCount} searchable excerpts.`,
+    status: "ok"
   };
 }
 

@@ -5,11 +5,14 @@ dist
 .env
 .env.local
 .env.*.local
+*chatgpt-credentials*.json
+*.chatgpt-credentials*.tmp
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
 coverage
+*.tsbuildinfo
 data/pilot-feedback.jsonl
 data/moodle-launch-audit.jsonl
 data/lti-launch-states.jsonl
@@ -26,3 +29,4 @@ data/kb-snapshots
 data/phase-2-gate-overrides.json
 data/support-connector-events.jsonl
 data/production-workflows
+data/rag-index.json

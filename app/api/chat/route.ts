@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import {
   generateAssistantAnswer,
-  getMissingProviderConfigMessage
+  getMissingProviderConfigMessage,
+  getProviderRuntimeErrorMessage
 } from "@/lib/aiProvider";
 import { buildAssistantSystemPrompt, getLocalGuardrailResponse } from "@/lib/guardrails";
 import {
@@ -82,12 +83,14 @@ export async function POST(request: Request) {
     }
 
     const knowledgeBase = await readResolvedCourseKnowledgeBase(
-      courseResolution.course
+      courseResolution.course,
+      latestStudentMessage.content
     );
     const answer = await generateAssistantAnswer({
       fallbackAnswer,
       knowledgeBase,
       messages,
+      request,
       systemPrompt: buildAssistantSystemPrompt(
         launchContext,
         courseResolution.uiContext
@@ -99,13 +102,12 @@ export async function POST(request: Request) {
       course: courseResolution.uiContext
     });
   } catch (error) {
-    console.error("Chat route error", error);
+    console.error("Chat route provider request failed.");
     return NextResponse.json(
       {
-        error:
-          "The assistant could not complete the request. Check the server logs, API key, and local setup."
+        error: getProviderRuntimeErrorMessage(error)
       },
-      { status: 500 }
+      { status: 503 }
     );
   }
 }

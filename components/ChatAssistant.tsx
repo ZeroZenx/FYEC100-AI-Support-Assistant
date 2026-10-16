@@ -12,6 +12,7 @@ import type { MoodleLaunchContext } from "@/lib/moodleContext";
 import { getRoleGuidance } from "@/lib/moodleRoleGuidance";
 import type { CourseChatContext } from "@/lib/courseResolver";
 import { FormattedAssistantMessage } from "@/components/FormattedAssistantMessage";
+import { ChatGptAuthPanel } from "@/components/ChatGptAuthPanel";
 
 type ChatMessage = {
   feedbackStatus?: "idle" | "sending" | "sent";
@@ -376,6 +377,7 @@ export function ChatAssistant({
               </dl>
             </div>
           ) : null}
+          <ChatGptAuthPanel embedded={embedded} />
         </div>
         {showUseNotice ? (
           <div

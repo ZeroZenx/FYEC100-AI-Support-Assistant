@@ -66,7 +66,7 @@ Future phase. May include personalized learning support, proactive nudges, multi
 - About page
 - Roadmap page
 - Local Markdown knowledge base at `data/fyec100-knowledge-base.md`
-- OpenAI-powered chat route at `app/api/chat/route.ts`
+- Configurable AI provider chat route at `app/api/chat/route.ts` with OpenAI API, local-only ChatGPT plan usage, Ollama, and DeepSeek options
 - Guardrails against writing full assignments
 - Guardrails against claiming to grade work
 - Academic integrity guidance
@@ -76,7 +76,7 @@ Future phase. May include personalized learning support, proactive nudges, multi
 ## Not Included in Phase 1
 
 - Database
-- Authentication
+- Institutional authentication and student identity integration
 - Moodle integration
 - Banner integration
 - Production hosting
@@ -109,11 +109,13 @@ npm install
 cp .env.example .env.local
 ```
 
-4. Add your OpenAI API key to `.env.local`:
+4. Choose an AI provider in `.env.local`. For the existing OpenAI API provider:
 
 ```bash
 OPENAI_API_KEY=your_api_key_here
 ```
+
+For the local-only Sign in with ChatGPT provider, configure the allowlisted account and loopback callback instead of an API key. See [`docs/chatgpt-authentication.md`](docs/chatgpt-authentication.md).
 
 5. Start the local development server:
 
@@ -124,12 +126,14 @@ npm run dev
 6. Open the app:
 
 ```text
-http://localhost:4100
+http://127.0.0.1:4100
 ```
 
 ## AI Provider Integration
 
-The chat assistant can use OpenAI, Ollama, or DeepSeek through a Next.js API route. The route reads `data/fyec100-knowledge-base.md` and passes it to the model as context. If the selected provider is not configured, the chat page still loads and returns a setup reminder.
+The chat assistant can use OpenAI, local-only ChatGPT plan usage, Ollama, or DeepSeek through a Next.js API route. The route resolves the selected course, retrieves relevant excerpts from the local Markdown knowledge base and optional external RAG index, and passes that grounded context to the selected provider. If the selected provider is not configured, the chat page still loads and returns an explicit setup reminder; it does not silently switch providers.
+
+ChatGPT plan usage is restricted to the authenticated local development account and is not available through the Moodle iframe. It uses the official Sign in with ChatGPT flow and public Responses API only. See [`docs/chatgpt-authentication.md`](docs/chatgpt-authentication.md) for eligibility, setup, limitations, and institutional deployment guidance.
 
 OpenAI example:
 
@@ -137,6 +141,16 @@ OpenAI example:
 AI_PROVIDER=openai
 OPENAI_API_KEY=your_api_key_here
 OPENAI_MODEL=gpt-4o-mini
+```
+
+ChatGPT plan usage example (local only):
+
+```bash
+AI_PROVIDER=chatgpt
+CHATGPT_AUTH_ENABLED=true
+CHATGPT_LOCAL_ONLY=true
+CHATGPT_ALLOWED_EMAIL=your-chatgpt-email@example.com
+CHATGPT_REDIRECT_URI=http://127.0.0.1:4100/api/auth/chatgpt/callback
 ```
 
 Ollama example:
@@ -825,6 +839,25 @@ Protected review endpoints:
 http://localhost:4100/api/admin/knowledge-base/review
 http://localhost:4100/api/admin/knowledge-base/review.md
 ```
+
+### External RAG source folder
+
+The local pilot can index PDFs, PowerPoint files, Markdown, and text files from
+the configured `RAG_DATA_DIR` folder. The current Windows configuration uses:
+
+```text
+C:\FYEC100 RAG Data
+```
+
+Rebuild the searchable local index after adding or replacing source files:
+
+```bash
+npm run rag:import
+```
+
+The generated `data/rag-index.json` file is local-only and is ignored by Git.
+Chat retrieves the most relevant excerpts from that index alongside the local
+Markdown knowledge base.
 
 ## GitHub Upload Instructions
 

@@ -5,14 +5,17 @@
   "scripts": {
     "dev": "next dev -p 4100",
     "build": "next build",
-    "start": "next start",
-    "start:pilot": "next start -p ${PORT:-4100}",
+    "start": "node scripts/start-next.mjs",
+    "start:pilot": "node scripts/start-next.mjs",
+    "rag:import": "node scripts/import-rag.mjs",
+    "test:chatgpt-auth": "node scripts/test-chatgpt-auth.mjs",
     "smoke:pilot": "node scripts/smoke-pilot.mjs",
     "lint": "eslint ."
   },
   "dependencies": {
     "next": "^16.2.6",
     "openai": "4.56.0",
+    "pdf-parse": "^2.4.5",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

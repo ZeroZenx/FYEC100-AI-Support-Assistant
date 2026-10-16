@@ -1,6 +1,7 @@
 import { stat } from "fs/promises";
 import { getCourseReadiness, readCourseRegistry, type CourseConfig } from "@/lib/courseRegistry";
 import { readKnowledgeBaseByPath, resolveKnowledgeBasePath } from "@/lib/knowledgeBase";
+import { retrieveRagContext } from "@/lib/ragCorpus";
 import {
   normalizeMoodleLaunchContext,
   type MoodleLaunchContext
@@ -87,8 +88,13 @@ export async function resolveCourseForChat(input: CourseResolverInput = {}) {
   };
 }
 
-export async function readResolvedCourseKnowledgeBase(course: CourseConfig) {
-  return readKnowledgeBaseByPath(course.knowledgeBasePath);
+export async function readResolvedCourseKnowledgeBase(course: CourseConfig, query = "") {
+  const knowledgeBase = await readKnowledgeBaseByPath(course.knowledgeBasePath);
+  const ragContext = await retrieveRagContext(query);
+
+  return ragContext
+    ? `${knowledgeBase}\n\nExternal RAG source excerpts:\n\n${ragContext}`
+    : knowledgeBase;
 }
 
 export function getCourseChatBlockMessage(context: CourseChatContext) {

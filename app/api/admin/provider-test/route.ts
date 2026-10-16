@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminAccess } from "@/lib/adminAuth";
-import { testSelectedProvider } from "@/lib/aiProvider";
+import { testSelectedProvider, type ProviderTestOverrides } from "@/lib/aiProvider";
 import {
   checkRateLimit,
   getRateLimitConfig,
@@ -23,7 +23,33 @@ export async function POST(request: Request) {
     return rateLimitResponse(rateLimit);
   }
 
-  const result = await testSelectedProvider();
+  const result = await testSelectedProvider(
+    await readProviderTestOverrides(request),
+    request
+  );
 
   return NextResponse.json(result, { status: result.ok ? 200 : 503 });
+}
+
+async function readProviderTestOverrides(request: Request): Promise<ProviderTestOverrides> {
+  try {
+    const body = (await request.json()) as {
+      apiKey?: unknown;
+      baseUrl?: unknown;
+      model?: unknown;
+      provider?: unknown;
+    };
+
+    return {
+      apiKey: typeof body.apiKey === "string" ? body.apiKey.trim() : undefined,
+      baseUrl: typeof body.baseUrl === "string" ? body.baseUrl.trim() : undefined,
+      model: typeof body.model === "string" ? body.model.trim() : undefined,
+      provider:
+        body.provider === "chatgpt" || body.provider === "openai" || body.provider === "deepseek" || body.provider === "ollama"
+          ? body.provider
+          : undefined
+    };
+  } catch {
+    return {};
+  }
 }

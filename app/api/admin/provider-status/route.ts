@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   const status = getProviderStatus();
   return NextResponse.json({
     ...status,
-    hosting: status.provider === "ollama" ? "local" : "hosted",
+    hosting: status.provider === "ollama" || status.provider === "chatgpt" ? "local" : "hosted",
     recommendation: status.configured && evaluation.summary.failed === 0 ? "pilot-ready" : status.configured ? "governance-review" : "unavailable",
     safety: evaluation.summary
   });
